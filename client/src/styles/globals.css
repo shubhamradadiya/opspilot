@@ -1,0 +1,101 @@
+/* ============================================================================
+   GLOBALS.CSS — CSS CUSTOM PROPERTIES (DESIGN SYSTEM TOKENS)
+   ApexTrack · SSOT v1.0
+   Brand: BRAND_DESIGN_GUIDELINES.md
+   ============================================================================ */
+
+/* ── Light Mode (default) ──────────────────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --color-bg-base: #F8FAFC;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-elevated: #FFFFFF;
+  --color-bg-subtle: #F1F5F9;
+
+  /* Text */
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-text-disabled: #CBD5E1;
+
+  /* Borders */
+  --color-border: #E2E8F0;
+  --color-border-strong: #CBD5E1;
+
+  /* Accent / Brand */
+  --color-accent: #1E40AF;
+  --color-accent-hover: #1E3A8A;
+  --color-success: #16A34A;
+  --color-warning: #D97706;
+  --color-danger: #DC2626;
+  --color-purple: #7C3AED;
+  --color-cyan: #0891B2;
+}
+
+/* ── Dark Mode (.dark class on <html>) ─────────────────────────────────────── */
+.dark {
+  /* Surfaces */
+  --color-bg-base: #0F172A;
+  --color-bg-surface: #1E293B;
+  --color-bg-elevated: #334155;
+  --color-bg-subtle: #1E293B;
+
+  /* Text */
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-text-disabled: #334155;
+
+  /* Borders */
+  --color-border: #334155;
+  --color-border-strong: #475569;
+
+  /* Accent / Brand */
+  --color-accent: #3B82F6;
+  --color-accent-hover: #60A5FA;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-purple: #8B5CF6;
+  --color-cyan: #06B6D4;
+}
+
+/* ── Reduced Motion ────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Base Resets ───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* ── Auth Page Animations ─────────────────────────────────────────────────── */
+@keyframes auth-orb-1 {
+  0%, 100% { transform: translate(0px,   0px)   scale(1);    opacity: 0.55; }
+  33%       { transform: translate(-28px, 18px)  scale(1.04); opacity: 0.70; }
+  66%       { transform: translate(18px,  -12px) scale(0.97); opacity: 0.45; }
+}
+
+@keyframes auth-orb-2 {
+  0%, 100% { transform: translate(0px,  0px)   scale(1);    opacity: 0.40; }
+  50%      { transform: translate(30px, -22px)  scale(1.06); opacity: 0.60; }
+}
+
+@keyframes auth-orb-3 {
+  0%, 100% { transform: translate(0px,   0px)   scale(1);    opacity: 0.35; }
+  40%      { transform: translate(-18px, 24px)  scale(1.03); opacity: 0.50; }
+  80%      { transform: translate(12px,  -16px) scale(0.96); opacity: 0.30; }
+}
+
+@keyframes auth-grid-drift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
