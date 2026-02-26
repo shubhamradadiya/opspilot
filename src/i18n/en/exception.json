@@ -1,0 +1,43 @@
+{
+  "NOT_FOUND": "{property} not found.",
+
+  "APP_DATA_NOT_STORED": "The app version data could not be stored. Please try again.",
+
+  "USER_BLOCKED_BY_ADMIN": "Your account has been blocked by the administrator. For assistance, please contact the administrator.",
+  "ENTER_VALID_PASSWORD": "Please enter a valid old password.",
+  "EMAIL_USER_ALREADY_REGISTERED": "This email is already registered with us.",
+  "PHONE_USER_ALREADY_REGISTERED": "This phone number is already registered with us.",
+  "EMAIL_NOT_REGISTERED": "This email is not registered with us. Please sign up first.",
+  "INVALID_PASSWORD": "The password entered is incorrect. Please check and try again.",
+  "EMAIL_ASSOCIATED_WITH_SOCIAL_PLATFORM": "The email address provided is already linked to {property}. Please log in using {property}.",
+  "INVALID_OTP": "The OTP you entered is invalid. Please verify and try again.",
+  "OTP_NOT_VERIFIED": "The OTP you entered is not verified. Please verify and try again.",
+  "OTP_EXPIRED": "The verification code has expired. Please request a new reset password email.",
+  "ACCOUNT_DISABLED": "Your account is temporarily disabled. Please contact the administrator for support.",
+  "USER_ALREADY_REGISTERED": "This email address is already registered. Please log in using your email and password.",
+  "EMAIL_ALREADY_VERIFIED": "This email address has already been verified.",
+  "PROPERTY_NOT_FOUND": "The specified {property} could not be found.",
+  "NEW_PASSWORD_CANNOT_BE_SAME": "The new password cannot be the same as your current password. Please choose a different password.",
+  "INVALID_SOCIAL_PROVIDER": "Oops! Invalid social provider",
+  "ALREADY_EXISTS": "{property} already exists",
+
+  "ONLY_IMAGES_ALLOWED": "Only image files are allowed! Ex. jpg, jpeg, png",
+  "ONLY_DOCS_ALLOWED": "Only document files are allowed! Ex. doc, docx, pdf, xls, xlsx, csv",
+  "MAX_FILE_SIZE_EXCEEDED": "File size exceeds the maximum limit of {property}.",
+
+  "INVALID_CREDENTIALS": "The credentials you entered are incorrect. Please try again.",
+  "ONLY_ADMIN_CAN_FORGET_PASSWORD": "Contact your admin to reset password.",
+
+  "ATTENDANCE_CLOCK_IN_ALREADY_EXISTS": "You have already clocked in without clocking out.",
+  "USER_PERMISSION_DENIED": "Permission denied for {property}",
+  "EMAIL_LOGIN_NOT_ALLOWED": "Please use your registered phone number or Email to sign in.",
+
+  "INSUFFICIENT_LOAN_AMOUNT": "User has insufficient loan amount.",
+  "INVALID_PAYOUT_AMOUNT": "Payout amount is invalid.",
+
+  "INVALID_INVENTORY_INPUT": "At least one of the inventory fields is required from carTiresCount, truckTiresCount, mixedTiresCount, bales.",
+  "CANNOT_DELETE_ACTIVE_LOGS": "Cannot delete active logs.",
+  "INVALID_WALK_IN_CUSTOMER_INPUT": "At least one of the walk-in customer fields is required from carTiresCount, truckTiresCount, rimsCount along with its corresponding price fields.",
+  "DATE_FILTER_REQUIRED_IN_WEEk_VIEW": "Date filter is required in week view.",
+  "INVALID_WALK_IN_CUSTOMER_STATUS": "All walk-in customers are already in this status."
+}

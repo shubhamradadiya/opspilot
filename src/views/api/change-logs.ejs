@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Changelogs | <%= process.env.APP_NAME %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="<%= process.env.APP_URL  %>/images/favicon.ico"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style type="text/css">
+      body,
+      html {
+        margin-top: 20px;
+        font-family: 'Work Sans', sans-serif;
+      }
+
+      .badge {
+        padding: 6px 8px;
+      }
+
+      .badge-primary {
+        background: black;
+      }
+
+      .text-muted {
+        color: #6b7584 !important;
+      }
+
+      .bg-light {
+        background-color: #add8e624 !important;
+      }
+
+      ul {
+        list-style-position: outside;
+      }
+
+      .text-success {
+        color: #0f84ab !important;
+      }
+
+      a,
+      code {
+        font-size: 16px !important;
+        color: #000000 !important;
+      }
+
+      .api-method {
+        font-weight: 600;
+      }
+
+      .container h1 {
+        font-size: 3rem;
+        font-weight: bold;
+      }
+
+      .container h4 {
+        font-weight: bold;
+        color: #000000;
+      }
+
+      code {
+        text-align: left;
+        font-size: 87.5%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css"
+      integrity="sha256-nwNjrH7J9zS/Ti4twtWX7OsC5QdQHCIKTv5cLMsGo68="
+      crossorigin="anonymous"
+    />
+    <div class="container">
+      <div class="row justify-content-center">
+        <h1 class="col-12 pt-2 pb-4"><%= process.env.APP_NAME %> API Changelogs</h1>
+        <hr />
+        <div class="col-lg-12 col-md-12 col-12 mx-auto my-auto">
+          <span class="h6 font-weight-bold">Base URL:</span>
+          <a href="<%= process.env.APP_URL %>" target="_blank"><%= process.env.APP_URL %></a>
+        </div>
+        <div class="col-lg-12 col-md-12 col-12 mx-auto my-auto">
+          <span class="h6 font-weight-bold">Swagger UI:</span>
+          <a href="<%= process.env.APP_URL %>/api/documentation" target="_blank"
+            ><%= process.env.APP_URL %>/api/documentation</a
+          >
+        </div>
+        <div class="col-lg-12 col-md-12 col-12 mx-auto my-auto">
+          <span class="h6 font-weight-bold">Privacy Policy:</span>
+          <a href="<%= process.env.APP_URL %>/privacy-policy" target="_blank"
+            ><%= process.env.APP_URL %>/privacy-policy</a
+          >
+        </div>
+        <div class="col-lg-12 col-md-12 col-12 mx-auto my-auto">
+          <span class="h6 font-weight-bold">Terms & Conditions :</span>
+          <a href="<%= process.env.APP_URL %>/terms-and-conditions" target="_blank"
+            ><%= process.env.APP_URL %>/terms-and-conditions</a
+          >
+        </div>
+        <div class="col-lg-12 col-md-12 col-12 mx-auto my-auto">
+          <span class="h6 font-weight-bold">Support :</span>
+          <a href="<%= process.env.APP_URL %>/support" target="_blank"
+            ><%= process.env.APP_URL %>/support</a
+          >
+        </div>
+        <div class="col-lg-12 col-md-12 col-12 mx-auto my-auto">
+          <span class="h6 font-weight-bold">Delete Account :</span>
+          <a href="<%= process.env.APP_URL %>/delete-account" target="_blank"
+            ><%= process.env.APP_URL %>/delete-account</a
+          >
+        </div>
+        <br />
+
+        <div
+          class="col-lg-12 col-md-12 col-12 mx-auto my-auto"
+          style="border-left: 1px groove #006aff32"
+        >
+          <div class="col-lg-10">
+            <h6 class="mt-3 h6">16 Feb, 2026</h6>
+            <span class="badge badge-primary">App Api</span>
+            <ul class="mt-3">
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/container</code>
+                <br />
+                &#10003; Add container
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">PUT</span> /api/v1/container/:cId</code>
+                <br />
+                &#10003; Update container
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">DELETE</span> /api/v1/container/:cId</code>
+                <br />
+                &#10003; Delete container
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/containers</code>
+                <br />
+                &#10003; Get all containers
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/container/booking-numbers</code>
+                <br />
+                &#10003; Get booking numbers for containers
+              </li>
+            </ul>
+
+            <h6 class="mt-3 h6">12 Feb, 2026</h6>
+            <span class="badge badge-primary">App Api</span>
+            <ul class="mt-3">
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">PUT</span> /api/v1/walk-in-customers/status</code>
+                <br />
+                &#10003; Update walk-in customers status
+              </li>
+            </ul>
+
+            <h6 class="mt-3 h6">10 Feb, 2026</h6>
+            <span class="badge badge-primary">App Api</span>
+            <ul class="mt-3">
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/walk-in-customer</code>
+                <br />
+                &#10003; Create walk-in customer
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/walk-in-customers</code>
+                <br />
+                &#10003; Get all walk-in customers
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">PUT</span> /api/v1/walk-in-customer/:wcId</code>
+                <br />
+                &#10003; Update walk-in customer
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">DELETE</span> /api/v1/walk-in-customer/:wcId</code>
+                <br />
+                &#10003; Delete walk-in customer
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">GET</span> /api/v1/walk-in-customer/customer-names</code
+                >
+                <br />
+                &#10003; Get customer names for walk-in customer
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">GET</span>
+                  /api/v1/walk-in-customer/download-invoice</code
+                >
+                <br />
+                &#10003; Get walk-in customer invoice PDF HTML code
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/attendance/logs</code>
+                <br />
+                &#10003; Get logged in or passed user's attendance logs
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">DELETE</span> /api/v1/attendance/logs</code>
+                <br />
+                &#10003; Delete user logs manually (admin only)
+              </li>
+            </ul>
+
+            <h6 class="mt-3 h6">09 Feb, 2026</h6>
+            <span class="badge badge-primary">App Api</span>
+            <ul class="mt-3">
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/attendance/log</code>
+                <br />
+                &#10003; Add manual user log (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/ring-customer</code>
+                <br />
+                &#10003; Create ring customer
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/ring-customers</code>
+                <br />
+                &#10003; Get all ring customers
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">PUT</span> /api/v1/ring-customer/:rcId</code>
+                <br />
+                &#10003; Update ring customer
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">DELETE</span> /api/v1/ring-customer/:rcId</code>
+                <br />
+                &#10003; Delete ring customer
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/expense/vendor-names</code>
+                <br />
+                &#10003; Get vendor names for expense
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/admin/dashboard</code>
+                <br />
+                &#10003; Get admin dashboard data (admin only)
+              </li>
+            </ul>
+
+            <h6 class="mt-3 h6">06 Feb, 2026</h6>
+            <span class="badge badge-primary">App Api</span>
+            <ul class="mt-3">
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/expense</code>
+                <br />
+                &#10003; Create expense
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/expenses</code>
+                <br />
+                &#10003; Get all expenses
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">PUT</span> /api/v1/expense/:eId</code>
+                <br />
+                &#10003; Update expense
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">DELETE</span> /api/v1/expense/:eId</code>
+                <br />
+                &#10003; Delete expense
+              </li>
+            </ul>
+
+            <h6 class="mt-3 h6">02 Feb, 2026</h6>
+            <span class="badge badge-primary">App Api</span>
+            <ul class="mt-3">
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/inventory</code>
+                <br />
+                &#10003; Create inventory
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/inventory</code>
+                <br />
+                &#10003; Get all inventories
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">DELETE</span> /api/v1/inventory/:iId</code>
+                <br />
+                &#10003; Delete inventory
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">PUT</span> /api/v1/inventory/:iId</code>
+                <br />
+                &#10003; Update inventory
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/inventory/activity-logs</code>
+                <br />
+                &#10003; Get all inventory activity logs (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">PUT</span> /api/v1/inventory/activity-log/read</code>
+                <br />
+                &#10003; Mark inventory activity log as read (admin only)
+              </li>
+            </ul>
+
+            <h6 class="mt-3 h6">27 Jan, 2026</h6>
+            <span class="badge badge-primary">App Api</span>
+            <ul class="mt-3">
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/attendance/check-status</code>
+                <br />
+                &#10003; Check attendance status
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">POST</span> /api/v1/attendance/clock-in-clock-out</code
+                >
+                <br />
+                &#10003; Clock in / clock out
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/attendance/logs/today</code>
+                <br />
+                &#10003; Get today's attendance logs of all users (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">GET</span>
+                  /api/v1/attendance/timestamps
+                </code>
+                <br />
+                &#10003; Get attendance timestamps of all users by days or weeks (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">POST</span>
+                  /api/v1/payout/add-loan
+                </code>
+                <br />
+                &#10003; Add loan for user (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">POST</span>
+                  /api/v1/payout
+                </code>
+                <br />
+                &#10003; Create payout for user (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">GET</span>
+                  /api/v1/payouts/self-payouts
+                </code>
+                <br />
+                &#10003; Get logged in user's payout list (self payouts)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">GET</span>
+                  /api/v1/payouts/all-payouts
+                </code>
+                <br />
+                &#10003; Get all users payout list (All user's payouts) (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">POST</span>
+                  /api/v2/payout/download-payout-receipt
+                </code>
+                <br />
+                &#10003; Download payout receipt PDF
+              </li>
+            </ul>
+
+            <h6 class="mt-3 h6">19 Jan, 2026</h6>
+            <span class="badge badge-primary">App Api</span>
+            <ul class="mt-3">
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/auth/login</code>
+                <br />
+                &#10003; Login user or admin
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">POST</span> /api/v1/auth/forgot-password/send-otp</code
+                >
+                <br />
+                &#10003; Send forgot password otp
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code
+                  ><span class="api-method">POST</span>
+                  /api/v1/auth/forgot-password/verify-otp</code
+                >
+                <br />
+                &#10003; Verify forgot password otp
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/auth/reset-password</code>
+                <br />
+                &#10003; Reset password
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/auth/change-password</code>
+                <br />
+                &#10003; Change password
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/auth/logout</code>
+                <br />
+                &#10003; Logout user or admin
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/user</code>
+                <br />
+                &#10003; User login user's details
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">GET</span> /api/v1/employee</code>
+                <br />
+                &#10003; Get all employees (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">POST</span> /api/v1/employee</code>
+                <br />
+                &#10003; Create employee (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">PUT</span> /api/v1/employee/:uid</code>
+                <br />
+                &#10003; Update employee (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">PATCH</span> /api/v1/employee/:uid/status</code>
+                <br />
+                &#10003; Update employee status (admin only)
+              </li>
+              <li class="text-muted ml-3 mb-2">
+                <code><span class="api-method">DELETE</span> /api/v1/employee/:uid</code>
+                <br />
+                &#10003; Delete employee (admin only)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

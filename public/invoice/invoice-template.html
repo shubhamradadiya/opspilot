@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice - Uvin Tire Reuse LLC</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+        color: #333;
+        background: #fff;
+        padding: 40px;
+      }
+
+      .container {
+        max-width: 750px;
+        margin: 0 auto;
+      }
+
+      /* ── HEADER ── */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo img {
+        width: 160px;
+        height: auto;
+        display: block;
+      }
+
+      .invoice-meta {
+        text-align: right;
+      }
+
+      .invoice-meta .invoice-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #4caf50;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .invoice-meta .invoice-number {
+        font-size: 13px;
+        color: #555;
+        margin-top: 4px;
+      }
+
+      .invoice-meta .invoice-date {
+        font-size: 13px;
+        color: #555;
+        margin-top: 2px;
+        margin-bottom: 12px;
+      }
+
+      /* ── FROM / BILL TO ── */
+      .parties {
+        display: flex;
+        height: 120px;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        overflow: hidden;
+      }
+
+      .party-block {
+        width: 48%;
+      }
+
+      .party-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+      }
+
+      .party-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 4px;
+      }
+
+      .party-details {
+        font-size: 12px;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      /* ── TABLE ── */
+      .items-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+      }
+
+      .items-table thead tr {
+        background-color: #4caf50;
+        color: #fff;
+      }
+
+      .items-table thead th {
+        padding: 10px 14px;
+        text-align: left;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .items-table thead th.right {
+        text-align: right;
+      }
+
+      .items-table tbody tr {
+        border-bottom: 1px solid #e8e8e8;
+      }
+
+      .items-table tbody tr:last-child {
+        border-bottom: none;
+      }
+
+      .items-table tbody td {
+        padding: 12px 14px;
+        vertical-align: top;
+      }
+
+      .items-table tbody td.right {
+        text-align: right;
+      }
+
+      .item-description {
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 2px;
+      }
+
+      .item-date {
+        font-size: 12px;
+        color: #777;
+      }
+
+      /* ── TOTAL ── */
+      .total-section {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+      }
+
+      .total-box {
+        width: 260px;
+      }
+
+      .total-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-top: 1px solid #e0e0e0;
+        font-size: 14px;
+        font-weight: 700;
+        color: #222;
+      }
+
+      /* ── PAID BADGE ── */
+      .paid-badge {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 30px;
+      }
+
+      .paid-badge span {
+        border: 3px solid #4caf50;
+        color: #4caf50;
+        font-size: 18px;
+        font-weight: 800;
+        padding: 4px 20px;
+        border-radius: 4px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transform: rotate(-15deg);
+        display: inline-block;
+      }
+
+      /* ── FOOTER ── */
+      .footer {
+        text-align: right;
+        font-size: 11px;
+        color: #999;
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+      }
+      /* 
+      .pdf-root {
+        width: 100%;
+      }
+
+      .pdf-page {
+        width: 750px;
+        margin: 0 auto;
+        padding: 40px;
+        background: #fff;
+      } */
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- ── HEADER ── -->
+      <div class="header">
+        <div class="logo">
+          <img src="{{LOGO_BASE64}}" alt="Uvin Tire Reuse LLC Logo" />
+        </div>
+        <div class="invoice-meta">
+          <div class="invoice-title">Invoice</div>
+          <div class="invoice-number">#{{INVOICE_NUMBER}}</div>
+          <div class="invoice-date">Issued {{ISSUED_DATE}}</div>
+        </div>
+      </div>
+
+      <!-- ── FROM / BILL TO ── -->
+      <div class="parties">
+        <div class="party-block">
+          <div class="party-label">From</div>
+          <div class="party-name">{{COMPANY_NAME}}</div>
+          <div class="party-details">
+            <span class="phone-number">{{COMPANY_PHONE_NUMBER}}</span><br />
+            <span class="email-address">{{COMPANY_EMAIL}}</span><br />
+            <span class="address">{{COMPANY_ADDRESS}}</span>
+          </div>
+        </div>
+        <div class="party-block">
+          <div class="party-label">Bill To</div>
+          <div class="party-name">{{CUSTOMER_NAME}}</div>
+        </div>
+      </div>
+
+      <!-- ── LINE ITEMS ── -->
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th class="right">QTY</th>
+            <th class="right">Price, USD</th>
+            <th class="right">Amount, USD</th>
+          </tr>
+        </thead>
+        <tbody id="items-body">
+          {{ITEMS_ROWS}}
+        </tbody>
+      </table>
+
+      <!-- ── TOTAL ── -->
+      <div class="total-section">
+        <div class="total-box">
+          <div class="total-row">
+            <span>Total</span>
+            <span>${{TOTAL_AMOUNT}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PAID BADGE ── -->
+      <div class="paid-badge">
+        <span>Paid</span>
+      </div>
+
+      <!-- ── FOOTER ── -->
+      <div class="footer">Inv. #{{INVOICE_NUMBER}} <span class="page-number"></span></div>
+    </div>
+  </body>
+</html>

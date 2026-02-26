@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Receipt - Uvin Tire Reuse LLC</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+        padding: 40px 20px;
+        color: #2c3e50;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 850px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      /* ================= HEADER ================= */
+      .header {
+        background: linear-gradient(135deg, #2b8ef2 0%, #1a5fb4 100%);
+        color: white;
+        padding: 40px;
+        text-align: center;
+        position: relative;
+      }
+
+      .header::after {
+        content: '';
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: white;
+        border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      }
+
+      .company-name {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .receipt-title {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 3px;
+        opacity: 0.95;
+        text-transform: uppercase;
+      }
+
+      /* ================= BODY CONTENT ================= */
+      .body-content {
+        padding: 50px 40px 40px;
+      }
+
+      /* ================= DATE ================= */
+      .date-row {
+        text-align: right;
+        margin-bottom: 35px;
+        font-size: 15px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .date-badge {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #f8f9fa;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border-left: 4px solid #2b8ef2;
+      }
+
+      .date-badge .label {
+        color: #6c757d;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .date-badge .value {
+        color: #2c3e50;
+        font-weight: 700;
+        font-size: 15px;
+      }
+
+      /* ================= CONTENT ================= */
+      .content {
+        background: #f8f9fa;
+        border-left: 4px solid #2b8ef2;
+        padding: 25px 30px;
+        border-radius: 8px;
+        margin-bottom: 40px;
+        font-size: 16px;
+        line-height: 1.9;
+      }
+
+      .content p {
+        margin: 0;
+        color: #495057;
+      }
+
+      .content strong {
+        color: #2c3e50;
+        font-weight: 600;
+        padding: 2px 6px;
+        background: #e3f2fd;
+        border-radius: 4px;
+      }
+
+      .divider {
+        height: 2px;
+        background: linear-gradient(to right, transparent, #dee2e6, transparent);
+        margin: 35px 0;
+      }
+
+      /* ================= SIGNATURE ================= */
+      .signature-section {
+        margin-top: 40px;
+      }
+
+      .signature-grid {
+        display: grid;
+        gap: 25px;
+      }
+
+      .signature-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .signature-row .label {
+        color: #6c757d;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        min-width: 140px;
+      }
+
+      .signature-value {
+        flex: 1;
+        border-bottom: 2px solid #dee2e6;
+        padding: 8px 12px;
+        min-height: 36px;
+        font-weight: 600;
+        color: #2c3e50;
+        transition: border-color 0.3s ease;
+      }
+
+      .signature-value:hover {
+        border-color: #2b8ef2;
+      }
+
+      .signature-image-wrapper {
+        flex: 1;
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        padding: 15px;
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+      }
+
+      .signature-image {
+        max-width: 100%;
+        max-height: 120px;
+        object-fit: contain;
+      }
+
+      /* ================= FOOTER ================= */
+      .footer {
+        margin-top: 50px;
+        padding-top: 25px;
+        border-top: 1px solid #dee2e6;
+        text-align: center;
+        color: #6c757d;
+        font-size: 13px;
+      }
+
+      .footer-icon {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: #2b8ef2;
+        border-radius: 50%;
+        line-height: 40px;
+        color: white;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      /* ================= PRINT STYLES ================= */
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+
+        .container {
+          box-shadow: none;
+          border-radius: 0;
+        }
+
+        .signature-value:hover {
+          border-color: #dee2e6;
+        }
+      }
+
+      /* ================= RESPONSIVE ================= */
+      @media (max-width: 600px) {
+        .body-content {
+          padding: 30px 20px;
+        }
+
+        .header {
+          padding: 30px 20px;
+        }
+
+        .company-name {
+          font-size: 26px;
+        }
+
+        .signature-row {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .signature-row .label {
+          min-width: auto;
+        }
+
+        .signature-value {
+          width: 100%;
+        }
+
+        .date-badge {
+          flex-direction: column;
+          gap: 5px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- ================= HEADER ================= -->
+      <div class="header">
+        <div class="company-name">Uvin Tire Reuse LLC</div>
+        <div class="receipt-title">Payment Receipt</div>
+      </div>
+
+      <!-- ================= BODY CONTENT ================= -->
+      <div class="body-content">
+        <!-- ================= DATE ================= -->
+        <div class="date-row">
+          <div class="date-badge">
+            <span class="label">Receipt Date:</span>
+            <span class="value receipt-date"></span>
+          </div>
+        </div>
+
+        <!-- ================= CONTENT ================= -->
+        <div class="content">
+          <p>
+            I receive from Uvin Tire Reuse LLC the amount of
+            <strong class="amount"></strong> for <strong class="hours"></strong> hours of work
+            performed during <strong class="week-range"></strong>.
+          </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ================= SIGNATURE ================= -->
+        <div class="signature-section">
+          <div class="signature-grid">
+            <div class="signature-row">
+              <span class="label">Employee Name:</span>
+              <div class="signature-value employee-name"></div>
+            </div>
+
+            <div class="signature-row">
+              <span class="label">Signature:</span>
+              <div class="signature-image-wrapper">
+                <img class="signature-image" alt="Employee signature" />
+              </div>
+            </div>
+
+            <div class="signature-row">
+              <span class="label">Date Signed:</span>
+              <div class="signature-value date-line"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= FOOTER ================= -->
+        <div class="footer">
+          <!-- <div class="footer-icon">&#x2713;</div> -->
+          <p>This receipt confirms payment for services rendered.</p>
+          <p style="margin-top: 5px; font-size: 12px; opacity: 0.8">
+            Keep this document for your records.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
