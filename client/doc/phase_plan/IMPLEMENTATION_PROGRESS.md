@@ -47,9 +47,9 @@
 
 | Phase | Title | Status | Started | Completed | Notes |
 |:-----:|-------|:------:|---------|-----------|-------|
-| FE-01 | Project Setup & Auth UI | `⬜` | — | — | — |
-| FE-02 | Auth Integration & App Shell | `⬜` | — | — | — |
-| FE-03 | Admin Dashboard | `⬜` | — | — | — |
+| FE-01 | Project Setup & Auth UI | `✅` | 2026-02-27 | 2026-02-28 | Gold/cream theme applied |
+| FE-02 | Auth Integration & App Shell | `✅` | 2026-02-27 | 2026-02-28 | AuthRoute enabled, OpsPilot branding |
+| FE-03 | Admin Dashboard | `✅` | 2026-02-28 | 2026-02-28 | Recharts charts, 5-endpoint aggregation |
 | FE-04 | Employee Management | `⬜` | — | — | — |
 | FE-05 | Attendance Module | `⬜` | — | — | — |
 | FE-06 | Payout Module | `⬜` | — | — | — |
@@ -65,9 +65,9 @@
 ## ◈ Overall Progress
 
 ```
-FE-01  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Project Setup & Auth UI
-FE-02  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Auth Integration & App Shell
-FE-03  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Admin Dashboard
+FE-01  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Project Setup & Auth UI
+FE-02  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Auth Integration & App Shell
+FE-03  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Admin Dashboard
 FE-04  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Employee Management
 FE-05  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Attendance Module
 FE-06  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Payout Module
@@ -78,7 +78,7 @@ FE-10  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Ring Customer Module
 FE-11  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Container Module
 FE-12  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Polish & Release
 
-Total: ░░░░░░░░░░░░░░░░░░░░ 0 / 12 phases complete
+Total: ██████░░░░░░░░░░░░░░ 3 / 12 phases complete
 ```
 
 > 🤖 AI: Replace `⬜` blocks with `🟦` as tasks complete within a phase.
@@ -88,95 +88,95 @@ Total: ░░░░░░░░░░░░░░░░░░░░ 0 / 12 phase
 
 ## ◈ FE-01 — Project Setup & Auth UI
 
-**Status:** `⬜ TODO` &nbsp;·&nbsp; **Started:** `—` &nbsp;·&nbsp; **Completed:** `—`
+**Status:** `✅ DONE` &nbsp;·&nbsp; **Started:** `2026-02-27` &nbsp;·&nbsp; **Completed:** `2026-02-28`
 
 ### Tasks
 
 | # | Task | Status | Notes |
 |---|------|:------:|-------|
-| 1.1 | Vite + React + TS project init | `⬜` | — |
-| 1.2 | Install all npm dependencies | `⬜` | — |
-| 1.3 | `vite.config.ts` path aliases + proxy | `⬜` | — |
-| 1.4 | `tailwind.config.ts` dark mode + tokens | `⬜` | — |
-| 1.5 | `src/styles/globals.css` CSS variables | `⬜` | — |
-| 1.6 | Redux store + rootReducer setup | `⬜` | — |
-| 1.7 | `auth.types.ts` — all interfaces | `⬜` | — |
-| 1.8 | `auth.slice.ts` + `auth.thunk.ts` | `⬜` | — |
-| 1.9 | `axiosInstance.ts` with interceptors | `⬜` | — |
-| 1.10 | `routes.ts` all route constants | `⬜` | — |
-| 1.11 | `Login.tsx` page + Redux integration | `⬜` | — |
-| 1.12 | `ForgotPassword.tsx` 3-step flow | `⬜` | — |
-| 1.13 | `ChangePassword.tsx` page | `⬜` | — |
-| 1.14 | `Button.tsx` all variants | `⬜` | — |
-| 1.15 | `Input.tsx` with error state | `⬜` | — |
-| 1.16 | `ThemeToggle.tsx` + `useTheme.ts` | `⬜` | — |
-| 1.17 | `Spinner.tsx` component | `⬜` | — |
-| 1.18 | `OtpInput.tsx` 6-digit component | `⬜` | — |
-| 1.19 | Dark mode verified on Login page | `⬜` | — |
-| 1.20 | `npm run build` — zero TS errors | `⬜` | — |
+| 1.1 | Vite + React + TS project init | `✅` | — |
+| 1.2 | Install all npm dependencies | `✅` | — |
+| 1.3 | `vite.config.ts` path aliases + proxy | `✅` | — |
+| 1.4 | `tailwind.config.ts` dark mode + tokens | `✅` | — |
+| 1.5 | `src/styles/globals.css` CSS variables | `✅` | Gold/cream tokens |
+| 1.6 | Redux store + rootReducer setup | `✅` | — |
+| 1.7 | `auth.types.ts` — all interfaces | `✅` | — |
+| 1.8 | `auth.slice.ts` + `auth.thunk.ts` | `✅` | — |
+| 1.9 | `axiosInstance.ts` with interceptors | `✅` | — |
+| 1.10 | `routes.ts` all route constants | `✅` | — |
+| 1.11 | `Login.tsx` page + Redux integration | `✅` | — |
+| 1.12 | `ForgotPassword.tsx` 3-step flow | `✅` | — |
+| 1.13 | `ChangePassword.tsx` page | `✅` | — |
+| 1.14 | `Button.tsx` all variants | `✅` | Gold primary |
+| 1.15 | `Input.tsx` with error state | `✅` | Gold focus ring |
+| 1.16 | `ThemeToggle.tsx` + `useTheme.ts` | `✅` | — |
+| 1.17 | `Spinner.tsx` component | `✅` | — |
+| 1.18 | `OtpInput.tsx` 6-digit component | `✅` | Gold focus ring |
+| 1.19 | Dark mode verified on Login page | `✅` | — |
+| 1.20 | `npm run build` — zero TS errors | `✅` | — |
 
 **Phase Notes:**
-> _🤖 AI: Add notes here as work progresses. E.g. blockers, decisions made, deviations from plan._
+> Brand theme refactored: blue/slate → gold/cream, Inter → DM Sans. ApexTrack → OpsPilot.
 
 ---
 
 ## ◈ FE-02 — Auth Integration & App Shell
 
-**Status:** `⬜ TODO` &nbsp;·&nbsp; **Started:** `—` &nbsp;·&nbsp; **Completed:** `—`
+**Status:** `✅ DONE` &nbsp;·&nbsp; **Started:** `2026-02-27` &nbsp;·&nbsp; **Completed:** `2026-02-28`
 
 ### Tasks
 
 | # | Task | Status | Notes |
 |---|------|:------:|-------|
-| 2.1 | `getMeThunk` — session restore on mount | `⬜` | — |
-| 2.2 | `logoutThunk` — clear tokens + redirect | `⬜` | — |
-| 2.3 | `AppLayout.tsx` shell component | `⬜` | — |
-| 2.4 | `Sidebar.tsx` collapsible nav | `⬜` | — |
-| 2.5 | Sidebar role-aware links (admin vs user) | `⬜` | — |
-| 2.6 | Sidebar feature-flag-aware items | `⬜` | — |
-| 2.7 | `Topbar.tsx` with user info + logout | `⬜` | — |
-| 2.8 | `ThemeToggle` integrated in Topbar | `⬜` | — |
-| 2.9 | `AuthRoute.tsx` guard | `⬜` | — |
-| 2.10 | `AdminRoute.tsx` guard | `⬜` | — |
-| 2.11 | `GuestRoute.tsx` guard | `⬜` | — |
-| 2.12 | `returnUrl` preservation after login | `⬜` | — |
-| 2.13 | `NotFound.tsx` 404 page | `⬜` | — |
-| 2.14 | `useAuth.ts` hook | `⬜` | — |
-| 2.15 | `Breadcrumb.tsx` component | `⬜` | — |
-| 2.16 | Full route tree in `App.tsx` | `⬜` | — |
-| 2.17 | Dark mode verified on Sidebar + Topbar | `⬜` | — |
-| 2.18 | Session restore tested on page refresh | `⬜` | — |
+| 2.1 | `getMeThunk` — session restore on mount | `✅` | — |
+| 2.2 | `logoutThunk` — clear tokens + redirect | `✅` | — |
+| 2.3 | `AppLayout.tsx` shell component | `✅` | — |
+| 2.4 | `Sidebar.tsx` collapsible nav | `✅` | — |
+| 2.5 | Sidebar role-aware links (admin vs user) | `✅` | — |
+| 2.6 | Sidebar feature-flag-aware items | `✅` | — |
+| 2.7 | `Topbar.tsx` with user info + logout | `✅` | — |
+| 2.8 | `ThemeToggle` integrated in Topbar | `✅` | — |
+| 2.9 | `AuthRoute.tsx` guard | `✅` | — |
+| 2.10 | `AdminRoute.tsx` guard | `✅` | — |
+| 2.11 | `GuestRoute.tsx` guard | `✅` | — |
+| 2.12 | `returnUrl` preservation after login | `✅` | — |
+| 2.13 | `NotFound.tsx` 404 page | `✅` | — |
+| 2.14 | `useAuth.ts` hook | `✅` | — |
+| 2.15 | `Breadcrumb.tsx` component | `✅` | — |
+| 2.16 | Full route tree in `App.tsx` | `✅` | — |
+| 2.17 | Dark mode verified on Sidebar + Topbar | `✅` | — |
+| 2.18 | Session restore tested on page refresh | `✅` | — |
 
 **Phase Notes:**
-> _🤖 AI: Update here._
+> AuthRoute guard enabled. OpsPilot branding applied. Sidebar spacing increased.
 
 ---
 
 ## ◈ FE-03 — Admin Dashboard
 
-**Status:** `⬜ TODO` &nbsp;·&nbsp; **Started:** `—` &nbsp;·&nbsp; **Completed:** `—`
+**Status:** `✅ DONE` &nbsp;·&nbsp; **Started:** `2026-02-28` &nbsp;·&nbsp; **Completed:** `2026-02-28`
 
 ### Tasks
 
 | # | Task | Status | Notes |
 |---|------|:------:|-------|
-| 3.1 | `dashboard.api.ts` — GET /admin/dashboard | `⬜` | — |
-| 3.2 | `dashboard.slice.ts` + `dashboard.thunk.ts` | `⬜` | — |
-| 3.3 | `StatsCard.tsx` with icon + trend | `⬜` | — |
-| 3.4 | `AttendanceChart.tsx` Recharts BarChart | `⬜` | — |
-| 3.5 | `ExpenseChart.tsx` Recharts LineChart | `⬜` | — |
-| 3.6 | `InventorySummary.tsx` widget | `⬜` | — |
-| 3.7 | `TodayAttendance.tsx` snapshot table | `⬜` | — |
-| 3.8 | `RecentActivityLog.tsx` widget | `⬜` | — |
-| 3.9 | `QuickActions.tsx` shortcut buttons | `⬜` | — |
-| 3.10 | `AdminDashboard.tsx` grid layout | `⬜` | — |
-| 3.11 | Skeleton loaders on all widgets | `⬜` | — |
-| 3.12 | Error state + retry button | `⬜` | — |
-| 3.13 | Charts adapt to dark mode | `⬜` | — |
-| 3.14 | Admin-only access verified | `⬜` | — |
+| 3.1 | `dashboard.api.ts` — GET /admin/dashboard | `✅` | 5 parallel calls |
+| 3.2 | `dashboard.slice.ts` + `dashboard.thunk.ts` | `✅` | — |
+| 3.3 | `StatsCard.tsx` with icon + trend | `✅` | — |
+| 3.4 | `AttendanceChart.tsx` Recharts BarChart | `✅` | Gold bars |
+| 3.5 | `ExpenseChart.tsx` Recharts LineChart | `✅` | Green line |
+| 3.6 | `InventorySummary.tsx` widget | `✅` | 2x2 grid |
+| 3.7 | `TodayAttendance.tsx` snapshot table | `✅` | — |
+| 3.8 | `RecentActivityLog.tsx` widget | `✅` | Unread dots |
+| 3.9 | `QuickActions.tsx` shortcut buttons | `✅` | 4 actions |
+| 3.10 | `AdminDashboard.tsx` grid layout | `✅` | — |
+| 3.11 | Skeleton loaders on all widgets | `✅` | — |
+| 3.12 | Error state + retry button | `✅` | — |
+| 3.13 | Charts adapt to dark mode | `✅` | — |
+| 3.14 | Admin-only access verified | `✅` | Via AdminRoute |
 
 **Phase Notes:**
-> _🤖 AI: Update here._
+> No backend dashboard endpoint — aggregated from 5 existing endpoints via Promise.all. Recharts installed (29 packages).
 
 ---
 

@@ -30,8 +30,9 @@ const ForgotPassword = lazy(() => import('@/pages/auth/ForgotPassword'));
 const ChangePassword = lazy(() => import('@/pages/auth/ChangePassword'));
 
 // ============================================================================
-// LAZY IMPORTS — App Pages (placeholders for future phases)
+// LAZY IMPORTS — App Pages
 // ============================================================================
+const AdminDashboard = lazy(() => import('@/pages/dashboard/AdminDashboard'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 // ============================================================================
@@ -52,7 +53,7 @@ const createPlaceholder = (title: string): React.FC => {
   return Placeholder;
 };
 
-const DashboardPage = createPlaceholder('Dashboard');
+const DashboardPage = AdminDashboard;
 const EmployeesPage = createPlaceholder('Employees');
 const AttendancePage = createPlaceholder('Attendance');
 const PayoutsPage = createPlaceholder('Payouts');
@@ -111,7 +112,7 @@ const AppRoutes: React.FC = () => {
       </Route>
 
       {/* ── Authenticated routes (inside AppLayout) ── */}
-      {/* <Route element={<AuthRoute />}> */}
+      <Route element={<AuthRoute />}>
         <Route element={<AppLayout />}>
           {/* Admin-only routes */}
           <Route element={<AdminRoute />}>
@@ -135,7 +136,7 @@ const AppRoutes: React.FC = () => {
           {/* 404 fallback (inside layout) */}
           <Route path="*" element={<NotFound />} />
         </Route>
-      {/* </Route> */}
+      </Route>
     </Routes>
   );
 };

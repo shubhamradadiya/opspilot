@@ -1,6 +1,6 @@
 // ============================================================================
 // ROUTES CONSTANTS
-// ApexTrack · FE-02
+// OpsPilot · FE-02
 // ============================================================================
 
 // ============================================================================
@@ -19,6 +19,13 @@ export const API_ROUTES = {
   },
   USER: {
     GET_ME: '/api/v1/user',
+  },
+  ADMIN: {
+    EMPLOYEES: '/api/v1/employee',
+    TODAY_ATTENDANCE: '/api/v1/attendance/logs/today',
+    INVENTORY: '/api/v1/inventory',
+    ACTIVITY_LOGS: '/api/v1/inventory/activity-logs',
+    EXPENSES: '/api/v1/expenses',
   },
 } as const;
 
