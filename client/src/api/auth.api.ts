@@ -11,6 +11,7 @@ import type {
   IResetPasswordPayload,
   IChangePasswordPayload,
   IApiResponse,
+  IUser,
 } from '@/store/auth/auth.types';
 import type { AxiosResponse } from 'axios';
 
@@ -61,6 +62,13 @@ export const apiChangePassword = (
   payload: IChangePasswordPayload,
 ): Promise<AxiosResponse<IApiResponse>> => {
   return axiosInstance.post(API_ROUTES.AUTH.CHANGE_PASSWORD, payload);
+};
+
+/**
+ * Get current user — GET /api/v1/user (session restore)
+ */
+export const apiGetMe = (): Promise<AxiosResponse<IApiResponse<IUser>>> => {
+  return axiosInstance.get(API_ROUTES.USER.GET_ME);
 };
 
 /**

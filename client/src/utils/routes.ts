@@ -1,6 +1,6 @@
 // ============================================================================
 // ROUTES CONSTANTS
-// Uvin Tire Management System · FE-01
+// ApexTrack · FE-02
 // ============================================================================
 
 // ============================================================================
@@ -17,6 +17,9 @@ export const API_ROUTES = {
     RESET_PASSWORD: '/api/v1/auth/reset-password',
     CHANGE_PASSWORD: '/api/v1/auth/change-password',
   },
+  USER: {
+    GET_ME: '/api/v1/user',
+  },
 } as const;
 
 // ============================================================================
@@ -28,8 +31,19 @@ export const APP_ROUTES = {
     FORGOT_PASSWORD: '/forgot-password',
     CHANGE_PASSWORD: '/change-password',
   },
-  DASHBOARD: {
-    ADMIN: '/dashboard',
-    HOME: '/',
+  DASHBOARD: '/dashboard',
+  EMPLOYEES: {
+    LIST: '/employees',
+    CREATE: '/employees/create',
+    EDIT: '/employees/:uid/edit',
   },
+  ATTENDANCE: '/attendance',
+  PAYOUTS: '/payouts',
+  INVENTORY: '/inventory',
+  EXPENSES: '/expenses',
+  WALK_IN_CUSTOMERS: '/walk-in-customers',
+  RING_CUSTOMERS: '/ring-customers',
+  CONTAINERS: '/containers',
+  SETTINGS: '/settings',
+  HOME: '/',
 } as const;

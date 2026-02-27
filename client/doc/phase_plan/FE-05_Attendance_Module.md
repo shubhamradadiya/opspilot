@@ -97,8 +97,8 @@ Attendance tracking for the entire workforce. Employees get a prominent Clock In
 │   │   ▶ Start Day   │           │   CLOCK OUT     │  │
 │   │                 │           │   ■ End Day     │  │
 │   └─────────────────┘           └─────────────────┘  │
-│   bg: blue-600                  bg: red-600           │
-│   dark: blue-500                dark: red-500         │
+│   bg: gold                  bg: red-600           │
+│   dark: gold                dark: red-500         │
 │                                                      │
 │   LOADING STATE: Spinner replaces icon while POST    │
 └──────────────────────────────────────────────────────┘
@@ -122,7 +122,7 @@ Color coding:
 - `≥ 8h` → `text-green-600 dark:text-green-400`
 - `4h–8h` → `text-yellow-600 dark:text-yellow-400`
 - `< 4h` → `text-red-600 dark:text-red-400`
-- `—` (absent) → `text-slate-400`
+- `—` (absent) → `text-[#9A9A9A]`
 
 ---
 
@@ -161,6 +161,6 @@ export const calcDuration = (
 
 [`FE-04`](./FE-04_Employee_Management.md) &nbsp;→&nbsp; `FE-05` &nbsp;→&nbsp; [`FE-06`](./FE-06_Payout_Module.md)
 
-*Management System · Frontend Phase Plans*
+*OpsPilot · Frontend Phase Plans*
 
 </div>

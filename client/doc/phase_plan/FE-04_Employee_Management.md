@@ -130,6 +130,6 @@ PATCH /api/v1/employee/:uid/status
 
 [`FE-03`](./FE-03_Admin_Dashboard.md) &nbsp;→&nbsp; `FE-04` &nbsp;→&nbsp; [`FE-05`](./FE-05_Attendance_Module.md)
 
-*Management System · Frontend Phase Plans*
+*OpsPilot · Frontend Phase Plans*
 
 </div>

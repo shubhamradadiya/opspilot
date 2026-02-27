@@ -101,6 +101,6 @@ Tire and bale inventory management. Create daily stock count snapshots, edit or 
 
 [`FE-06`](./FE-06_Payout_Module.md) &nbsp;→&nbsp; `FE-07` &nbsp;→&nbsp; [`FE-08`](./FE-08_Expense_Module.md)
 
-*Management System · Frontend Phase Plans*
+*OpsPilot · Frontend Phase Plans*
 
 </div>

@@ -167,26 +167,27 @@
 ### Colors
 
 ```
-Light Mode                        Dark Mode
-──────────────────────────────    ──────────────────────────────
-Background   #F8FAFC (slate-50)   #0F172A (slate-900)
-Surface      #FFFFFF               #1E293B (slate-800)
-Elevated     #FFFFFF               #334155 (slate-700)
-Text/Primary #0F172A (slate-900)  #F8FAFC (slate-50)
-Text/Muted   #64748B (slate-500)  #94A3B8 (slate-400)
-Border       #E2E8F0 (slate-200)  #334155 (slate-700)
+Light Mode                         Dark Mode
+───────────────────────────────    ───────────────────────────────
+Background   #FDFBD4 (warm cream)  #121212 (near-black)
+Surface      #FFFFFF               #1E1E1E
+Elevated     #FFFFFF               #2A2A2A
+Text/Primary #2A2A2A               #F5F5F5
+Text/Muted   #9A9A9A               #666666
+Border       #E8E0B8 (warm)        #2E2E2E
 ─────────────────────────────────────────────────────
-Accent/Blue  #1E40AF (blue-800)   #3B82F6 (blue-500)
-Success      #16A34A (green-600)  #22C55E (green-500)
-Warning      #D97706 (amber-600)  #F59E0B (amber-500)
-Danger       #DC2626 (red-600)    #EF4444 (red-500)
-Purple       #7C3AED (violet-600) #8B5CF6 (violet-500)
+Gold/Primary #D4AF37               #D4AF37  (same both modes)
+Gold/Hover   #CE8946               #CE8946  (same both modes)
+Success      #2D7A4F               #4CAF80
+Warning      #B8860B               #D4A017
+Danger       #C0392B               #E05A4A
+Purple       #6A3A8A               #9A6ABA
 ```
 
 ### Typography
 
 ```
-Font Family:   Inter (body), system-ui fallback
+Font Family:   DM Sans (body), system-ui fallback
 Headings:      font-semibold, tracking-tight
 Body:          font-normal, leading-relaxed
 Code/IDs:      font-mono, text-sm
@@ -340,7 +341,7 @@ client/
 
 <div align="center">
 
-*Management System · Frontend Master Plan*
+*OpsPilot · Frontend Master Plan*
 &nbsp;·&nbsp;
 `12 Phases` &nbsp;·&nbsp; `http://localhost:3001` &nbsp;·&nbsp; `Dark & Light Mode`
 

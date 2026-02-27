@@ -11,6 +11,7 @@ import {
   verifyOtpThunk,
   resetPasswordThunk,
   changePasswordThunk,
+  getMeThunk,
 } from './auth.thunk';
 
 // ============================================================================
@@ -25,6 +26,7 @@ const initialState: IAuthState = {
   user: null,
   accessToken: localStorage.getItem(ACCESS_TOKEN_KEY) ?? null,
   isAuthenticated: !!localStorage.getItem(ACCESS_TOKEN_KEY),
+  sessionRestored: !localStorage.getItem(ACCESS_TOKEN_KEY),
   loading: false,
   error: null,
   fpStep: 1,
@@ -149,6 +151,26 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload ?? 'Password change failed';
       });
+
+    // ── Get Me (session restore) ─────────────────────────────────────────────
+    builder
+      .addCase(getMeThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getMeThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+        state.sessionRestored = true;
+      })
+      .addCase(getMeThunk.rejected, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.accessToken = null;
+        state.isAuthenticated = false;
+        state.sessionRestored = true;
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+      });
   },
 });
 
@@ -163,6 +185,7 @@ export const { clearError, setUser, clearAuth, resetFpFlow } = authSlice.actions
 export const selectAuthUser = (state: RootState) => state.auth.user;
 export const selectAccessToken = (state: RootState) => state.auth.accessToken;
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
+export const selectSessionRestored = (state: RootState) => state.auth.sessionRestored;
 export const selectAuthLoading = (state: RootState) => state.auth.loading;
 export const selectAuthError = (state: RootState) => state.auth.error;
 export const selectFpStep = (state: RootState) => state.auth.fpStep;

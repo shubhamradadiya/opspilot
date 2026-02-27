@@ -110,7 +110,7 @@ Wire up the authentication lifecycle (session restore on refresh, logout, token 
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  ⚙️  Management System            [ collapse ]   │
+│  ⚙️  OpsPilot            [ collapse ]   │
 ├─────────────────────────────────────────────────┤
 │  ▸  Dashboard           /dashboard   ADMIN ONLY  │
 │  ▸  Employees           /employees   ADMIN ONLY  │
@@ -215,12 +215,12 @@ AuthRoute reads isAuthenticated
 
 | Element | Light | Dark |
 |---------|-------|------|
-| `<body>` | `bg-slate-50` | `dark:bg-slate-900` |
-| Sidebar | `bg-white border-r border-slate-200` | `dark:bg-slate-900 dark:border-slate-700` |
-| Sidebar active item | `bg-blue-50 text-blue-700` | `dark:bg-blue-900/30 dark:text-blue-400` |
-| Topbar | `bg-white border-b border-slate-200` | `dark:bg-slate-800 dark:border-slate-700` |
-| Nav item hover | `hover:bg-slate-100` | `dark:hover:bg-slate-800` |
-| User name text | `text-slate-800` | `dark:text-slate-100` |
+| `<body>` | `bg-[#FDFBD4]` | `dark:bg-[#121212]` |
+| Sidebar | `bg-white border-r border-[#E8E0B8]` | `dark:bg-[#121212] dark:border-[#2E2E2E]` |
+| Sidebar active item | `bg-[#D4AF37] text-gold` | `dark:bg-[#D4AF37]/30 dark:text-gold-hover` |
+| Topbar | `bg-white border-b border-[#E8E0B8]` | `dark:bg-[#1E1E1E] dark:border-[#2E2E2E]` |
+| Nav item hover | `hover:bg-[#F5F0D0]` | `dark:hover:bg-[#252525]` |
+| User name text | `text-[#5A5A5A]` | `dark:text-[#F5F5F5]` |
 
 ---
 
@@ -243,6 +243,6 @@ AuthRoute reads isAuthenticated
 
 [`FE-01`](./FE-01_Project_Setup_Auth_UI.md) &nbsp;→&nbsp; `FE-02` &nbsp;→&nbsp; [`FE-03`](./FE-03_Admin_Dashboard.md)
 
-*Management System · Frontend Phase Plans*
+*OpsPilot · Frontend Phase Plans*
 
 </div>

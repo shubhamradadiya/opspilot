@@ -117,11 +117,11 @@ Build the Admin Dashboard — the first screen admins see after login. Pulls rea
 ```typescript
 // Chart colors adapt to theme
 const chartColors = {
-  bar: theme === 'dark' ? '#3B82F6' : '#1E40AF',
+  bar: theme === 'dark' ? '#D4AF37' : '#D4AF37',
   line: theme === 'dark' ? '#22C55E' : '#16A34A',
-  grid: theme === 'dark' ? '#334155' : '#E2E8F0',
-  text: theme === 'dark' ? '#94A3B8' : '#64748B',
-  tooltip: theme === 'dark' ? '#1E293B' : '#FFFFFF',
+  grid: theme === 'dark' ? '#2E2E2E' : '#E8E0B8',
+  text: theme === 'dark' ? '#AAAAAA' : '#9A9A9A',
+  tooltip: theme === 'dark' ? '#1E1E1E' : '#FFFFFF',
 };
 ```
 
@@ -144,6 +144,6 @@ const chartColors = {
 
 [`FE-02`](./FE-02_Auth_Integration_App_Shell.md) &nbsp;→&nbsp; `FE-03` &nbsp;→&nbsp; [`FE-04`](./FE-04_Employee_Management.md)
 
-*Management System · Frontend Phase Plans*
+*OpsPilot · Frontend Phase Plans*
 
 </div>

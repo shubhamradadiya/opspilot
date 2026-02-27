@@ -17,12 +17,14 @@ import {
   apiResetPassword,
   apiChangePassword,
   apiLogout,
+  apiGetMe,
 } from '@/api/auth.api';
 
 // ============================================================================
 // CONSTANTS
 // ============================================================================
 const THUNK_PREFIX = 'auth';
+const ACCESS_TOKEN_KEY = 'accessToken';
 
 // ============================================================================
 // UTILITY FUNCTIONS
@@ -41,6 +43,30 @@ const extractErrorMessage = (error: unknown): string => {
 // ============================================================================
 // THUNKS
 // ============================================================================
+
+/**
+ * Session restore — GET /api/v1/user
+ * Called on app mount when a stored token exists.
+ */
+export const getMeThunk = createAsyncThunk<
+  { user: IUser },
+  void,
+  { rejectValue: string }
+>(`${THUNK_PREFIX}/getMe`, async (_, { rejectWithValue }) => {
+  try {
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    if (!token) {
+      return rejectWithValue('No token');
+    }
+    const response = await apiGetMe();
+    const user = response.data.data!;
+    return { user };
+  } catch (error) {
+    // Clear stale token on 401
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    return rejectWithValue(extractErrorMessage(error));
+  }
+});
 
 /**
  * Login thunk — POST /api/v1/auth/login

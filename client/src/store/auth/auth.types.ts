@@ -1,6 +1,6 @@
 // ============================================================================
 // AUTH TYPE DEFINITIONS
-// Uvin Tire Management System · FE-01
+// ApexTrack · FE-02
 // ============================================================================
 
 // ============================================================================
@@ -43,6 +43,7 @@ export interface IAuthState {
   user: IUser | null;
   accessToken: string | null;
   isAuthenticated: boolean;
+  sessionRestored: boolean;
   loading: boolean;
   error: string | null;
   // Forgot password flow

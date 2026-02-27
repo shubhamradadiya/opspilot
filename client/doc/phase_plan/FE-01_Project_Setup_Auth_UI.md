@@ -85,22 +85,22 @@ Bootstrap the entire frontend project from scratch. This phase establishes the p
 
 ```css
 /* Light Mode */
---color-bg-base: #F8FAFC;
+--color-bg-base: bg-[#FDFBD4];
 --color-bg-surface: #FFFFFF;
 --color-bg-elevated: #FFFFFF;
---color-text-primary: #0F172A;
---color-text-secondary: #64748B;
---color-border: #E2E8F0;
---color-accent: #1E40AF;
+--color-text-primary: [#121212];
+--color-text-secondary: #9A9A9A;
+--color-border: #E8E0B8;
+--color-accent: #D4AF37;
 
 /* Dark Mode (.dark class on <html>) */
---color-bg-base: #0F172A;
---color-bg-surface: #1E293B;
---color-bg-elevated: #334155;
---color-text-primary: #F8FAFC;
---color-text-secondary: #94A3B8;
---color-border: #334155;
---color-accent: #3B82F6;
+--color-bg-base: [#121212];
+--color-bg-surface: #1E1E1E;
+--color-bg-elevated: #2E2E2E;
+--color-text-primary: bg-[#FDFBD4];
+--color-text-secondary: #AAAAAA;
+--color-border: #2E2E2E;
+--color-accent: #D4AF37;
 ```
 
 ### 🗂 Store Architecture
@@ -279,6 +279,6 @@ npm install -D tailwindcss@4 @tailwindcss/vite
 
 `FE-01` &nbsp;→&nbsp; [`FE-02`](./FE-02_Auth_Integration_App_Shell.md)
 
-*Management System · Frontend Phase Plans*
+*OpsPilot · Frontend Phase Plans*
 
 </div>

@@ -83,26 +83,26 @@ Every component must use **Tailwind's `dark:` prefix** — no hardcoded colors. 
 
 | Token Purpose | Light Class | Dark Class |
 |---------------|-------------|------------|
-| Page background | `bg-slate-50` | `dark:bg-slate-900` |
-| Card / surface | `bg-white` | `dark:bg-slate-800` |
-| Elevated (modal, dropdown) | `bg-white shadow-md` | `dark:bg-slate-700 dark:shadow-slate-900` |
-| Primary text | `text-slate-900` | `dark:text-slate-50` |
-| Secondary text | `text-slate-500` | `dark:text-slate-400` |
-| Muted text | `text-slate-400` | `dark:text-slate-500` |
-| Dividers / borders | `border-slate-200` | `dark:border-slate-700` |
-| Input background | `bg-white border-slate-300` | `dark:bg-slate-700 dark:border-slate-600` |
-| Input focus ring | `ring-blue-600` | `dark:ring-blue-400` |
-| Table header | `bg-slate-100 text-slate-600` | `dark:bg-slate-700 dark:text-slate-300` |
-| Table row alt | `even:bg-slate-50` | `dark:even:bg-slate-800/50` |
-| Table row hover | `hover:bg-slate-100` | `dark:hover:bg-slate-700/50` |
-| Sidebar background | `bg-white` | `dark:bg-slate-900` |
-| Sidebar active | `bg-blue-50 text-blue-700` | `dark:bg-blue-900/20 dark:text-blue-400` |
-| Topbar | `bg-white border-b-slate-200` | `dark:bg-slate-800 dark:border-b-slate-700` |
+| Page background | `bg-[#FDFBD4]` | `dark:bg-[#121212]` |
+| Card / surface | `bg-white` | `dark:bg-[#1E1E1E]` |
+| Elevated (modal, dropdown) | `bg-white shadow-md` | `dark:bg-[#2A2A2A] dark:shadow-[#121212]` |
+| Primary text | `text-[#121212]` | `dark:text-[#F5F5F5]` |
+| Secondary text | `text-[#9A9A9A]` | `dark:text-[#AAAAAA]` |
+| Muted text | `text-[#9A9A9A]` | `dark:text-[#F5F5F5]0` |
+| Dividers / borders | `border-[#E8E0B8]` | `dark:border-[#2E2E2E]` |
+| Input background | `bg-white border-[#D4C88A]` | `dark:bg-[#2A2A2A] dark:border-[#3A3A3A]` |
+| Input focus ring | `ring-gold` | `dark:ring-gold-hover` |
+| Table header | `bg-[#F5F0D0] text-[#5A5A5A]` | `dark:bg-[#2A2A2A] dark:text-[#AAAAAA]` |
+| Table row alt | `even:bg-[#FDFBD4]` | `dark:even:bg-ink-surface/50` |
+| Table row hover | `hover:bg-[#F5F0D0]` | `dark:hover:bg-[#252525]/50` |
+| Sidebar background | `bg-white` | `dark:bg-[#121212]` |
+| Sidebar active | `bg-[#D4AF37] text-gold` | `dark:bg-[#D4AF37]/20 dark:text-gold-hover` |
+| Topbar | `bg-white border-b-cream-border` | `dark:bg-[#1E1E1E] dark:border-b-ink-raised` |
 | Badge (success) | `bg-green-100 text-green-700` | `dark:bg-green-900/30 dark:text-green-400` |
 | Badge (danger) | `bg-red-100 text-red-700` | `dark:bg-red-900/30 dark:text-red-400` |
 | Badge (warning) | `bg-yellow-100 text-yellow-700` | `dark:bg-yellow-900/30 dark:text-yellow-400` |
-| Badge (info) | `bg-blue-100 text-blue-700` | `dark:bg-blue-900/30 dark:text-blue-400` |
-| Toast background | `bg-white border-slate-200` | `dark:bg-slate-800 dark:border-slate-600` |
+| Badge (info) | `bg-[#D4AF37] text-gold` | `dark:bg-[#D4AF37]/30 dark:text-gold-hover` |
+| Toast background | `bg-white border-[#E8E0B8]` | `dark:bg-[#1E1E1E] dark:border-[#3A3A3A]` |
 
 ---
 
@@ -230,6 +230,6 @@ Accessibility
 
 [`FE-11`](./FE-11_Container_Module.md) &nbsp;→&nbsp; `FE-12` &nbsp;→&nbsp; **🚀 Production**
 
-*Management System · Frontend Phase Plans*
+*OpsPilot · Frontend Phase Plans*
 
 </div>

@@ -100,6 +100,6 @@ Color: filled = current/done, empty = upcoming
 
 [`FE-10`](./FE-10_Ring_Customer_Module.md) &nbsp;→&nbsp; `FE-11` &nbsp;→&nbsp; [`FE-12`](./FE-12_Polish_Dark_Mode_Release.md)
 
-*Management System · Frontend Phase Plans*
+*OpsPilot · Frontend Phase Plans*
 
 </div>

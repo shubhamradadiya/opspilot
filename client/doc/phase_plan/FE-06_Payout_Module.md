@@ -92,6 +92,6 @@ Payout management covering employee salary payouts, loan tracking, and PDF recei
 
 [`FE-05`](./FE-05_Attendance_Module.md) &nbsp;→&nbsp; `FE-06` &nbsp;→&nbsp; [`FE-07`](./FE-07_Inventory_Module.md)
 
-*Management System · Frontend Phase Plans*
+*OpsPilot · Frontend Phase Plans*
 
 </div>
