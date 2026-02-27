@@ -121,13 +121,13 @@ const ChangePassword: React.FC = () => {
   // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
     <AuthLayout>
-      <div className="w-full max-w-[400px] bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-xl shadow-lg shadow-slate-200/60 dark:shadow-black/40 border border-slate-200/80 dark:border-slate-700/80 p-8">
+      <div className="w-full max-w-[400px] bg-white/90 dark:bg-[#1E1E1E]/90 backdrop-blur-md rounded-xl shadow-lg shadow-[#E8E0B8]/60 dark:shadow-black/40 border border-[#E8E0B8]/80 dark:border-[#2E2E2E]/80 p-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-50 tracking-tight">
+          <h1 className="text-2xl font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] tracking-tight">
             Change password
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA] mt-1">
             Update your account password
           </p>
         </div>

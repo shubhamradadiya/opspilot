@@ -1,9 +1,10 @@
 /* ============================================================================
    INDEX.CSS — TAILWIND DIRECTIVES + GOOGLE FONTS
+   OpsPilot · Premium Gold Theme
    ============================================================================ */
 
-/* Google Fonts — Inter (UI) + JetBrains Mono (code/IDs) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Google Fonts — DM Sans (UI) + JetBrains Mono (code/IDs) */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* Tailwind CSS v4 */
 @import "tailwindcss";
@@ -17,15 +18,20 @@
 /* ── Base Layer ──────────────────────────────────────────────────────────────── */
 @layer base {
   body {
-    @apply font-sans text-sm antialiased;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    @apply text-sm antialiased;
     background-color: var(--color-bg-base);
     color: var(--color-text-primary);
     transition: background-color 150ms ease-out, color 150ms ease-out;
   }
+
+  code, kbd, samp, pre {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
 }
 
 /* ============================================================================
-   AUTH LAYOUT — Animated Background System
+   AUTH LAYOUT — Animated Background System (Gold Theme)
    Pure CSS: zero runtime JS, GPU-composited transforms only.
    ============================================================================ */
 
@@ -35,40 +41,39 @@
   min-height: 100vh;
   overflow: hidden;
 
-  /* Light mode: airy blue-slate gradient */
+  /* Light mode: warm cream/gold gradient */
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 55%),
-    linear-gradient(145deg, #EFF6FF 0%, #F1F5F9 40%, #F8FAFC 100%);
+    radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(240, 223, 160, 0.08) 0%, transparent 55%),
+    linear-gradient(145deg, #FDFBD4 0%, #F5F0D0 40%, #FDFBD4 100%);
 }
 
-/* Dark mode: deep navy */
+/* Dark mode: near-black with warm gold accents */
 .dark .auth-layout {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(99, 102, 241, 0.10) 0%, transparent 55%),
-    linear-gradient(145deg, #020617 0%, #0F172A 50%, #080E1B 100%);
+    radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(206, 137, 70, 0.08) 0%, transparent 55%),
+    linear-gradient(145deg, #121212 0%, #1E1E1E 50%, #121212 100%);
 }
 
-/* ── Floating orbs ───────────────────────────────────────────────────────── */
+/* ── Floating orbs (gold theme) ──────────────────────────────────────────── */
 .auth-orb {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  /* GPU compositing hints */
   will-change: transform, opacity;
   transform: translateZ(0);
 }
 
-/* Orb 1 — top-right, large blue */
+/* Orb 1 — top-right, large gold */
 .auth-orb-1 {
   width: 600px;
   height: 600px;
   top: -180px;
   right: -120px;
   background: radial-gradient(circle at center,
-    rgba(59, 130, 246, 0.18) 0%,
-    rgba(59, 130, 246, 0.06) 50%,
+    rgba(212, 175, 55, 0.18) 0%,
+    rgba(212, 175, 55, 0.06) 50%,
     transparent 70%);
   filter: blur(48px);
   animation: auth-orb-1 12s ease-in-out infinite;
@@ -76,20 +81,20 @@
 
 .dark .auth-orb-1 {
   background: radial-gradient(circle at center,
-    rgba(59, 130, 246, 0.30) 0%,
-    rgba(59, 130, 246, 0.10) 50%,
+    rgba(212, 175, 55, 0.25) 0%,
+    rgba(212, 175, 55, 0.08) 50%,
     transparent 70%);
 }
 
-/* Orb 2 — bottom-left, indigo */
+/* Orb 2 — bottom-left, warm gold */
 .auth-orb-2 {
   width: 500px;
   height: 500px;
   bottom: -140px;
   left: -100px;
   background: radial-gradient(circle at center,
-    rgba(99, 102, 241, 0.16) 0%,
-    rgba(99, 102, 241, 0.05) 50%,
+    rgba(206, 137, 70, 0.14) 0%,
+    rgba(206, 137, 70, 0.04) 50%,
     transparent 70%);
   filter: blur(56px);
   animation: auth-orb-2 16s ease-in-out infinite;
@@ -97,20 +102,20 @@
 
 .dark .auth-orb-2 {
   background: radial-gradient(circle at center,
-    rgba(99, 102, 241, 0.28) 0%,
-    rgba(99, 102, 241, 0.08) 50%,
+    rgba(206, 137, 70, 0.22) 0%,
+    rgba(206, 137, 70, 0.06) 50%,
     transparent 70%);
 }
 
-/* Orb 3 — center-right, smaller cyan accent */
+/* Orb 3 — center-right, subtle gold accent */
 .auth-orb-3 {
   width: 320px;
   height: 320px;
   top: 45%;
   right: 8%;
   background: radial-gradient(circle at center,
-    rgba(6, 182, 212, 0.10) 0%,
-    rgba(6, 182, 212, 0.03) 50%,
+    rgba(240, 223, 160, 0.12) 0%,
+    rgba(240, 223, 160, 0.04) 50%,
     transparent 70%);
   filter: blur(40px);
   animation: auth-orb-3 20s ease-in-out infinite;
@@ -118,8 +123,8 @@
 
 .dark .auth-orb-3 {
   background: radial-gradient(circle at center,
-    rgba(6, 182, 212, 0.20) 0%,
-    rgba(6, 182, 212, 0.06) 50%,
+    rgba(240, 223, 160, 0.18) 0%,
+    rgba(240, 223, 160, 0.05) 50%,
     transparent 70%);
 }
 
@@ -128,9 +133,9 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.30;
   background-image:
-    radial-gradient(circle, rgba(100, 116, 139, 0.25) 1px, transparent 1px);
+    radial-gradient(circle, rgba(212, 175, 55, 0.20) 1px, transparent 1px);
   background-size: 28px 28px;
   animation: auth-grid-drift 20s linear infinite;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
@@ -138,8 +143,531 @@
 }
 
 .dark .auth-grid {
-  opacity: 0.18;
+  opacity: 0.15;
   background-image:
-    radial-gradient(circle, rgba(148, 163, 184, 0.30) 1px, transparent 1px);
+    radial-gradient(circle, rgba(212, 175, 55, 0.25) 1px, transparent 1px);
 }
 
+/* ============================================================================
+   APP LAYOUT — Sidebar + Main content grid
+   ============================================================================ */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-bg-base);
+}
+
+.dark .app-layout {
+  background-color: #121212;
+}
+
+.app-main {
+  flex: 1;
+  margin-left: 256px;
+  transition: margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main--expanded {
+  margin-left: 64px;
+}
+
+.app-content {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+/* ============================================================================
+   SIDEBAR — Gold Theme
+   ============================================================================ */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 40;
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-right: 1px solid #E8E0B8;
+  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.dark .sidebar {
+  background: #1E1E1E;
+  border-right-color: #2E2E2E;
+}
+
+.sidebar--collapsed {
+  width: 64px;
+}
+
+/* ── Sidebar header ── */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.75rem;
+  height: 4rem;
+  border-bottom: 1px solid #E8E0B8;
+  flex-shrink: 0;
+}
+
+.dark .sidebar-header {
+  border-bottom-color: #2E2E2E;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sidebar-logo-img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.sidebar-logo-text {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #D4AF37;
+  white-space: nowrap;
+  letter-spacing: -0.025em;
+}
+
+/* Logo text stays gold in both modes */
+.dark .sidebar-logo-text {
+  color: #D4AF37;
+}
+
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.375rem;
+  color: #9A9A9A;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+}
+
+.sidebar-toggle:hover {
+  background: #F5F0D0;
+  color: #2A2A2A;
+}
+
+.dark .sidebar-toggle:hover {
+  background: #252525;
+  color: #F5F5F5;
+}
+
+/* ── Sidebar nav ── */
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.sidebar-bottom {
+  padding: 0.5rem;
+  border-top: 1px solid #E8E0B8;
+  flex-shrink: 0;
+}
+
+.dark .sidebar-bottom {
+  border-top-color: #2E2E2E;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #5A5A5A;
+  text-decoration: none;
+  transition: background-color 150ms ease, color 150ms ease;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidebar-link:hover {
+  background: #F5F0D0;
+  color: #2A2A2A;
+}
+
+.dark .sidebar-link {
+  color: #AAAAAA;
+}
+
+.dark .sidebar-link:hover {
+  background: #252525;
+  color: #F5F5F5;
+}
+
+/* Active nav item — gold accent */
+.sidebar-link--active {
+  background: #F0DFA0;
+  color: #2A2A2A;
+  border-left: 2px solid #D4AF37;
+}
+
+.sidebar-link--active:hover {
+  background: #E8D88A;
+  color: #2A2A2A;
+}
+
+.dark .sidebar-link--active {
+  background: rgba(42, 34, 0, 0.6);
+  color: #D4AF37;
+  border-left: 2px solid #D4AF37;
+}
+
+.dark .sidebar-link--active:hover {
+  background: rgba(42, 34, 0, 0.8);
+  color: #D4AF37;
+}
+
+/* Active icon is always gold */
+.sidebar-link--active .sidebar-link-icon {
+  color: #D4AF37;
+}
+
+.sidebar-link-icon {
+  flex-shrink: 0;
+}
+
+.sidebar-link-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================================
+   TOPBAR — Gold Theme
+   ============================================================================ */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+  padding: 0 1.5rem;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E8E0B8;
+  flex-shrink: 0;
+}
+
+.dark .topbar {
+  background: #1E1E1E;
+  border-bottom-color: #2E2E2E;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbar-hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+  color: #9A9A9A;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+  background: none;
+  border: none;
+}
+
+.topbar-hamburger:hover {
+  background: #F5F0D0;
+  color: #2A2A2A;
+}
+
+.dark .topbar-hamburger:hover {
+  background: #252525;
+  color: #F5F5F5;
+}
+
+/* ── User info ── */
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.topbar-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  flex-shrink: 0;
+  outline: 2px solid #D4AF37;
+  outline-offset: 1px;
+}
+
+.topbar-avatar--initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #D4AF37, #CE8946);
+  color: #2A2A2A;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.topbar-user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.topbar-user-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #2A2A2A;
+}
+
+.dark .topbar-user-name {
+  color: #F5F5F5;
+}
+
+/* ── Role badges — per Brand badge color map ── */
+.topbar-badge {
+  display: inline-block;
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.0625rem 0.375rem;
+  border-radius: 9999px;
+}
+
+/* Admin badge — purple per brand spec */
+.topbar-badge--admin {
+  background: #EDD6F5;
+  color: #6A3A8A;
+}
+
+.dark .topbar-badge--admin {
+  background: rgba(106, 58, 138, 0.2);
+  color: #9A6ABA;
+}
+
+/* User badge — subtle cream */
+.topbar-badge--user {
+  background: #F0EDD0;
+  color: #5A5A5A;
+}
+
+.dark .topbar-badge--user {
+  background: rgba(90, 90, 90, 0.2);
+  color: #AAAAAA;
+}
+
+/* ── Logout button ── */
+.topbar-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+  color: #9A9A9A;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+  background: none;
+  border: none;
+}
+
+.topbar-logout:hover {
+  background: #FADADD;
+  color: #C0392B;
+}
+
+.dark .topbar-logout:hover {
+  background: rgba(192, 57, 43, 0.15);
+  color: #E05A4A;
+}
+
+/* ============================================================================
+   BREADCRUMB — Gold Theme
+   ============================================================================ */
+.breadcrumb-list {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.breadcrumb-separator {
+  color: #9A9A9A;
+}
+
+.breadcrumb-link {
+  font-size: 0.8125rem;
+  color: #5A5A5A;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.breadcrumb-link:hover {
+  color: #D4AF37;
+}
+
+.dark .breadcrumb-link {
+  color: #AAAAAA;
+}
+
+.dark .breadcrumb-link:hover {
+  color: #D4AF37;
+}
+
+.breadcrumb-link--home {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-current {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #2A2A2A;
+}
+
+.dark .breadcrumb-current {
+  color: #F5F5F5;
+}
+
+/* ============================================================================
+   NOT FOUND PAGE — Gold Theme
+   ============================================================================ */
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 4rem);
+  padding: 2rem;
+}
+
+.not-found-content {
+  text-align: center;
+  max-width: 24rem;
+}
+
+.not-found-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 9999px;
+  background: #F0DFA0;
+  color: #D4AF37;
+  margin-bottom: 1.5rem;
+}
+
+.dark .not-found-icon {
+  background: rgba(212, 175, 55, 0.15);
+  color: #D4AF37;
+}
+
+.not-found-title {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #2A2A2A;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.dark .not-found-title {
+  color: #F5F5F5;
+}
+
+.not-found-subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #5A5A5A;
+  margin-top: 0.5rem;
+}
+
+.dark .not-found-subtitle {
+  color: #AAAAAA;
+}
+
+.not-found-description {
+  font-size: 0.875rem;
+  color: #9A9A9A;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.dark .not-found-description {
+  color: #666666;
+}
+
+/* ============================================================================
+   RESPONSIVE — Mobile
+   ============================================================================ */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 50;
+  }
+
+  .sidebar:not(.sidebar--collapsed) {
+    transform: translateX(0);
+    width: 256px;
+  }
+
+  .sidebar--collapsed {
+    transform: translateX(-100%);
+  }
+
+  .app-main {
+    margin-left: 0 !important;
+  }
+
+  .topbar-user-info {
+    display: none;
+  }
+}

@@ -21,17 +21,23 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 // ============================================================================
-// CONSTANTS
+// CONSTANTS — Brand Design Guidelines (Gold Theme)
 // ============================================================================
+
+/**
+ * Variant classes per BRAND_DESIGN_GUIDELINES.md §7 Component Rules.
+ * Primary uses gold (#D4AF37) with dark text for contrast.
+ * No shadows on buttons — forbidden per brand spec.
+ */
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
-    'bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white dark:bg-blue-600 dark:hover:bg-blue-500 dark:active:bg-blue-400',
+    'bg-[#D4AF37] hover:bg-[#CE8946] active:bg-[#A8892B] text-[#2A2A2A] dark:text-[#121212]',
   secondary:
-    'bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 active:bg-slate-100 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-700 dark:active:bg-slate-600',
+    'bg-white border border-[#D4AF37] text-[#D4AF37] hover:bg-[#FDFBD4] dark:bg-[#1E1E1E] dark:border-[#D4AF37] dark:text-[#D4AF37] dark:hover:bg-[#2A2A2A]',
   ghost:
-    'bg-transparent text-slate-700 hover:bg-slate-100 active:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800 dark:active:bg-slate-700',
+    'bg-transparent text-[#5A5A5A] hover:bg-[#F5F0D0] active:bg-[#E8E0B8] dark:text-[#AAAAAA] dark:hover:bg-[#252525] dark:active:bg-[#2E2E2E]',
   danger:
-    'bg-red-600 hover:bg-red-700 active:bg-red-800 text-white dark:bg-red-700 dark:hover:bg-red-600 dark:active:bg-red-500',
+    'bg-[#C0392B] hover:bg-[#A0302A] active:bg-[#8A2820] text-white',
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {
@@ -69,7 +75,7 @@ const Button: React.FC<ButtonProps> = ({
         clsx(
           'inline-flex items-center justify-center gap-2 font-medium',
           'transition-colors duration-100',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:focus-visible:ring-blue-400',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2',
           'disabled:opacity-40 disabled:cursor-not-allowed',
           VARIANT_CLASSES[variant],
           SIZE_CLASSES[size],

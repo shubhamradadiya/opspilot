@@ -71,7 +71,7 @@ const Login: React.FC = () => {
   // ── EFFECTS ────────────────────────────────────────────────────────────────
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(APP_ROUTES.DASHBOARD.ADMIN, { replace: true });
+      navigate(APP_ROUTES.DASHBOARD, { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
@@ -87,7 +87,7 @@ const Login: React.FC = () => {
       const result = await dispatch(loginThunk({ email: data.email, password: data.password }));
       if (loginThunk.fulfilled.match(result)) {
         toast.success('Welcome back!');
-        navigate(APP_ROUTES.DASHBOARD.ADMIN, { replace: true });
+        navigate(APP_ROUTES.DASHBOARD, { replace: true });
       } else {
         toast.error(String(result.payload) || 'Login failed');
       }
@@ -103,14 +103,14 @@ const Login: React.FC = () => {
   // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
     <AuthLayout>
-      <div className="w-full max-w-[400px] bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-xl shadow-lg shadow-slate-200/60 dark:shadow-black/40 border border-slate-200/80 dark:border-slate-700/80 p-8">
+      <div className="w-full max-w-[400px] bg-white/90 dark:bg-[#1E1E1E]/90 backdrop-blur-md rounded-xl shadow-lg shadow-[#E8E0B8]/60 dark:shadow-black/40 border border-[#E8E0B8]/80 dark:border-[#2E2E2E]/80 p-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-50 tracking-tight">
+          <h1 className="text-2xl font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] tracking-tight">
             Sign in
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            ApexTrack
+          <p className="text-sm text-[#D4AF37] font-medium mt-1">
+            OpsPilot
           </p>
         </div>
 
@@ -153,15 +153,15 @@ const Login: React.FC = () => {
               <input
                 {...register('rememberMe')}
                 type="checkbox"
-                className="h-4 w-4 rounded accent-blue-600"
+                className="h-4 w-4 rounded accent-[#D4AF37]"
               />
-              <span className="text-sm text-slate-600 dark:text-slate-400">
+              <span className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA]">
                 Remember me
               </span>
             </label>
             <Link
               to={APP_ROUTES.AUTH.FORGOT_PASSWORD}
-              className="text-sm text-blue-700 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+              className="text-sm text-[#D4AF37] hover:text-[#CE8946] dark:text-[#D4AF37] dark:hover:text-[#F0DFA0] transition-colors"
             >
               Forgot password?
             </Link>

@@ -50,20 +50,24 @@ const OtpInput: React.FC<OtpInputProps> = ({
 
   const hasError = useMemo(() => !!error, [error]);
 
+  /**
+   * OTP cell styling per BRAND_DESIGN_GUIDELINES.md §7 — Inputs.
+   * Focus ring: gold (#D4AF37); Error: danger (#C0392B).
+   */
   const cellClasses = useMemo(
     () =>
       twMerge(
         clsx(
           'h-11 w-10 text-center text-base font-semibold rounded-md border',
-          'bg-white text-slate-900',
+          'bg-white text-[#2A2A2A]',
           'transition-colors duration-100',
           'focus:outline-none focus:ring-2 focus:border-transparent',
-          'disabled:opacity-50 disabled:cursor-not-allowed',
-          'dark:bg-slate-800 dark:text-slate-50',
+          'disabled:opacity-40 disabled:cursor-not-allowed',
+          'dark:bg-[#1E1E1E] dark:text-[#F5F5F5]',
           {
-            'border-slate-300 focus:ring-blue-600 dark:border-slate-600 dark:focus:ring-blue-400':
+            'border-[#E8E0B8] focus:ring-[#D4AF37] dark:border-[#2E2E2E] dark:focus:ring-[#D4AF37]':
               !hasError,
-            'border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:ring-red-400':
+            'border-[#C0392B] focus:ring-[#C0392B] dark:border-[#C0392B] dark:focus:ring-[#E05A4A]':
               hasError,
           },
         ),
@@ -131,7 +135,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
         ))}
       </div>
       {error && (
-        <p role="alert" className="text-xs text-red-600 dark:text-red-400 mt-1">
+        <p role="alert" className="text-xs text-[#C0392B] dark:text-[#E05A4A] mt-1">
           {error}
         </p>
       )}

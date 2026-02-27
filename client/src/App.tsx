@@ -1,111 +1,153 @@
 // ============================================================================
 // IMPORTS
 // ============================================================================
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
-import { useAppSelector } from '@/hooks/useRedux';
-import { selectIsAuthenticated } from '@/store/auth/auth.slice';
+import { useAppDispatch } from '@/hooks/useRedux';
+import { useAuth } from '@/hooks/useAuth';
+import { getMeThunk } from '@/store/auth/auth.thunk';
 import { APP_ROUTES } from '@/utils/routes';
 import { Spinner } from '@/components/ui';
 
 // ============================================================================
-// LAZY IMPORTS — Pages
+// LAZY IMPORTS — Guards
+// ============================================================================
+const AuthRoute = lazy(() => import('@/components/guards/AuthRoute'));
+const AdminRoute = lazy(() => import('@/components/guards/AdminRoute'));
+const GuestRoute = lazy(() => import('@/components/guards/GuestRoute'));
+
+// ============================================================================
+// LAZY IMPORTS — Layout
+// ============================================================================
+const AppLayout = lazy(() => import('@/components/layout/AppLayout'));
+
+// ============================================================================
+// LAZY IMPORTS — Auth Pages
 // ============================================================================
 const Login = lazy(() => import('@/pages/auth/Login'));
 const ForgotPassword = lazy(() => import('@/pages/auth/ForgotPassword'));
 const ChangePassword = lazy(() => import('@/pages/auth/ChangePassword'));
 
 // ============================================================================
-// HELPER COMPONENTS
+// LAZY IMPORTS — App Pages (placeholders for future phases)
+// ============================================================================
+const NotFound = lazy(() => import('@/pages/NotFound'));
+
+// ============================================================================
+// CONSTANTS
 // ============================================================================
 
-/** Require that user be authenticated to access route */
-const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  if (!isAuthenticated) {
-    return <Navigate to={APP_ROUTES.AUTH.LOGIN} replace />;
-  }
-  return <>{children}</>;
+/** Placeholder page factory — renders a centered title for modules not yet built */
+const createPlaceholder = (title: string): React.FC => {
+  const Placeholder: React.FC = () => (
+    <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] p-8">
+      <div className="text-center">
+        <h1 className="text-2xl font-semibold text-[#2A2A2A] dark:text-[#F5F5F5]">{title}</h1>
+        <p className="text-[#9A9A9A] dark:text-[#666666] mt-2">Coming soon</p>
+      </div>
+    </div>
+  );
+  Placeholder.displayName = `${title}Placeholder`;
+  return Placeholder;
 };
 
-/** Redirect authenticated users away from auth pages */
-const RedirectIfAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  if (isAuthenticated) {
-    return <Navigate to={APP_ROUTES.DASHBOARD.ADMIN} replace />;
-  }
-  return <>{children}</>;
-};
+const DashboardPage = createPlaceholder('Dashboard');
+const EmployeesPage = createPlaceholder('Employees');
+const AttendancePage = createPlaceholder('Attendance');
+const PayoutsPage = createPlaceholder('Payouts');
+const InventoryPage = createPlaceholder('Inventory');
+const ExpensesPage = createPlaceholder('Expenses');
+const WalkInPage = createPlaceholder('Walk-In Customers');
+const RingPage = createPlaceholder('Ring Customers');
+const ContainersPage = createPlaceholder('Containers');
+const SettingsPage = createPlaceholder('Settings');
 
+// ============================================================================
+// HELPER COMPONENTS
+// ============================================================================
 const PageFallback: React.FC = () => (
-  <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
-    <Spinner size="lg" className="text-blue-600 dark:text-blue-400" />
+  <div className="min-h-screen flex items-center justify-center bg-[#FDFBD4] dark:bg-[#121212]">
+    <Spinner size="lg" className="text-[#D4AF37]" />
   </div>
 );
+
+// ============================================================================
+// SESSION BOOTSTRAP COMPONENT
+// ============================================================================
+
+/**
+ * Dispatches getMeThunk on mount to restore the user session from the stored token.
+ * Wraps BrowserRouter so hooks like useNavigate are available in children.
+ */
+const AppRoutes: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { isAdmin, sessionRestored, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    dispatch(getMeThunk());
+  }, [dispatch]);
+
+  return (
+    <Routes>
+      {/* Root → redirect based on role */}
+      <Route
+        path="/"
+        element={
+          !sessionRestored ? (
+            <PageFallback />
+          ) : isAuthenticated ? (
+            <Navigate to={isAdmin ? APP_ROUTES.DASHBOARD : APP_ROUTES.ATTENDANCE} replace />
+          ) : (
+            <Navigate to={APP_ROUTES.AUTH.LOGIN} replace />
+          )
+        }
+      />
+
+      {/* ── Guest routes (login, forgot password) ── */}
+      <Route element={<GuestRoute />}>
+        <Route path={APP_ROUTES.AUTH.LOGIN} element={<Login />} />
+        <Route path={APP_ROUTES.AUTH.FORGOT_PASSWORD} element={<ForgotPassword />} />
+      </Route>
+
+      {/* ── Authenticated routes (inside AppLayout) ── */}
+      {/* <Route element={<AuthRoute />}> */}
+        <Route element={<AppLayout />}>
+          {/* Admin-only routes */}
+          <Route element={<AdminRoute />}>
+            <Route path={APP_ROUTES.DASHBOARD} element={<DashboardPage />} />
+            <Route path={APP_ROUTES.EMPLOYEES.LIST} element={<EmployeesPage />} />
+            <Route path={APP_ROUTES.EMPLOYEES.CREATE} element={<EmployeesPage />} />
+            <Route path={APP_ROUTES.EMPLOYEES.EDIT} element={<EmployeesPage />} />
+          </Route>
+
+          {/* All authenticated users */}
+          <Route path={APP_ROUTES.ATTENDANCE} element={<AttendancePage />} />
+          <Route path={APP_ROUTES.PAYOUTS} element={<PayoutsPage />} />
+          <Route path={APP_ROUTES.INVENTORY} element={<InventoryPage />} />
+          <Route path={APP_ROUTES.EXPENSES} element={<ExpensesPage />} />
+          <Route path={APP_ROUTES.WALK_IN_CUSTOMERS} element={<WalkInPage />} />
+          <Route path={APP_ROUTES.RING_CUSTOMERS} element={<RingPage />} />
+          <Route path={APP_ROUTES.CONTAINERS} element={<ContainersPage />} />
+          <Route path={APP_ROUTES.SETTINGS} element={<SettingsPage />} />
+          <Route path={APP_ROUTES.AUTH.CHANGE_PASSWORD} element={<ChangePassword />} />
+
+          {/* 404 fallback (inside layout) */}
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      {/* </Route> */}
+    </Routes>
+  );
+};
 
 // ============================================================================
 // MAIN COMPONENT
 // ============================================================================
 const App: React.FC = () => {
-  // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
     <BrowserRouter>
       <Suspense fallback={<PageFallback />}>
-        <Routes>
-          {/* Root → redirect to dashboard or login */}
-          <Route path="/" element={<Navigate to={APP_ROUTES.DASHBOARD.ADMIN} replace />} />
-
-          {/* Auth routes — redirect away if already authenticated */}
-          <Route
-            path={APP_ROUTES.AUTH.LOGIN}
-            element={
-              <RedirectIfAuth>
-                <Login />
-              </RedirectIfAuth>
-            }
-          />
-          <Route
-            path={APP_ROUTES.AUTH.FORGOT_PASSWORD}
-            element={
-              <RedirectIfAuth>
-                <ForgotPassword />
-              </RedirectIfAuth>
-            }
-          />
-
-          {/* Protected routes */}
-          <Route
-            path={APP_ROUTES.AUTH.CHANGE_PASSWORD}
-            element={
-              <RequireAuth>
-                <ChangePassword />
-              </RequireAuth>
-            }
-          />
-
-          {/* Dashboard placeholder — will be replaced in FE-02 */}
-          <Route
-            path={APP_ROUTES.DASHBOARD.ADMIN}
-            element={
-              <RequireAuth>
-                <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center">
-                  <div className="text-center">
-                    <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
-                      Dashboard
-                    </h1>
-                    <p className="text-slate-500 dark:text-slate-400 mt-2">
-                      Coming soon — Phase FE-02
-                    </p>
-                  </div>
-                </div>
-              </RequireAuth>
-            }
-          />
-
-          {/* 404 fallback */}
-          <Route path="*" element={<Navigate to={APP_ROUTES.AUTH.LOGIN} replace />} />
-        </Routes>
+        <AppRoutes />
       </Suspense>
 
       {/* Toast notifications */}

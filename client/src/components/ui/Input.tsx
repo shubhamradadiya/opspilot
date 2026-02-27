@@ -41,20 +41,25 @@ const Input: React.FC<InputProps> = ({
   // ── COMPUTED VALUES ────────────────────────────────────────────────────────
   const hasError = useMemo(() => !!error, [error]);
 
+  /**
+   * Input styling per BRAND_DESIGN_GUIDELINES.md §7 Component Rules — Inputs.
+   * Focus ring: gold (#D4AF37); Error: danger (#C0392B).
+   * No shadows on inputs — forbidden per brand spec.
+   */
   const inputClasses = useMemo(
     () =>
       twMerge(
         clsx(
           'h-9 w-full px-3 py-2 text-sm rounded-md border',
-          'bg-white text-slate-900 placeholder:text-slate-400',
+          'bg-white text-[#2A2A2A] placeholder:text-[#9A9A9A]',
           'transition-colors duration-100',
           'focus:outline-none focus:ring-2 focus:border-transparent',
-          'disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-50',
-          'dark:bg-slate-800 dark:text-slate-50 dark:placeholder:text-slate-500',
+          'disabled:opacity-40 disabled:cursor-not-allowed disabled:bg-[#F5F0D0]',
+          'dark:bg-[#1E1E1E] dark:text-[#F5F5F5] dark:placeholder:text-[#666666]',
           {
-            'border-slate-300 focus:ring-blue-600 dark:border-slate-600 dark:focus:ring-blue-400':
+            'border-[#E8E0B8] focus:ring-[#D4AF37] dark:border-[#2E2E2E] dark:focus:ring-[#D4AF37]':
               !hasError,
-            'border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:ring-red-400':
+            'border-[#C0392B] focus:ring-[#C0392B] dark:border-[#C0392B] dark:focus:ring-[#E05A4A]':
               hasError,
             'pl-9': !!leftIcon,
             'pr-9': !!rightIcon,
@@ -71,14 +76,14 @@ const Input: React.FC<InputProps> = ({
       {label && (
         <label
           htmlFor={id}
-          className="text-sm font-medium text-slate-700 dark:text-slate-300"
+          className="text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA]"
         >
           {label}
         </label>
       )}
       <div className="relative flex items-center">
         {leftIcon && (
-          <span className="absolute left-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+          <span className="absolute left-3 flex items-center pointer-events-none text-[#9A9A9A] dark:text-[#666666]">
             {leftIcon}
           </span>
         )}
@@ -93,7 +98,7 @@ const Input: React.FC<InputProps> = ({
           }
         />
         {rightIcon && (
-          <span className="absolute right-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+          <span className="absolute right-3 flex items-center pointer-events-none text-[#9A9A9A] dark:text-[#666666]">
             {rightIcon}
           </span>
         )}
@@ -102,13 +107,13 @@ const Input: React.FC<InputProps> = ({
         <p
           id={errorId}
           role="alert"
-          className="text-xs text-red-600 dark:text-red-400"
+          className="text-xs text-[#C0392B] dark:text-[#E05A4A]"
         >
           {error}
         </p>
       )}
       {!error && helperText && (
-        <p id={helperId} className="text-xs text-slate-500 dark:text-slate-400">
+        <p id={helperId} className="text-xs text-[#9A9A9A] dark:text-[#666666]">
           {helperText}
         </p>
       )}

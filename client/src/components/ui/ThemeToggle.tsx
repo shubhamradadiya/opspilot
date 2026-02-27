@@ -26,13 +26,12 @@ const ThemeToggle: React.FC = () => {
       className="
         inline-flex items-center justify-center
         h-9 w-9 rounded-lg
-        text-slate-600 dark:text-slate-400
-        hover:bg-slate-100 dark:hover:bg-slate-800
-        active:bg-slate-200 dark:active:bg-slate-700
+        text-[#5A5A5A] dark:text-[#AAAAAA]
+        hover:bg-[#F5F0D0] dark:hover:bg-[#252525]
+        active:bg-[#E8E0B8] dark:active:bg-[#2E2E2E]
         transition-colors duration-100
         focus-visible:outline-none focus-visible:ring-2
-        focus-visible:ring-blue-600 focus-visible:ring-offset-2
-        dark:focus-visible:ring-blue-400
+        focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2
       "
     >
       {theme === 'dark' ? (

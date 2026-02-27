@@ -165,12 +165,12 @@ const ForgotPassword: React.FC = () => {
             <div
               className={`h-1.5 flex-1 rounded-full transition-colors duration-150 ${
                 step <= fpStep
-                  ? 'bg-blue-600 dark:bg-blue-400'
-                  : 'bg-slate-200 dark:bg-slate-700'
+                  ? 'bg-[#D4AF37]'
+                  : 'bg-[#E8E0B8] dark:bg-[#2E2E2E]'
               }`}
             />
             {step < 3 && (
-              <ChevronRight className="w-3 h-3 text-slate-300 dark:text-slate-600 shrink-0" aria-hidden="true" />
+              <ChevronRight className="w-3 h-3 text-[#9A9A9A] dark:text-[#666666] shrink-0" aria-hidden="true" />
             )}
           </React.Fragment>
         ))}
@@ -182,11 +182,11 @@ const ForgotPassword: React.FC = () => {
   // ── RENDER - Main ──────────────────────────────────────────────────────────
   return (
     <AuthLayout>
-      <div className="w-full max-w-[400px] bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-xl shadow-lg shadow-slate-200/60 dark:shadow-black/40 border border-slate-200/80 dark:border-slate-700/80 p-8">
+      <div className="w-full max-w-[400px] bg-white/90 dark:bg-[#1E1E1E]/90 backdrop-blur-md rounded-xl shadow-lg shadow-[#E8E0B8]/60 dark:shadow-black/40 border border-[#E8E0B8]/80 dark:border-[#2E2E2E]/80 p-8">
         {/* Back to login */}
         <Link
           to={APP_ROUTES.AUTH.LOGIN}
-          className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 mb-6 transition-colors"
+          className="inline-flex items-center gap-1 text-sm text-[#9A9A9A] hover:text-[#D4AF37] dark:text-[#666666] dark:hover:text-[#D4AF37] mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" aria-hidden="true" />
           Back to sign in
@@ -194,10 +194,10 @@ const ForgotPassword: React.FC = () => {
 
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-50 tracking-tight">
+          <h1 className="text-2xl font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] tracking-tight">
             {stepInfo.title}
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA] mt-1">
             {stepInfo.subtitle}
           </p>
         </div>
@@ -235,9 +235,9 @@ const ForgotPassword: React.FC = () => {
         {fpStep === 2 && (
           <div className="flex flex-col gap-4">
             <div>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+              <p className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA] mb-3">
                 Code sent to{' '}
-                <span className="font-medium text-slate-900 dark:text-slate-100">
+                <span className="font-medium text-[#2A2A2A] dark:text-[#F5F5F5]">
                   {fpEmail}
                 </span>
               </p>
