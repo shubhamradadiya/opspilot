@@ -36,6 +36,11 @@ const AdminDashboard = lazy(() => import('@/pages/dashboard/AdminDashboard'));
 const EmployeeList = lazy(() => import('@/pages/employees/EmployeeList'));
 const CreateEmployee = lazy(() => import('@/pages/employees/CreateEmployee'));
 const EditEmployee = lazy(() => import('@/pages/employees/EditEmployee'));
+const AttendanceDashboard = lazy(() => import('@/pages/attendance/AttendanceDashboard'));
+const AttendanceLogs = lazy(() => import('@/pages/attendance/AttendanceLogs'));
+const AttendanceTimestamps = lazy(() => import('@/pages/attendance/AttendanceTimestamps'));
+const PayoutList = lazy(() => import('@/pages/payouts/PayoutList'));
+const CreatePayout = lazy(() => import('@/pages/payouts/CreatePayout'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 // ============================================================================
@@ -57,8 +62,6 @@ const createPlaceholder = (title: string): React.FC => {
 };
 
 const DashboardPage = AdminDashboard;
-const AttendancePage = createPlaceholder('Attendance');
-const PayoutsPage = createPlaceholder('Payouts');
 const InventoryPage = createPlaceholder('Inventory');
 const ExpensesPage = createPlaceholder('Expenses');
 const WalkInPage = createPlaceholder('Walk-In Customers');
@@ -100,7 +103,7 @@ const AppRoutes: React.FC = () => {
           !sessionRestored ? (
             <PageFallback />
           ) : isAuthenticated ? (
-            <Navigate to={isAdmin ? APP_ROUTES.DASHBOARD : APP_ROUTES.ATTENDANCE} replace />
+            <Navigate to={isAdmin ? APP_ROUTES.DASHBOARD : APP_ROUTES.ATTENDANCE.DASHBOARD} replace />
           ) : (
             <Navigate to={APP_ROUTES.AUTH.LOGIN} replace />
           )
@@ -124,9 +127,18 @@ const AppRoutes: React.FC = () => {
             <Route path={APP_ROUTES.EMPLOYEES.EDIT} element={<EditEmployee />} />
           </Route>
 
-          {/* All authenticated users */}
-          <Route path={APP_ROUTES.ATTENDANCE} element={<AttendancePage />} />
-          <Route path={APP_ROUTES.PAYOUTS} element={<PayoutsPage />} />
+          {/* Attendance — all users */}
+          <Route path={APP_ROUTES.ATTENDANCE.DASHBOARD} element={<AttendanceDashboard />} />
+          <Route path={APP_ROUTES.ATTENDANCE.LOGS} element={<AttendanceLogs />} />
+
+          {/* Payouts — all users */}
+          <Route path={APP_ROUTES.PAYOUTS.LIST} element={<PayoutList />} />
+
+          {/* Attendance timestamps + Create payout — admin only */}
+          <Route element={<AdminRoute />}>
+            <Route path={APP_ROUTES.ATTENDANCE.TIMESTAMPS} element={<AttendanceTimestamps />} />
+            <Route path={APP_ROUTES.PAYOUTS.CREATE} element={<CreatePayout />} />
+          </Route>
           <Route path={APP_ROUTES.INVENTORY} element={<InventoryPage />} />
           <Route path={APP_ROUTES.EXPENSES} element={<ExpensesPage />} />
           <Route path={APP_ROUTES.WALK_IN_CUSTOMERS} element={<WalkInPage />} />

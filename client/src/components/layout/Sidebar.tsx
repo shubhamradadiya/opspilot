@@ -44,9 +44,9 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', path: APP_ROUTES.DASHBOARD, icon: LayoutDashboard, adminOnly: true },
   { label: 'Employees', path: APP_ROUTES.EMPLOYEES.LIST, icon: Users, adminOnly: true },
 
-  // All users
-  { label: 'Attendance', path: APP_ROUTES.ATTENDANCE, icon: Clock },
-  { label: 'Payouts', path: APP_ROUTES.PAYOUTS, icon: Wallet },
+  // All users (feature-flag guarded)
+  { label: 'Attendance', path: APP_ROUTES.ATTENDANCE.DASHBOARD, icon: Clock, featureFlag: 'isClockInClockOutEnabled' },
+  { label: 'Payouts', path: APP_ROUTES.PAYOUTS.LIST, icon: Wallet, featureFlag: 'isPayoutEnabled' },
 
   // Feature-flagged
   { label: 'Inventory', path: APP_ROUTES.INVENTORY, icon: Package, featureFlag: 'isInventoryEnabled' },
