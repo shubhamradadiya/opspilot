@@ -33,6 +33,9 @@ const ChangePassword = lazy(() => import('@/pages/auth/ChangePassword'));
 // LAZY IMPORTS — App Pages
 // ============================================================================
 const AdminDashboard = lazy(() => import('@/pages/dashboard/AdminDashboard'));
+const EmployeeList = lazy(() => import('@/pages/employees/EmployeeList'));
+const CreateEmployee = lazy(() => import('@/pages/employees/CreateEmployee'));
+const EditEmployee = lazy(() => import('@/pages/employees/EditEmployee'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 // ============================================================================
@@ -54,7 +57,6 @@ const createPlaceholder = (title: string): React.FC => {
 };
 
 const DashboardPage = AdminDashboard;
-const EmployeesPage = createPlaceholder('Employees');
 const AttendancePage = createPlaceholder('Attendance');
 const PayoutsPage = createPlaceholder('Payouts');
 const InventoryPage = createPlaceholder('Inventory');
@@ -117,9 +119,9 @@ const AppRoutes: React.FC = () => {
           {/* Admin-only routes */}
           <Route element={<AdminRoute />}>
             <Route path={APP_ROUTES.DASHBOARD} element={<DashboardPage />} />
-            <Route path={APP_ROUTES.EMPLOYEES.LIST} element={<EmployeesPage />} />
-            <Route path={APP_ROUTES.EMPLOYEES.CREATE} element={<EmployeesPage />} />
-            <Route path={APP_ROUTES.EMPLOYEES.EDIT} element={<EmployeesPage />} />
+            <Route path={APP_ROUTES.EMPLOYEES.LIST} element={<EmployeeList />} />
+            <Route path={APP_ROUTES.EMPLOYEES.CREATE} element={<CreateEmployee />} />
+            <Route path={APP_ROUTES.EMPLOYEES.EDIT} element={<EditEmployee />} />
           </Route>
 
           {/* All authenticated users */}

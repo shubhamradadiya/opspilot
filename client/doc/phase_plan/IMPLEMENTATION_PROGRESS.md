@@ -50,7 +50,7 @@
 | FE-01 | Project Setup & Auth UI | `✅` | 2026-02-27 | 2026-02-28 | Gold/cream theme applied |
 | FE-02 | Auth Integration & App Shell | `✅` | 2026-02-27 | 2026-02-28 | AuthRoute enabled, OpsPilot branding |
 | FE-03 | Admin Dashboard | `✅` | 2026-02-28 | 2026-02-28 | Recharts charts, 5-endpoint aggregation |
-| FE-04 | Employee Management | `⬜` | — | — | — |
+| FE-04 | Employee Management | `✅` | 2026-02-28 | 2026-02-28 | Full CRUD, optimistic toggle, Zod forms |
 | FE-05 | Attendance Module | `⬜` | — | — | — |
 | FE-06 | Payout Module | `⬜` | — | — | — |
 | FE-07 | Inventory Module | `⬜` | — | — | — |
@@ -68,7 +68,7 @@
 FE-01  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Project Setup & Auth UI
 FE-02  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Auth Integration & App Shell
 FE-03  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Admin Dashboard
-FE-04  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Employee Management
+FE-04  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Employee Management
 FE-05  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Attendance Module
 FE-06  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Payout Module
 FE-07  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Inventory Module

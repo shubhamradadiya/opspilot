@@ -59,9 +59,9 @@ export class AuthService {
     let user: User | null = null;
     if (email) {
       user = await this.userService.findByEmail(email);
-      if (user?.role !== UserRoles.ADMIN) {
-        throw new BadRequestException(this.i18n.t('exception.EMAIL_LOGIN_NOT_ALLOWED'));
-      }
+      // if (user?.role !== UserRoles.ADMIN) {
+      //   throw new BadRequestException(this.i18n.t('exception.EMAIL_LOGIN_NOT_ALLOWED'));
+      // }
     } else if (phone && countryCode && isoCode) {
       user = await this.userService.findByPhone(phone, countryCode, isoCode);
     }
@@ -71,6 +71,7 @@ export class AuthService {
     if (user.isActive === false) {
       throw new BadRequestException(this.i18n.t('exception.ACCOUNT_DISABLED'));
     }
+
 
     if (!comparePassword(password, user.password)) {
       throw new ConflictException(this.i18n.t('exception.INVALID_PASSWORD'));
