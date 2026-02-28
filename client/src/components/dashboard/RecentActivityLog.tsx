@@ -71,8 +71,8 @@ const RecentActivityLog: React.FC<RecentActivityLogProps> = ({
           No recent activity
         </p>
       ) : (
-        <div className="space-y-3">
-          {entries.slice(0, 5).map((entry) => (
+        <div className="space-y-3 max-h-[320px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#E8E0B8] dark:scrollbar-thumb-[#2E2E2E]">
+          {entries.map((entry) => (
             <div
               key={entry.ilId}
               className="flex items-start gap-3 p-2 rounded-lg hover:bg-[#F5F0D0]/40 dark:hover:bg-[#252525] transition-colors"
@@ -86,12 +86,12 @@ const RecentActivityLog: React.FC<RecentActivityLogProps> = ({
               />
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-[#2A2A2A] dark:text-[#F5F5F5] leading-snug">
-                  {entry.description || entry.action}
+                  {entry.text}
                 </p>
                 <div className="flex items-center gap-2 mt-1">
-                  {entry.user?.fullName && (
+                  {(entry.user?.fullName || entry.user?.email) && (
                     <span className="text-xs font-medium text-[#D4AF37]">
-                      {entry.user.fullName}
+                      {entry.user?.fullName || entry.user?.email?.split('@')[0]}
                     </span>
                   )}
                   <span className="text-xs text-[#9A9A9A] dark:text-[#666666]">

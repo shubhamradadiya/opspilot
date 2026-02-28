@@ -83,12 +83,15 @@ const PayoutList: React.FC = () => {
   };
 
   // ── Flatten admin payouts for table ───────────────────────────────────────────
-  const adminFlatPayouts: IPayout[] = (allPayouts || []).flatMap((u) =>
-    (u.payouts || []).map((p) => ({
-      ...p,
-      user: { uid: u.userId, fullName: u.fullName, perHourRate: 0 },
-    })),
-  );
+  const adminFlatPayouts: IPayout[] = (allPayouts || []).map((u) => ({
+    uid: u.userId,
+    amount: u.totalAmount,
+    loanAmount: u.loanAmount,
+    paidAmount: u.totalAmount - u.loanAmount,
+    isPaid: ((u as any).isPaid) || false,
+    createdAt: '', // Handled as summary in the table
+    user: { uid: u.userId, fullName: u.fullName, perHourRate: (u as any).perHourRate || 0 },
+  }));
 
   // ── RENDER ────────────────────────────────────────────────────────────────────
   return (

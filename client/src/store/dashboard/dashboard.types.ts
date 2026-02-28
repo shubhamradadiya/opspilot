@@ -43,14 +43,12 @@ export interface IInventoryRecord {
   user?: { fullName: string };
 }
 
-/** Activity log entry from GET /api/v1/inventory/activity-logs */
 export interface IInventoryActivity {
   ilId: string;
-  action: string;
-  description: string;
+  text: string;
   createdAt: string;
   isRead: boolean;
-  user?: { fullName: string };
+  user?: { fullName: string; email?: string };
 }
 
 /** Expense record from GET /api/v1/expenses */

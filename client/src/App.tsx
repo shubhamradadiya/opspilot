@@ -41,6 +41,8 @@ const AttendanceLogs = lazy(() => import('@/pages/attendance/AttendanceLogs'));
 const AttendanceTimestamps = lazy(() => import('@/pages/attendance/AttendanceTimestamps'));
 const PayoutList = lazy(() => import('@/pages/payouts/PayoutList'));
 const CreatePayout = lazy(() => import('@/pages/payouts/CreatePayout'));
+const InventoryList = lazy(() => import('@/pages/inventory/InventoryList'));
+const ActivityLogs = lazy(() => import('@/pages/inventory/ActivityLogs'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 // ============================================================================
@@ -62,7 +64,6 @@ const createPlaceholder = (title: string): React.FC => {
 };
 
 const DashboardPage = AdminDashboard;
-const InventoryPage = createPlaceholder('Inventory');
 const ExpensesPage = createPlaceholder('Expenses');
 const WalkInPage = createPlaceholder('Walk-In Customers');
 const RingPage = createPlaceholder('Ring Customers');
@@ -139,7 +140,10 @@ const AppRoutes: React.FC = () => {
             <Route path={APP_ROUTES.ATTENDANCE.TIMESTAMPS} element={<AttendanceTimestamps />} />
             <Route path={APP_ROUTES.PAYOUTS.CREATE} element={<CreatePayout />} />
           </Route>
-          <Route path={APP_ROUTES.INVENTORY} element={<InventoryPage />} />
+          <Route path={APP_ROUTES.INVENTORY.LIST} element={<InventoryList />} />
+          <Route element={<AdminRoute />}>
+            <Route path={APP_ROUTES.INVENTORY.ACTIVITY_LOGS} element={<ActivityLogs />} />
+          </Route>
           <Route path={APP_ROUTES.EXPENSES} element={<ExpensesPage />} />
           <Route path={APP_ROUTES.WALK_IN_CUSTOMERS} element={<WalkInPage />} />
           <Route path={APP_ROUTES.RING_CUSTOMERS} element={<RingPage />} />

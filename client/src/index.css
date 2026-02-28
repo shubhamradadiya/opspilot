@@ -843,3 +843,38 @@
 .dark .gold-theme-calendar.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::after {
   border-bottom-color: #2E2E2E !important;
 }
+
+/* ============================================================================
+   CUSTOM SCROLLBARS — Tailwind v4 Compatibility
+   ============================================================================ */
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  /* Default track */
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Default thumb */
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #E8E0B8;
+    border-radius: 4px;
+  }
+
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #2E2E2E;
+  }
+
+  /* Hover state */
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #D4AF37;
+  }
+
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #CE8946;
+  }
+}
+

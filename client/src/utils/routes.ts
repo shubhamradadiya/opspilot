@@ -69,7 +69,10 @@ export const APP_ROUTES = {
     LIST: '/payouts',
     CREATE: '/payouts/create',
   },
-  INVENTORY: '/inventory',
+  INVENTORY: {
+    LIST: '/inventory',
+    ACTIVITY_LOGS: '/inventory/activity-logs',
+  },
   EXPENSES: '/expenses',
   WALK_IN_CUSTOMERS: '/walk-in-customers',
   RING_CUSTOMERS: '/ring-customers',

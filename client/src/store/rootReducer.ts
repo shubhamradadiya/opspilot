@@ -7,6 +7,7 @@ import dashboardReducer from './dashboard/dashboard.slice';
 import employeesReducer from './employees/employees.slice';
 import { attendanceReducer } from './attendance/attendance.slice';
 import { payoutsReducer } from './payouts/payouts.slice';
+import inventoryReducer from './inventory/inventory.slice';
 
 // ============================================================================
 // ROOT REDUCER
@@ -17,6 +18,7 @@ export const rootReducer = combineReducers({
   employees: employeesReducer,
   attendance: attendanceReducer,
   payouts: payoutsReducer,
+  inventory: inventoryReducer,
 });
 
 

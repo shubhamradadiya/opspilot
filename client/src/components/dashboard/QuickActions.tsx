@@ -24,7 +24,7 @@ const ACTIONS = [
   {
     label: 'Add Inventory',
     icon: PackagePlus,
-    path: APP_ROUTES.INVENTORY,
+    path: APP_ROUTES.INVENTORY.LIST,
     color: 'bg-[#D4F5E0] dark:bg-[rgba(45,122,79,0.15)] text-[#2D7A4F] dark:text-[#4CAF80]',
   },
   {
