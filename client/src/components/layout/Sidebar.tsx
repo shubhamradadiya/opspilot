@@ -7,18 +7,19 @@ import {
   LayoutDashboard,
   Users,
   Clock,
+  Settings,
+  ChevronsLeft,
+  ChevronsRight,
   Wallet,
   Package,
   Receipt,
   UserCheck,
   Phone,
   Container,
-  Settings,
-  ChevronsLeft,
-  ChevronsRight,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { APP_ROUTES } from '@/utils/routes';
+import Logo from '@/components/common/Logo';
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -69,11 +70,17 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
 
   // ── COMPUTED VALUES ────────────────────────────────────────────────────────
   const visibleItems = useMemo(() => {
-    return NAV_ITEMS.filter((item) => {
+    return NAV_ITEMS.map(item => {
+      // For Admin, redirect Attendance to timestamps
+      if (item.label === 'Attendance' && isAdmin) {
+        return { ...item, path: APP_ROUTES.ATTENDANCE.TIMESTAMPS };
+      }
+      return item;
+    }).filter((item) => {
       // Admin-only check
       if (item.adminOnly && !isAdmin) return false;
-      // Feature flag check
-      if (item.featureFlag && user) {
+      // Feature flag check (Admins bypass feature flags to manage everything)
+      if (item.featureFlag && user && !isAdmin) {
         const flagValue = user[item.featureFlag as keyof typeof user];
         if (flagValue === false) return false;
       }
@@ -86,14 +93,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
     <aside className={`sidebar ${collapsed ? 'sidebar--collapsed' : ''}`}>
       {/* ── Logo area ── */}
       <div className="sidebar-header">
-        <div className="sidebar-logo">
-          <img
-            src="/apexTrack.png"
-            alt="OpsPilot"
-            className="sidebar-logo-img"
-            draggable={false}
-          />
-          {!collapsed && <span className="sidebar-logo-text">OpsPilot</span>}
+        <div className="sidebar-logo py-4 flex items-center justify-center w-full overflow-hidden">
+          <Logo variant={collapsed ? 'icon-gold' : 'primary'} height={collapsed ? 32 : 44} className="shrink-0 transition-all duration-300" />
         </div>
         <button
           type="button"

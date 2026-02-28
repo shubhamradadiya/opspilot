@@ -671,3 +671,175 @@
     display: none;
   }
 }
+
+/* ============================================================================
+   DATE PICKER — Gold Theme Overrides
+   ============================================================================ */
+.custom-datepicker .react-datepicker-wrapper {
+  width: 100%;
+}
+
+.gold-theme-calendar {
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  border: 1px solid #E8E0B8 !important;
+  border-radius: 0.75rem !important;
+  background-color: #FFFFFF !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01) !important;
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.dark .gold-theme-calendar {
+  border-color: #2E2E2E !important;
+  background-color: #1A1A1A !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Header */
+.gold-theme-calendar .react-datepicker__header {
+  background-color: #FAF7E8 !important;
+  border-bottom: 1px solid #E8E0B8 !important;
+  padding-top: 1rem !important;
+  border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__header {
+  background-color: #1E1E1E !important;
+  border-bottom-color: #2E2E2E !important;
+}
+
+.gold-theme-calendar .react-datepicker__current-month,
+.gold-theme-calendar .react-datepicker-time__header,
+.gold-theme-calendar .react-datepicker-year-header {
+  color: #2A2A2A !important;
+  font-weight: 600 !important;
+  font-size: 0.9375rem !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__current-month,
+.dark .gold-theme-calendar .react-datepicker-time__header,
+.dark .gold-theme-calendar .react-datepicker-year-header {
+  color: #F5F5F5 !important;
+}
+
+.gold-theme-calendar .react-datepicker__day-name {
+  color: #9A9A9A !important;
+  font-weight: 500 !important;
+  width: 2rem !important;
+  line-height: 2rem !important;
+  margin: 0.2rem !important;
+}
+
+/* Days */
+.gold-theme-calendar .react-datepicker__day {
+  color: #5A5A5A !important;
+  width: 2rem !important;
+  line-height: 2rem !important;
+  margin: 0.2rem !important;
+  border-radius: 9999px !important;
+  font-size: 0.875rem !important;
+  transition: all 150ms ease !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__day {
+  color: #AAAAAA !important;
+}
+
+.gold-theme-calendar .react-datepicker__day:hover:not(.react-datepicker__day--selected):not(.react-datepicker__day--keyboard-selected) {
+  background-color: #F5F0D0 !important;
+  color: #2A2A2A !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__day:hover:not(.react-datepicker__day--selected):not(.react-datepicker__day--keyboard-selected) {
+  background-color: #252525 !important;
+  color: #F5F5F5 !important;
+}
+
+/* Selected */
+.gold-theme-calendar .react-datepicker__day--selected,
+.gold-theme-calendar .react-datepicker__day--keyboard-selected,
+.gold-theme-calendar .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+  background-color: #D4AF37 !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__day--selected,
+.dark .gold-theme-calendar .react-datepicker__day--keyboard-selected,
+.dark .gold-theme-calendar .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+  background-color: rgba(212, 175, 55, 0.4) !important;
+  color: #D4AF37 !important;
+}
+
+/* In Range */
+.gold-theme-calendar .react-datepicker__day--in-range,
+.gold-theme-calendar .react-datepicker__day--in-selecting-range {
+  background-color: #F5F0D0 !important;
+  color: #2A2A2A !important;
+  border-radius: 0 !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__day--in-range,
+.dark .gold-theme-calendar .react-datepicker__day--in-selecting-range {
+  background-color: rgba(212, 175, 55, 0.2) !important;
+  color: #F5F5F5 !important;
+}
+
+/* Arrows */
+.gold-theme-calendar .react-datepicker__navigation-icon::before {
+  border-color: #9A9A9A !important;
+  border-width: 2px 2px 0 0 !important;
+  transition: border-color 150ms ease !important;
+}
+
+.gold-theme-calendar .react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
+  border-color: #D4AF37 !important;
+}
+
+/* Time Picker Sidebar */
+.gold-theme-calendar .react-datepicker__time-container {
+  border-left: 1px solid #E8E0B8 !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__time-container {
+  border-left-color: #2E2E2E !important;
+}
+
+.gold-theme-calendar .react-datepicker__time-container .react-datepicker__time {
+  background-color: #FFFFFF !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__time-container .react-datepicker__time {
+  background-color: #1A1A1A !important;
+}
+
+.gold-theme-calendar .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
+  height: auto !important;
+  padding: 0.5rem !important;
+  color: #5A5A5A !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
+  color: #AAAAAA !important;
+}
+
+.gold-theme-calendar .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {
+  background-color: #F5F0D0 !important;
+  color: #2A2A2A !important;
+}
+
+.dark .gold-theme-calendar .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {
+  background-color: #252525 !important;
+  color: #F5F5F5 !important;
+}
+
+/* Triangle Hook */
+.gold-theme-calendar.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before,
+.gold-theme-calendar.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::after {
+  border-bottom-color: #E8E0B8 !important;
+}
+
+.dark .gold-theme-calendar.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before,
+.dark .gold-theme-calendar.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::after {
+  border-bottom-color: #2E2E2E !important;
+}
