@@ -237,17 +237,28 @@ export class PayoutController {
   ) {
     const timeZone = authUser?.requestHeader?.timezone || authUser?.timeZone || DEFAULT_TIME_ZONE;
 
-    const data = await this.payoutService.generatePayoutReceiptPDF(
-      timeZone,
-      uid,
-      startTimestamp,
-      endTimestamp,
-    );
+    try {
+      const data = await this.payoutService.generatePayoutReceiptPDF(
+        timeZone,
+        uid,
+        startTimestamp,
+        endTimestamp,
+      );
 
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'success',
-      data,
-    };
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'success',
+        data,
+      };
+    } catch (error) {
+      if (error?.response?.statusCode === HttpStatus.NOT_FOUND) {
+        return {
+          statusCode: HttpStatus.OK,
+          message: 'No payouts found for this period.',
+          data: [],
+        };
+      }
+      throw error;
+    }
   }
 }

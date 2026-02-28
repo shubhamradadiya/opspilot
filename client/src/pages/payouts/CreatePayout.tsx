@@ -12,9 +12,11 @@ import { z } from 'zod';
 import { ArrowLeft, Upload, Loader2 } from 'lucide-react';
 import { fetchAttendanceLogs } from '@/api/attendance.api';
 import { createPayoutThunk } from '@/store/payouts/payouts.thunk';
+import { fetchEmployeesThunk } from '@/store/employees/employees.thunk';
 import { getCurrentWeekRange } from '@/utils/formatters';
 import { APP_ROUTES } from '@/utils/routes';
 import { Button } from '@/components/ui';
+import { DatePicker } from '@/components/ui/DatePicker';
 import type { AppDispatch, RootState } from '@/store/store';
 
 // ============================================================================
@@ -76,6 +78,10 @@ const CreatePayout: React.FC = () => {
       setValue('loanAmount', selectedEmployee.loanAmount ?? 0);
     }
   }, [selectedEmployee, setValue]);
+
+  useEffect(() => {
+    dispatch(fetchEmployeesThunk());
+  }, [dispatch]);
 
   // Estimate amount from attendance logs for that employee
   const fetchEstimate = useCallback(async () => {
@@ -185,27 +191,31 @@ const CreatePayout: React.FC = () => {
 
         {/* Date range + estimate */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA]">
-              From <span className="text-[#C0392B] ml-0.5">*</span>
-            </label>
-            <input
-              type="date"
-              {...register('startDate')}
-              className="w-full h-9 px-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
+          <div className="space-y-1.5 pt-0.5">
+            <DatePicker
+              label="From *"
+              value={startDate ? new Date(startDate) : null}
+              onChange={(date) => {
+                setValue('startDate', date ? new Date(date.setHours(0, 0, 0, 0)).toISOString().split('T')[0] : '');
+              }}
+              error={errors.startDate?.message}
+              placeholderText="Select start date"
+              dateFormat="MMM d, yyyy"
+              maxDate={endDate ? new Date(endDate) : undefined}
             />
-            {errors.startDate && <p className="text-xs text-[#C0392B]">{errors.startDate.message}</p>}
           </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA]">
-              To <span className="text-[#C0392B] ml-0.5">*</span>
-            </label>
-            <input
-              type="date"
-              {...register('endDate')}
-              className="w-full h-9 px-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
+          <div className="space-y-1.5 pt-0.5">
+            <DatePicker
+              label="To *"
+              value={endDate ? new Date(endDate) : null}
+              onChange={(date) => {
+                setValue('endDate', date ? new Date(date.setHours(23, 59, 59, 999)).toISOString().split('T')[0] : '');
+              }}
+              error={errors.endDate?.message}
+              placeholderText="Select end date"
+              dateFormat="MMM d, yyyy"
+              minDate={startDate ? new Date(startDate) : undefined}
             />
-            {errors.endDate && <p className="text-xs text-[#C0392B]">{errors.endDate.message}</p>}
           </div>
         </div>
         {selectedUid && (

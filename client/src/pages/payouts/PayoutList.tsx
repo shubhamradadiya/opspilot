@@ -16,7 +16,9 @@ import {
   fetchSelfPayoutsThunk,
   addLoanThunk,
 } from '@/store/payouts/payouts.thunk';
+import { fetchEmployeesThunk } from '@/store/employees/employees.thunk';
 import { setFilters } from '@/store/payouts/payouts.slice';
+import { DatePicker } from '@/components/ui/DatePicker';
 import { getCurrentWeekRange, formatCurrency } from '@/utils/formatters';
 import { APP_ROUTES } from '@/utils/routes';
 import { Button } from '@/components/ui';
@@ -35,6 +37,7 @@ const PayoutList: React.FC = () => {
   );
   const employees = useSelector((s: RootState) => s.employees.list);
   const [loanModalOpen, setLoanModalOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'cards' | 'list'>('list');
 
   // ── Load payouts ──────────────────────────────────────────────────────────────
   const load = useCallback(() => {
@@ -59,7 +62,12 @@ const PayoutList: React.FC = () => {
     }
   }, [dispatch, isAdmin, filters]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+    if (isAdmin) {
+      dispatch(fetchEmployeesThunk());
+    }
+  }, [load, isAdmin, dispatch]);
 
   // ── Handlers ──────────────────────────────────────────────────────────────────
   const handleAddLoan = (params: { uid: string; loanAmount: number }) => {
@@ -75,10 +83,10 @@ const PayoutList: React.FC = () => {
   };
 
   // ── Flatten admin payouts for table ───────────────────────────────────────────
-  const adminFlatPayouts: IPayout[] = allPayouts.flatMap((u) =>
-    u.payouts.map((p) => ({
+  const adminFlatPayouts: IPayout[] = (allPayouts || []).flatMap((u) =>
+    (u.payouts || []).map((p) => ({
       ...p,
-      user: { uid: u.uid, fullName: u.fullName, perHourRate: 0 },
+      user: { uid: u.userId, fullName: u.fullName, perHourRate: 0 },
     })),
   );
 
@@ -115,37 +123,47 @@ const PayoutList: React.FC = () => {
       </div>
 
       {/* Summary cards — admin: totals per employee */}
-      {isAdmin && allPayouts.length > 0 && (
+      {isAdmin && viewMode === 'cards' && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {allPayouts.slice(0, 4).map((u) => (
-            <div key={u.uid} className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="w-7 h-7 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/30 flex items-center justify-center">
-                  <span className="text-[10px] font-bold text-[#D4AF37]">{u.fullName?.charAt(0)}</span>
+          {allPayouts.length > 0 ? (
+            allPayouts.map((u) => (
+              <div key={u.userId} className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-4 flex flex-col justify-between h-[120px] transition-all hover:border-[#D4AF37] hover:shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="w-8 h-8 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/30 flex items-center justify-center shrink-0">
+                    <span className="text-xs font-bold text-[#D4AF37]">{u.fullName?.charAt(0)}</span>
+                  </div>
+                  <PayoutReceiptButton
+                    uid={u.userId}
+                    startTimestamp={filters.startTimestamp ?? 0}
+                    endTimestamp={filters.endTimestamp ?? Date.now()}
+                  />
                 </div>
-                <PayoutReceiptButton
-                  uid={u.uid}
-                  startTimestamp={filters.startTimestamp ?? 0}
-                  endTimestamp={filters.endTimestamp ?? Date.now()}
-                />
+                <div>
+                  <p className="text-xs text-[#9A9A9A] dark:text-[#666666] truncate">{u.fullName}</p>
+                  <p className="text-xl font-bold text-[#D4AF37] mt-1 track-tight">
+                    {formatCurrency(u.totalAmount)}
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-[#9A9A9A] dark:text-[#666666] truncate">{u.fullName}</p>
-              <p className="text-base font-bold text-[#D4AF37] mt-0.5">
-                {formatCurrency(u.totalAmount)}
-              </p>
+            ))
+          ) : (
+            <div className="col-span-full py-16 text-center border border-dashed border-[#E8E0B8] dark:border-[#2E2E2E] rounded-xl">
+              <span className="text-3xl mb-3 block">💵</span>
+              <p className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA]">No cards found</p>
+              <p className="text-xs text-[#9A9A9A] dark:text-[#666666] mt-1">Try adjusting your date range</p>
             </div>
-          ))}
+          )}
         </div>
       )}
 
       {/* Filters */}
       <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
           {isAdmin && (
             <>
               {/* Slot type */}
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">View By</label>
+                <label className="text-xs font-medium text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Timeframe</label>
                 <div className="flex rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] overflow-hidden h-9">
                   {(['DAY', 'WEEK'] as const).map((t) => (
                     <button
@@ -163,36 +181,55 @@ const PayoutList: React.FC = () => {
                   ))}
                 </div>
               </div>
+
+              {/* View Mode Toggle */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Display Mode</label>
+                <div className="flex rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] overflow-hidden h-9">
+                  {(['CARDS', 'LIST'] as const).map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setViewMode(t.toLowerCase() as 'cards' | 'list')}
+                      className={`flex-1 text-xs font-medium transition-colors ${
+                        viewMode.toUpperCase() === t
+                          ? 'bg-[#D4AF37] text-white'
+                          : 'text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#E8E0B8]/40 dark:hover:bg-[#2E2E2E]'
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </>
           )}
 
           {/* From */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">From</label>
-            <input
-              type="date"
-              value={filters.startTimestamp
-                ? new Date(filters.startTimestamp).toISOString().split('T')[0]
-                : ''}
-              onChange={(e) =>
-                dispatch(setFilters({ startTimestamp: e.target.value ? new Date(e.target.value).setHours(0, 0, 0, 0) : null }))
+          <div className="space-y-1.5 pt-0.5">
+            <DatePicker
+              label="From"
+              value={filters.startTimestamp ? new Date(filters.startTimestamp) : null}
+              onChange={(date) =>
+                dispatch(setFilters({ startTimestamp: date ? new Date(date).setHours(0, 0, 0, 0) : null }))
               }
-              className="w-full h-9 px-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              placeholderText="Select start date"
+              dateFormat="MMM d, yyyy"
+              maxDate={filters.endTimestamp ? new Date(filters.endTimestamp) : undefined}
             />
           </div>
 
           {/* To */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">To</label>
-            <input
-              type="date"
-              value={filters.endTimestamp
-                ? new Date(filters.endTimestamp).toISOString().split('T')[0]
-                : ''}
-              onChange={(e) =>
-                dispatch(setFilters({ endTimestamp: e.target.value ? new Date(e.target.value).setHours(23, 59, 59, 999) : null }))
+          <div className="space-y-1.5 pt-0.5">
+            <DatePicker
+              label="To"
+              value={filters.endTimestamp ? new Date(filters.endTimestamp) : null}
+              onChange={(date) =>
+                dispatch(setFilters({ endTimestamp: date ? new Date(date).setHours(23, 59, 59, 999) : null }))
               }
-              className="w-full h-9 px-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              placeholderText="Select end date"
+              dateFormat="MMM d, yyyy"
+              minDate={filters.startTimestamp ? new Date(filters.startTimestamp) : undefined}
             />
           </div>
         </div>
@@ -205,8 +242,8 @@ const PayoutList: React.FC = () => {
         </button>
       </div>
 
-      {/* Table */}
-      {isAdmin ? (
+      {/* Table Component View */}
+      {isAdmin && viewMode === 'list' && (
         <PayoutTable
           payouts={adminFlatPayouts}
           loading={loading}
@@ -215,18 +252,21 @@ const PayoutList: React.FC = () => {
           endTimestamp={filters.endTimestamp ?? Date.now()}
           priceUnit={user?.priceUnit}
         />
-      ) : (
+      )}
+      
+      {!isAdmin && (
         // Self payout table for employees
         <div className="overflow-x-auto rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E]">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-[#FAF7E8] dark:bg-[#1A1A1A] border-b border-[#E8E0B8] dark:border-[#2E2E2E]">
                 <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">#</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Amount</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Week Range</th>
+                <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Hours</th>
+                <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Rate</th>
+                <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Gross</th>
                 <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Loan</th>
                 <th className="px-4 py-3 text-right text-xs font-semibold text-[#D4AF37] uppercase tracking-wider">Net Pay</th>
-                <th className="px-4 py-3 text-center text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Date</th>
                 <th className="px-4 py-3 text-center text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Receipt</th>
               </tr>
             </thead>
@@ -242,33 +282,32 @@ const PayoutList: React.FC = () => {
                     </tr>
                   ))
                 : selfPayouts.map((p, idx) => (
-                    <tr key={p.id} className="hover:bg-[#FAF7E8]/30 dark:hover:bg-[#1E1E1E]/30 transition-colors">
+                    <tr key={p.weekStartDate} className="hover:bg-[#FAF7E8]/30 dark:hover:bg-[#1E1E1E]/30 transition-colors">
                       <td className="px-4 py-3 text-xs text-[#9A9A9A] dark:text-[#666666]">#{idx + 1}</td>
+                      <td className="px-4 py-3 text-left text-xs text-[#5A5A5A] dark:text-[#AAAAAA]">
+                        {p.weekRange || '—'}
+                      </td>
                       <td className="px-4 py-3 text-right text-xs font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">
-                        {formatCurrency(p.amount, user?.priceUnit)}
+                        {p.durationInHours?.toFixed(2) || '0.00'}
+                      </td>
+                      <td className="px-4 py-3 text-right text-xs font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">
+                        {formatCurrency(p.perHourRate, user?.priceUnit)}
+                      </td>
+                      <td className="px-4 py-3 text-right text-xs font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">
+                        {formatCurrency(p.totalAmount, user?.priceUnit)}
                       </td>
                       <td className="px-4 py-3 text-right text-xs font-mono text-[#C0392B]">
                         {p.loanAmount > 0 ? `- ${formatCurrency(p.loanAmount, user?.priceUnit)}` : '—'}
                       </td>
                       <td className="px-4 py-3 text-right text-xs font-bold font-mono text-[#D4AF37]">
-                        {formatCurrency(Math.max(0, p.amount - p.loanAmount), user?.priceUnit)}
+                        {formatCurrency(Math.max(0, p.totalAmount - p.loanAmount), user?.priceUnit)}
                       </td>
                       <td className="px-4 py-3 text-center">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${
-                          p.isPaid ? 'text-[#2ECC71] bg-[#2ECC71]/10 border-[#2ECC71]/30' : 'text-[#D4AF37] bg-[#D4AF37]/10 border-[#D4AF37]/30'
-                        }`}>
-                          {p.isPaid ? 'Paid' : 'Unpaid'}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-xs text-[#5A5A5A] dark:text-[#AAAAAA]">
-                        {p.createdAt ? new Date(p.createdAt).toLocaleDateString() : '—'}
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        {user?.uid && filters.startTimestamp && filters.endTimestamp && (
+                        {user?.uid && (
                           <PayoutReceiptButton
                             uid={user.uid}
-                            startTimestamp={filters.startTimestamp}
-                            endTimestamp={filters.endTimestamp}
+                            startTimestamp={p.weekStartDate}
+                            endTimestamp={p.weekEndDate}
                           />
                         )}
                       </td>

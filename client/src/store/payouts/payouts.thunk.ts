@@ -3,6 +3,7 @@
 // OpsPilot · FE-06
 // ============================================================================
 import { toast } from 'sonner';
+import html2pdf from 'html2pdf.js';
 import type { AppDispatch } from '@/store/store';
 import {
   createPayout,
@@ -119,10 +120,39 @@ export const downloadReceiptThunk = (params: {
   dispatch(setSubmitting(true));
   try {
     const data = await downloadPayoutReceipt(params);
+    
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      toast.error('No payouts found for this period');
+      return;
+    }
+
+    if (Array.isArray(data)) {
+      // Backend returns an array of HTML strings
+      const htmlContent = data.join('');
+      
+      const element = document.createElement('div');
+      element.innerHTML = htmlContent;
+      
+      const opt = {
+        margin:       1,
+        filename:     `receipt_${params.uid}_${new Date().toISOString().split('T')[0]}.pdf`,
+        image:        { type: 'jpeg' as const, quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' as const }
+      };
+
+      toast.loading('Generating PDF...', { id: 'pdf-gen' });
+      await html2pdf().set(opt).from(element).save();
+      toast.success('Receipt downloaded successfully', { id: 'pdf-gen' });
+
+      return;
+    }
+
     // Open receipt in new tab (data may be a URL or base64)
-    if (data?.startsWith('http')) {
+    if (typeof data === 'string' && data.startsWith('http')) {
       window.open(data, '_blank', 'noopener,noreferrer');
-    } else if (data) {
+      toast.success('Receipt opened in new tab');
+    } else if (typeof data === 'string') {
       // Treat as base64 PDF
       const byteChars = atob(data);
       const byteArr = new Uint8Array(byteChars.length);
@@ -131,8 +161,8 @@ export const downloadReceiptThunk = (params: {
       const url = URL.createObjectURL(blob);
       window.open(url, '_blank', 'noopener,noreferrer');
       setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      toast.success('Receipt opened in new tab');
     }
-    toast.success('Receipt opened in new tab');
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : 'Failed to download receipt';
     toast.error(msg);

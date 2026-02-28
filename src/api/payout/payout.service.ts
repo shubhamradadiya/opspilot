@@ -1343,6 +1343,9 @@ export class PayoutService {
 
       return receipt;
     } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
       console.error('Error generating payout receipt PDF:', error);
       throw new Error(`Failed to generate payout receipt PDF: ${error.message}`);
     }

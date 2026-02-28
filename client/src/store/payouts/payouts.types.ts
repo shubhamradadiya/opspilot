@@ -27,20 +27,22 @@ export interface IPayout {
 // SELF PAYOUT (user's own record)
 // ============================================================================
 export interface ISelfPayout {
-  id: number;
-  amount: number;
+  perHourRate: number;
   loanAmount: number;
-  paidAmount: number;
-  isPaid: boolean;
-  createdAt: string;
-  employeeSignature?: string | null;
+  totalAmount: number;
+  durationInHours: number;
+  durationInMinutes: number;
+  durationInSeconds: number;
+  weekStartDate: number;
+  weekEndDate: number;
+  weekRange: string;
 }
 
 // ============================================================================
 // ADMIN ALL PAYOUTS — user-wise grouped
 // ============================================================================
 export interface IUserWisePayout {
-  uid: string;
+  userId: string;
   fullName: string;
   totalAmount: number;
   totalPaid: number;

@@ -678,7 +678,7 @@ export class WalkInCustomerService {
       const billToName = walkInCustomers[0]?.customerName ?? customerName;
 
       // Build company details
-      const COMPANY_NAME = this.configService.get<string>('COMPANY_NAME') || 'Uvin Tire Reuse LLC';
+      const COMPANY_NAME = this.configService.get<string>('COMPANY_NAME') || 'OpsPilot';
       const COMPANY_PHONE_NUMBER =
         this.configService.get<string>('COMPANY_PHONE_NUMBER') || '5105669355';
       const COMPANY_EMAIL =

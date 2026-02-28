@@ -46,17 +46,6 @@ const PayoutTable: React.FC<PayoutTableProps> = ({
   endTimestamp,
   priceUnit = '$',
 }) => {
-  // ── Empty state ─────────────────────────────────────────────────────────────
-  if (!loading && payouts.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <span className="text-3xl mb-3">💵</span>
-        <p className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA]">No payouts found</p>
-        <p className="text-xs text-[#9A9A9A] dark:text-[#666666] mt-1">Try adjusting your date range</p>
-      </div>
-    );
-  }
-
   // ── RENDER ──────────────────────────────────────────────────────────────────
   return (
     <div className="overflow-x-auto rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E]">
@@ -75,9 +64,18 @@ const PayoutTable: React.FC<PayoutTableProps> = ({
           </tr>
         </thead>
         <tbody className="divide-y divide-[#E8E0B8]/40 dark:divide-[#2E2E2E]/60">
-          {loading
-            ? Array.from({ length: 4 }).map((_, i) => <SkeletonRow key={i} />)
-            : payouts.map((payout, idx) => (
+          {loading ? (
+            Array.from({ length: 4 }).map((_, i) => <SkeletonRow key={i} />)
+          ) : payouts.length === 0 ? (
+            <tr>
+              <td colSpan={showReceipt ? 7 : 6} className="py-16 text-center">
+                <span className="text-3xl mb-3 block">💵</span>
+                <p className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA]">No payouts found</p>
+                <p className="text-xs text-[#9A9A9A] dark:text-[#666666] mt-1">Try adjusting your date range</p>
+              </td>
+            </tr>
+          ) : (
+            payouts.map((payout, idx) => (
                 <tr
                   key={payout.uid + idx}
                   className="hover:bg-[#FAF7E8]/30 dark:hover:bg-[#1E1E1E]/30 transition-colors"
@@ -134,7 +132,7 @@ const PayoutTable: React.FC<PayoutTableProps> = ({
                     </td>
                   )}
                 </tr>
-              ))
+              )))
           }
         </tbody>
       </table>
