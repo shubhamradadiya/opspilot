@@ -13,6 +13,8 @@ export interface IUser {
   fullName: string | null;
   email: string | null;
   phone: string | null;
+  countryCode: string | null;
+  isoCode: string | null;
   role: 'admin' | 'user';
   language: string;
   timeZone: string | null;

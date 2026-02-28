@@ -16,6 +16,7 @@ export interface IEmployee {
   role: 'admin' | 'user';
   isActive: boolean;
   perHourRate: number;
+  loanAmount: number;
   // ── Feature flags ──────────────────────────────────────────────────────────
   isClockInClockOutEnabled: boolean;
   isInventoryEnabled: boolean;

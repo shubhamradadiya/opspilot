@@ -1,10 +1,10 @@
 // ============================================================================
 // ROUTES CONSTANTS
-// OpsPilot · FE-02
+// OpsPilot · FE-02 → FE-06
 // ============================================================================
 
 // ============================================================================
-// API ROUTES — Backend endpoints (matches auth.controller.ts)
+// API ROUTES — Backend endpoints
 // ============================================================================
 export const API_ROUTES = {
   AUTH: {
@@ -28,6 +28,21 @@ export const API_ROUTES = {
     EXPENSES: '/api/v1/expenses',
     COUNTRIES: '/api/v1/country',
   },
+  ATTENDANCE: {
+    CHECK_STATUS: '/api/v1/attendance/check-status',
+    CLOCK: '/api/v1/attendance/clock-in-clock-out',
+    LOGS: '/api/v1/attendance/logs',
+    TODAY_LOGS: '/api/v1/attendance/logs/today',
+    TIMESTAMPS: '/api/v1/attendance/timestamps',
+    MANUAL_LOG: '/api/v1/attendance/log',
+  },
+  PAYOUTS: {
+    CREATE: '/api/v1/payout',
+    ADD_LOAN: '/api/v1/payout/add-loan',
+    SELF: '/api/v1/payouts/self-payouts',
+    ALL: '/api/v1/payouts/all-payouts',
+    RECEIPT: '/api/v1/payout/download-payout-receipt',
+  },
 } as const;
 
 // ============================================================================
@@ -45,8 +60,15 @@ export const APP_ROUTES = {
     CREATE: '/employees/create',
     EDIT: '/employees/:uid/edit',
   },
-  ATTENDANCE: '/attendance',
-  PAYOUTS: '/payouts',
+  ATTENDANCE: {
+    DASHBOARD: '/attendance',
+    LOGS: '/attendance/logs',
+    TIMESTAMPS: '/attendance/timestamps',
+  },
+  PAYOUTS: {
+    LIST: '/payouts',
+    CREATE: '/payouts/create',
+  },
   INVENTORY: '/inventory',
   EXPENSES: '/expenses',
   WALK_IN_CUSTOMERS: '/walk-in-customers',
@@ -55,3 +77,4 @@ export const APP_ROUTES = {
   SETTINGS: '/settings',
   HOME: '/',
 } as const;
+
