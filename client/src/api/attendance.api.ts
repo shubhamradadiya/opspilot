@@ -53,11 +53,22 @@ export const checkAttendanceStatus = async (params: {
   countryCode: string;
   phoneNumber: string;
 }): Promise<IAttendanceStatus> => {
-  const res = await axiosInstance.post<ApiResponse<IAttendanceStatus>>(
+  const res = await axiosInstance.post<ApiResponse<any>>(
     API_ROUTES.ATTENDANCE.CHECK_STATUS,
     params,
   );
-  return (res.data as unknown as ApiResponse<IAttendanceStatus>).data;
+  
+  const data = res.data.data;
+  // Backend might return activeLog as an array or a single object depending on entity mapping changes
+  const activeLogData = Array.isArray(data?.activeLog) 
+    ? data.activeLog[0] 
+    : data?.activeLog;
+
+  return {
+    isCheckedIn: !!activeLogData,
+    checkedInAt: activeLogData?.checkedInAt ?? null,
+    ulId: activeLogData?.ulId ?? null,
+  };
 };
 
 /**

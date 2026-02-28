@@ -49,8 +49,8 @@ const TimestampGrid: React.FC<TimestampGridProps> = ({
   // Derive column labels from first entry's slots
   const cols = dateLabels?.length
     ? dateLabels
-    : (entries[0]?.slots ?? []).map((s: ITimestampSlot) => {
-        const d = new Date(s.date + 'T00:00:00');
+    : (entries[0]?.attendance ?? []).map((s: ITimestampSlot) => {
+        const d = new Date(s.startDate * 1000);
         return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
       });
 
@@ -76,7 +76,7 @@ const TimestampGrid: React.FC<TimestampGridProps> = ({
             <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider min-w-[140px]">
               Employee
             </th>
-            {cols.map((col, i) => (
+            {cols.map((col: string, i: number) => (
               <th
                 key={i}
                 className="px-3 py-3 text-center text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider min-w-[80px]"
@@ -92,9 +92,9 @@ const TimestampGrid: React.FC<TimestampGridProps> = ({
 
         {/* Body */}
         <tbody className="divide-y divide-[#E8E0B8]/40 dark:divide-[#2E2E2E]/60">
-          {entries.map((entry) => (
+          {entries.map((entry, index) => (
             <tr
-              key={entry.uid}
+              key={entry.userId || index}
               className="hover:bg-[#FAF7E8]/30 dark:hover:bg-[#1E1E1E]/30 transition-colors"
             >
               {/* Employee name */}
@@ -113,18 +113,22 @@ const TimestampGrid: React.FC<TimestampGridProps> = ({
               </td>
 
               {/* Per-day slots */}
-              {entry.slots.map((slot, i) => (
-                <td key={i} className="px-3 py-3 text-center">
-                  <span className={`font-mono text-xs ${getHoursColor(slot.hours)}`}>
-                    {slot.hours > 0 ? decimalHoursToStr(slot.hours) : '—'}
-                  </span>
-                </td>
-              ))}
+              {cols.map((_: string, i: number) => {
+                const slot = entry.attendance?.[i];
+                const hours = slot?.durationInHours ?? 0;
+                return (
+                  <td key={i} className="px-3 py-3 text-center">
+                    <span className={`font-mono text-xs ${getHoursColor(hours)}`}>
+                      {hours > 0 ? decimalHoursToStr(hours) : '—'}
+                    </span>
+                  </td>
+                );
+              })}
 
               {/* Total */}
               <td className="px-4 py-3 text-center">
                 <span className="text-xs font-bold text-[#D4AF37]">
-                  {decimalHoursToStr(entry.totalHours)}
+                  {decimalHoursToStr(entry.totalDurationInHours ?? 0)}
                 </span>
               </td>
             </tr>

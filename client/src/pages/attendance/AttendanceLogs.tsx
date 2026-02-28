@@ -10,7 +10,9 @@ import { RefreshCw, Plus } from 'lucide-react';
 import AttendanceLogTable from '@/components/attendance/AttendanceLogTable';
 import ManualLogModal from '@/components/attendance/ManualLogModal';
 import { fetchLogsThunk, addManualLogThunk, deleteLogThunk } from '@/store/attendance/attendance.thunk';
+import { fetchEmployeesThunk } from '@/store/employees/employees.thunk';
 import { setFilters } from '@/store/attendance/attendance.slice';
+import { DatePicker } from '@/components/ui/DatePicker';
 import { getCurrentWeekRange } from '@/utils/formatters';
 import { Button } from '@/components/ui';
 import type { AppDispatch, RootState } from '@/store/store';
@@ -20,8 +22,7 @@ import type { AppDispatch, RootState } from '@/store/store';
 // ============================================================================
 const AttendanceLogs: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { user, isAdmin } = useSelector((s: RootState) => ({
-    user: s.auth.user,
+  const { isAdmin } = useSelector((s: RootState) => ({
     isAdmin: s.auth.user?.role === 'admin',
   }));
   const { logs, filters, logsLoading, submitting } = useSelector(
@@ -42,7 +43,12 @@ const AttendanceLogs: React.FC = () => {
     );
   }, [dispatch, filters.startTimestamp, filters.endTimestamp, filters.selectedUid]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+    if (isAdmin) {
+      dispatch(fetchEmployeesThunk());
+    }
+  }, [load, isAdmin, dispatch]);
 
   // ── Handlers ────────────────────────────────────────────────────────────────
   const handleAddManualLog = (params: {
@@ -113,37 +119,33 @@ const AttendanceLogs: React.FC = () => {
           )}
 
           {/* Date range */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">From</label>
-            <input
-              type="date"
-              value={filters.startTimestamp
-                ? new Date(filters.startTimestamp).toISOString().split('T')[0]
-                : ''}
-              onChange={(e) =>
+          <div className="space-y-1.5 pt-0.5">
+            <DatePicker
+              label="From"
+              value={filters.startTimestamp ? new Date(filters.startTimestamp) : null}
+              onChange={(date) =>
                 dispatch(setFilters({
-                  startTimestamp: e.target.value ? new Date(e.target.value).setHours(0, 0, 0, 0) : null,
+                  startTimestamp: date ? new Date(date).setHours(0, 0, 0, 0) : null,
                 }))
               }
-              className="w-full h-9 px-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              placeholderText="Select start date"
+              dateFormat="MMM d, yyyy"
+              maxDate={filters.endTimestamp ? new Date(filters.endTimestamp) : undefined}
             />
           </div>
 
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">To</label>
-            <input
-              type="date"
-              value={filters.endTimestamp
-                ? new Date(filters.endTimestamp).toISOString().split('T')[0]
-                : ''}
-              onChange={(e) =>
+          <div className="space-y-1.5 pt-0.5">
+            <DatePicker
+              label="To"
+              value={filters.endTimestamp ? new Date(filters.endTimestamp) : null}
+              onChange={(date) =>
                 dispatch(setFilters({
-                  endTimestamp: e.target.value
-                    ? new Date(e.target.value).setHours(23, 59, 59, 999)
-                    : null,
+                  endTimestamp: date ? new Date(date).setHours(23, 59, 59, 999) : null,
                 }))
               }
-              className="w-full h-9 px-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              placeholderText="Select end date"
+              dateFormat="MMM d, yyyy"
+              minDate={filters.startTimestamp ? new Date(filters.startTimestamp) : undefined}
             />
           </div>
         </div>

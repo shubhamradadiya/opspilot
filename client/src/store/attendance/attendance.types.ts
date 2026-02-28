@@ -59,15 +59,24 @@ export interface ITodayAttendanceEntry {
 // TIMESTAMP GRID ENTRY — admin weekly grid
 // ============================================================================
 export interface ITimestampSlot {
-  date: string;   // "2026-02-28"
-  hours: number;  // decimal hours
+  startDate: number;
+  endDate: number;
+  dateTest: string;
+  durationInHours: number | null;
+  durationInMinutes: number | null;
+  durationInSeconds: number | null;
 }
 
 export interface ITimestampEntry {
-  uid: string;
+  userId: string;
   fullName: string;
-  totalHours: number;
-  slots: ITimestampSlot[];
+  countryCode: string | null;
+  phone: string | null;
+  profilePicture: string | null;
+  totalDurationInHours: number | null;
+  totalDurationInMinutes: number | null;
+  totalDurationInSeconds: number | null;
+  attendance: ITimestampSlot[];
 }
 
 // ============================================================================

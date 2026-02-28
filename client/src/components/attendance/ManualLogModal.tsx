@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { X, Clock, Loader2 } from 'lucide-react';
-import { Input } from '@/components/ui';
+import { DatePicker } from '@/components/ui/DatePicker';
 import { Button } from '@/components/ui';
 import type { IEmployee } from '@/store/employees/employees.types';
 
@@ -53,10 +53,15 @@ const ManualLogModal: React.FC<ManualLogModalProps> = ({
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<ManualLogFormValues>({
     resolver: zodResolver(manualLogSchema),
   });
+
+  const checkedInAt = watch('checkedInAt');
+  const checkedOutAt = watch('checkedOutAt');
 
   // Close on Escape
   useEffect(() => {
@@ -138,30 +143,35 @@ const ManualLogModal: React.FC<ManualLogModalProps> = ({
           </div>
 
           {/* Clock In */}
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA]">
-              Clock In <span className="text-[#C0392B] ml-0.5">*</span>
-            </label>
-            <Input
-              type="datetime-local"
+          <div className="space-y-1.5 pt-0.5">
+            <DatePicker
+              label="Clock In *"
+              value={checkedInAt ? new Date(checkedInAt) : null}
+              onChange={(date) => {
+                setValue('checkedInAt', date ? date.toISOString() : '');
+              }}
               error={errors.checkedInAt?.message}
-              {...register('checkedInAt')}
+              placeholderText="Select check-in time"
+              dateFormat="MMM d, yyyy h:mm aa"
+              showTimeSelect
+              maxDate={checkedOutAt ? new Date(checkedOutAt) : undefined}
             />
           </div>
 
           {/* Clock Out */}
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA]">
-              Clock Out <span className="text-[#C0392B] ml-0.5">*</span>
-            </label>
-            <Input
-              type="datetime-local"
+          <div className="space-y-1.5 pt-0.5">
+            <DatePicker
+              label="Clock Out *"
+              value={checkedOutAt ? new Date(checkedOutAt) : null}
+              onChange={(date) => {
+                setValue('checkedOutAt', date ? date.toISOString() : '');
+              }}
               error={errors.checkedOutAt?.message}
-              {...register('checkedOutAt')}
+              placeholderText="Select check-out time"
+              dateFormat="MMM d, yyyy h:mm aa"
+              showTimeSelect
+              minDate={checkedInAt ? new Date(checkedInAt) : undefined}
             />
-            {errors.checkedOutAt && (
-              <p className="text-xs text-[#C0392B]">{errors.checkedOutAt.message}</p>
-            )}
           </div>
 
           {/* Actions */}

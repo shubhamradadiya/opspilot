@@ -48,17 +48,21 @@ const AttendanceTimestamps: React.FC = () => {
   weekEnd.setHours(23, 59, 59, 999);
 
   // ── Fetch on week or slotType change ─────────────────────────────────────────
+  const startTs = weekStart.getTime();
+  const endTs = weekEnd.getTime();
+  const slotType = filters.calenderSlotType;
+
   const load = useCallback(() => {
     dispatch(
       fetchTimestampsThunk({
-        startTimestamp: weekStart.getTime(),
-        endTimestamp: weekEnd.getTime(),
-        calenderSlotType: filters.calenderSlotType,
+        startTimestamp: startTs,
+        endTimestamp: endTs,
+        calenderSlotType: slotType,
         search: search || undefined,
         limit: 50,
       }),
     );
-  }, [dispatch, weekStart, weekEnd, filters.calenderSlotType, search]);
+  }, [dispatch, startTs, endTs, slotType, search]);
 
   useEffect(() => { load(); }, [load]);
 
