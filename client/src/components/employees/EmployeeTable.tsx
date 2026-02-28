@@ -101,12 +101,12 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ employees, loading = fals
   // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
     <>
-      <div className="rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] overflow-hidden">
+      <div className="rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             {/* ── Table Head ── */}
             <thead>
-              <tr className="bg-[#F5F0D0] dark:bg-[#252525]">
+              <tr className="bg-[#F5F0D0] dark:bg-[#252525] border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
                 {['Employee', 'Phone', 'Role', 'Rate/hr', 'Status', 'Toggle', 'Actions'].map(
                   (col) => (
                     <th

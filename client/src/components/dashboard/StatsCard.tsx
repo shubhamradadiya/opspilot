@@ -53,7 +53,7 @@ const TREND_ICONS = {
 // SKELETON
 // ============================================================================
 const StatsCardSkeleton: React.FC = () => (
-  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5 animate-pulse">
+  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5 animate-pulse">
     <div className="flex items-center justify-between mb-4">
       <div className="h-4 w-24 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded" />
       <div className="h-10 w-10 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded-lg" />
@@ -81,7 +81,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
   if (loading) return <StatsCardSkeleton />;
 
   return (
-    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5 transition-all duration-150 hover:shadow-md hover:shadow-[#E8E0B8]/40 dark:hover:shadow-black/20">
+    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5 transition-all duration-150 hover:shadow-md hover:shadow-[#E8E0B8]/40 dark:hover:shadow-black/20">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <span className="text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA]">

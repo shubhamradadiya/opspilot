@@ -68,11 +68,11 @@ const TimestampGrid: React.FC<TimestampGridProps> = ({
 
   // ── RENDER ──────────────────────────────────────────────────────────────────
   return (
-    <div className="overflow-x-auto rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E]">
+    <div className="overflow-x-auto rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E]">
       <table className="w-full text-sm" aria-label="Attendance Timestamp Grid">
         {/* Header */}
         <thead>
-          <tr className="bg-[#FAF7E8] dark:bg-[#1A1A1A] border-b border-[#E8E0B8] dark:border-[#2E2E2E]">
+          <tr className="bg-[#FAF7E8] dark:bg-[#1A1A1A] border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
             <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider min-w-[140px]">
               Employee
             </th>
@@ -137,7 +137,7 @@ const TimestampGrid: React.FC<TimestampGridProps> = ({
       </table>
 
       {/* Legend */}
-      <div className="px-4 py-3 border-t border-[#E8E0B8] dark:border-[#2E2E2E] bg-[#FAF7E8]/50 dark:bg-[#1A1A1A]/50 flex gap-4 text-xs">
+      <div className="px-4 py-3 border-t border-[#2A2A2A] dark:border-[#2E2E2E] bg-[#FAF7E8]/50 dark:bg-[#1A1A1A]/50 flex gap-4 text-xs">
         <span className="text-green-600 dark:text-green-400 font-medium">≥ 8h Full day</span>
         <span className="text-yellow-600 dark:text-yellow-400">4–8h Partial</span>
         <span className="text-red-600 dark:text-red-400">&lt; 4h Short</span>

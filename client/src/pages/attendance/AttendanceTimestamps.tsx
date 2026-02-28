@@ -100,14 +100,14 @@ const AttendanceTimestamps: React.FC = () => {
       </div>
 
       {/* Controls */}
-      <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-4">
+      <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-4">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           {/* Week navigator */}
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={prevWeek}
-              className="p-2 rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors"
+              className="p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors"
               aria-label="Previous week"
             >
               <ChevronLeft size={16} />
@@ -118,7 +118,7 @@ const AttendanceTimestamps: React.FC = () => {
             <button
               type="button"
               onClick={nextWeek}
-              className="p-2 rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors"
+              className="p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors"
               aria-label="Next week"
             >
               <ChevronRight size={16} />
@@ -133,7 +133,7 @@ const AttendanceTimestamps: React.FC = () => {
           </div>
 
           {/* Slot type toggle */}
-          <div className="flex items-center rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] overflow-hidden ml-auto">
+          <div className="flex items-center rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] overflow-hidden ml-auto">
             {(['DAY', 'WEEK'] as const).map((type) => (
               <button
                 key={type}
@@ -158,7 +158,7 @@ const AttendanceTimestamps: React.FC = () => {
               placeholder="Search employees…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full h-9 pl-8 pr-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              className="w-full h-9 pl-8 pr-3 rounded-md text-sm border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
             />
           </div>
         </div>

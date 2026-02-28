@@ -23,7 +23,7 @@ const SummaryCard: React.FC<{
   value: string;
   sub?: string;
 }> = ({ icon, label, value, sub }) => (
-  <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5">
+  <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5">
     <div className="flex items-start justify-between">
       <div>
         <p className="text-xs text-[#9A9A9A] dark:text-[#666666] font-medium uppercase tracking-wider mb-1">
@@ -101,7 +101,7 @@ const AttendanceDashboard: React.FC = () => {
       </div>
 
       {/* Clock section */}
-      <div className="bg-white dark:bg-[#1A1A1A] rounded-2xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-8 flex flex-col items-center gap-8">
+      <div className="bg-white dark:bg-[#1A1A1A] rounded-2xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-8 flex flex-col items-center gap-8">
         {statusLoading ? (
           <div className="w-48 h-48 rounded-full bg-[#E8E0B8]/40 dark:bg-[#2E2E2E] animate-pulse" />
         ) : (

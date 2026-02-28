@@ -130,7 +130,7 @@ const PayoutList: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {allPayouts.length > 0 ? (
             allPayouts.map((u) => (
-              <div key={u.userId} className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-4 flex flex-col justify-between h-[120px] transition-all hover:border-[#D4AF37] hover:shadow-sm">
+              <div key={u.userId} className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-4 flex flex-col justify-between h-[120px] transition-all hover:border-[#D4AF37] hover:shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <div className="w-8 h-8 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/30 flex items-center justify-center shrink-0">
                     <span className="text-xs font-bold text-[#D4AF37]">{u.fullName?.charAt(0)}</span>
@@ -150,7 +150,7 @@ const PayoutList: React.FC = () => {
               </div>
             ))
           ) : (
-            <div className="col-span-full py-16 text-center border border-dashed border-[#E8E0B8] dark:border-[#2E2E2E] rounded-xl">
+            <div className="col-span-full py-16 text-center border border-dashed border-[#2A2A2A] dark:border-[#2E2E2E] rounded-xl">
               <span className="text-3xl mb-3 block">💵</span>
               <p className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA]">No cards found</p>
               <p className="text-xs text-[#9A9A9A] dark:text-[#666666] mt-1">Try adjusting your date range</p>
@@ -160,14 +160,14 @@ const PayoutList: React.FC = () => {
       )}
 
       {/* Filters */}
-      <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-4">
+      <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-4">
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
           {isAdmin && (
             <>
               {/* Slot type */}
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Timeframe</label>
-                <div className="flex rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] overflow-hidden h-9">
+                <div className="flex rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] overflow-hidden h-9">
                   {(['DAY', 'WEEK'] as const).map((t) => (
                     <button
                       key={t}
@@ -188,7 +188,7 @@ const PayoutList: React.FC = () => {
               {/* View Mode Toggle */}
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Display Mode</label>
-                <div className="flex rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] overflow-hidden h-9">
+                <div className="flex rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] overflow-hidden h-9">
                   {(['CARDS', 'LIST'] as const).map((t) => (
                     <button
                       key={t}
@@ -259,10 +259,10 @@ const PayoutList: React.FC = () => {
       
       {!isAdmin && (
         // Self payout table for employees
-        <div className="overflow-x-auto rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E]">
+        <div className="overflow-x-auto rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E]">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-[#FAF7E8] dark:bg-[#1A1A1A] border-b border-[#E8E0B8] dark:border-[#2E2E2E]">
+              <tr className="bg-[#FAF7E8] dark:bg-[#1A1A1A] border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
                 <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">#</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Week Range</th>
                 <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Hours</th>
@@ -276,7 +276,7 @@ const PayoutList: React.FC = () => {
             <tbody className="divide-y divide-[#E8E0B8]/40 dark:divide-[#2E2E2E]/60">
               {loading
                 ? Array.from({ length: 3 }).map((_, i) => (
-                    <tr key={i} className="border-b border-[#E8E0B8]/40 dark:border-[#2E2E2E]/60">
+                    <tr key={i} className="border-b border-[#2A2A2A]/40 dark:border-[#2E2E2E]/60">
                       {[1, 2, 3, 4, 5, 6, 7].map((j) => (
                         <td key={j} className="px-4 py-3">
                           <div className="h-4 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded animate-pulse" />

@@ -26,7 +26,7 @@ const formatTime = (value: string | number | null): string => {
 // SKELETON
 // ============================================================================
 const TableSkeleton: React.FC = () => (
-  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5 animate-pulse">
+  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5 animate-pulse">
     <div className="h-4 w-40 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded mb-4" />
     {[1, 2, 3, 4].map((i) => (
       <div key={i} className="h-8 bg-[#F5F0D0] dark:bg-[#252525] rounded mb-2" />
@@ -47,7 +47,7 @@ const TodayAttendance: React.FC<TodayAttendanceProps> = ({
   const entries = data ?? [];
 
   return (
-    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5">
+    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5">
       <div className="flex items-center gap-2 mb-4">
         <Clock size={16} className="text-[#D4AF37]" />
         <h3 className="text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5]">
@@ -63,7 +63,7 @@ const TodayAttendance: React.FC<TodayAttendanceProps> = ({
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#E8E0B8] dark:border-[#2E2E2E]">
+              <tr className="border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
                 <th className="text-left py-2 text-xs font-medium text-[#9A9A9A] dark:text-[#666666] uppercase tracking-wider">
                   Name
                 </th>
@@ -86,7 +86,7 @@ const TodayAttendance: React.FC<TodayAttendanceProps> = ({
                 return (
                   <tr
                     key={entry.userId}
-                    className="border-b border-[#E8E0B8]/50 dark:border-[#2E2E2E]/50 last:border-0"
+                    className="border-b border-[#2A2A2A]/50 dark:border-[#2E2E2E]/50 last:border-0"
                   >
                     <td className="py-2 text-[#2A2A2A] dark:text-[#F5F5F5] font-medium">
                       {entry.fullName ?? 'Unknown'}

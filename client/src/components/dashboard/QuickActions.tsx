@@ -50,7 +50,7 @@ const QuickActions: React.FC = () => {
 
   // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
-    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5">
+    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5">
       <h3 className="text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] mb-4">
         ⚡ Quick Actions
       </h3>
@@ -60,7 +60,7 @@ const QuickActions: React.FC = () => {
             key={action.label}
             type="button"
             onClick={() => navigate(action.path)}
-            className="flex flex-col items-center gap-2 p-4 rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] hover:shadow-md hover:shadow-[#E8E0B8]/30 dark:hover:shadow-black/20 transition-all duration-150 hover:-translate-y-0.5 cursor-pointer bg-white dark:bg-[#1E1E1E]"
+            className="flex flex-col items-center gap-2 p-4 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] hover:shadow-md hover:shadow-[#E8E0B8]/30 dark:hover:shadow-black/20 transition-all duration-150 hover:-translate-y-0.5 cursor-pointer bg-white dark:bg-[#1E1E1E]"
           >
             <div className={`p-2 rounded-lg ${action.color}`}>
               <action.icon size={20} />

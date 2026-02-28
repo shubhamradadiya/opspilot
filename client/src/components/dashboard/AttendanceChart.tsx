@@ -58,7 +58,7 @@ const DEMO_DATA = [
 // SKELETON
 // ============================================================================
 const ChartSkeleton: React.FC = () => (
-  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5 animate-pulse">
+  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5 animate-pulse">
     <div className="h-4 w-40 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded mb-4" />
     <div className="h-[250px] bg-[#F5F0D0] dark:bg-[#252525] rounded" />
   </div>
@@ -80,7 +80,7 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({
   if (loading) return <ChartSkeleton />;
 
   return (
-    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5">
+    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5">
       <h3 className="text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] mb-4">
         📊 Weekly Attendance
       </h3>

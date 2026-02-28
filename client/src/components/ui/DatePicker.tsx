@@ -25,7 +25,7 @@ const CustomInput = forwardRef<HTMLDivElement, any>(
         placeholder={placeholder}
         disabled={disabled}
         readOnly
-        className={`w-full h-9 pl-9 pr-3 rounded-md text-sm border bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none transition-all border-[#E8E0B8] dark:border-[#2E2E2E] focus:ring-2 focus:ring-[#D4AF37] ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+        className={`w-full h-9 pl-9 pr-3 rounded-md text-sm border bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none transition-all border-[#2A2A2A] dark:border-[#2E2E2E] focus:ring-2 focus:ring-[#D4AF37] ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
       />
       <CalendarIcon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9A9A9A]" />
     </div>

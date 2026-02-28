@@ -99,7 +99,7 @@ const AttendanceLogs: React.FC = () => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-4">
+      <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-4">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Employee selector (admin only) */}
           {isAdmin && (
@@ -108,7 +108,7 @@ const AttendanceLogs: React.FC = () => {
               <select
                 value={filters.selectedUid ?? ''}
                 onChange={(e) => dispatch(setFilters({ selectedUid: e.target.value || null }))}
-                className="w-full h-9 px-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                className="w-full h-9 px-3 rounded-md text-sm border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
               >
                 <option value="">All employees</option>
                 {employees.map((e) => (

@@ -14,7 +14,7 @@ import type { IDateWiseLog, IUserLog } from '@/store/attendance/attendance.types
 // SKELETON ROW
 // ============================================================================
 const SkeletonRow: React.FC = () => (
-  <tr className="border-b border-[#E8E0B8]/40 dark:border-[#2E2E2E]/60">
+  <tr className="border-b border-[#2A2A2A]/40 dark:border-[#2E2E2E]/60">
     {[1, 2, 3, 4, 5].map((i) => (
       <td key={i} className="px-4 py-3">
         <div className="h-4 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded animate-pulse" />
@@ -65,10 +65,10 @@ const AttendanceLogTable: React.FC<AttendanceLogTableProps> = ({
 
   // ── RENDER ──────────────────────────────────────────────────────────────────
   return (
-    <div className="overflow-x-auto rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E]">
+    <div className="overflow-x-auto rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E]">
       <table className="w-full text-sm">
         <thead>
-          <tr className="bg-[#FAF7E8] dark:bg-[#1A1A1A] border-b border-[#E8E0B8] dark:border-[#2E2E2E]">
+          <tr className="bg-[#FAF7E8] dark:bg-[#1A1A1A] border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
             <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Date</th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Clock In</th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Clock Out</th>

@@ -87,7 +87,7 @@ const SectionHeader: React.FC<{ icon: React.ReactNode; title: string }> = ({
   icon,
   title,
 }) => (
-  <div className="flex items-center gap-2 pb-3 border-b border-[#E8E0B8] dark:border-[#2E2E2E]">
+  <div className="flex items-center gap-2 pb-3 border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
     <span className="text-[#D4AF37]">{icon}</span>
     <h3 className="text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] uppercase tracking-wider">
       {title}

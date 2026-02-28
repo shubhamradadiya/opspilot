@@ -88,9 +88,9 @@ const AddLoanModal: React.FC<AddLoanModalProps> = ({
       />
 
       {/* Modal */}
-      <div className="relative z-10 w-full max-w-md bg-white dark:bg-[#1A1A1A] rounded-2xl border border-[#E8E0B8] dark:border-[#2E2E2E] shadow-2xl">
+      <div className="relative z-10 w-full max-w-md bg-white dark:bg-[#1A1A1A] rounded-2xl border border-[#2A2A2A] dark:border-[#2E2E2E] shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#E8E0B8] dark:border-[#2E2E2E]">
+        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
           <div className="flex items-center gap-2.5">
             <span className="text-[#D4AF37]"><DollarSign size={18} /></span>
             <h2 id="add-loan-title" className="text-base font-semibold text-[#2A2A2A] dark:text-[#F5F5F5]">Add Loan</h2>
@@ -130,7 +130,7 @@ const AddLoanModal: React.FC<AddLoanModalProps> = ({
 
           {/* Current loan info */}
           {selectedEmployee && selectedEmployee.loanAmount > 0 && (
-            <div className="rounded-lg bg-[#FAF7E8] dark:bg-[#1E1E1E] border border-[#E8E0B8] dark:border-[#2E2E2E] px-4 py-2.5">
+            <div className="rounded-lg bg-[#FAF7E8] dark:bg-[#1E1E1E] border border-[#2A2A2A] dark:border-[#2E2E2E] px-4 py-2.5">
               <p className="text-xs text-[#9A9A9A] dark:text-[#666666]">
                 Current loan: <span className="text-[#C0392B] font-semibold">${selectedEmployee.loanAmount}</span>
               </p>

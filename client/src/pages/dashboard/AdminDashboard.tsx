@@ -76,7 +76,7 @@ const AdminDashboard: React.FC = () => {
         <button
           type="button"
           onClick={handleRetry}
-          className="p-2 rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#F5F0D0] dark:hover:bg-[#252525] transition-colors cursor-pointer"
+          className="p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#F5F0D0] dark:hover:bg-[#252525] transition-colors cursor-pointer"
           aria-label="Refresh dashboard"
         >
           <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />

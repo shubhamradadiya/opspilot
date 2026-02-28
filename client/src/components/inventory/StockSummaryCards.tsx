@@ -40,7 +40,7 @@ export const StockSummaryCards: React.FC<Props> = ({ latestInventory }) => {
       {cards.map((card, idx) => (
         <div
           key={idx}
-          className="bg-white dark:bg-[#1E1E1E] border border-cream-border dark:border-ink-border shadow-sm rounded-xl p-6 transition-colors duration-150 hover:border-[#D4AF37] dark:hover:border-[#D4AF37]"
+          className="bg-white dark:bg-[#1E1E1E] border border-[#2A2A2A] dark:border-[#2E2E2E] shadow-sm rounded-xl p-6 transition-colors duration-150 hover:border-[#D4AF37] dark:hover:border-[#D4AF37]"
         >
           <div className="flex items-start justify-between">
             <div className="space-y-2">

@@ -31,7 +31,7 @@ const timeAgo = (iso: string): string => {
 // SKELETON
 // ============================================================================
 const ActivitySkeleton: React.FC = () => (
-  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5 animate-pulse">
+  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5 animate-pulse">
     <div className="h-4 w-44 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded mb-4" />
     {[1, 2, 3, 4, 5].map((i) => (
       <div key={i} className="flex items-start gap-3 mb-3">
@@ -58,7 +58,7 @@ const RecentActivityLog: React.FC<RecentActivityLogProps> = ({
   const entries = data ?? [];
 
   return (
-    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#E8E0B8] dark:border-[#2E2E2E] p-5">
+    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5">
       <div className="flex items-center gap-2 mb-4">
         <Bell size={16} className="text-[#D4AF37]" />
         <h3 className="text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5]">

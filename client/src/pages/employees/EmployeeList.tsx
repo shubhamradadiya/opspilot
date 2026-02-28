@@ -90,7 +90,7 @@ const EmployeeList: React.FC = () => {
             type="button"
             onClick={handleRefresh}
             aria-label="Refresh employees"
-            className="p-2 rounded-lg border border-[#E8E0B8] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#F5F0D0] dark:hover:bg-[#252525] transition-colors cursor-pointer"
+            className="p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#F5F0D0] dark:hover:bg-[#252525] transition-colors cursor-pointer"
           >
             <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
           </button>
@@ -118,7 +118,7 @@ const EmployeeList: React.FC = () => {
             placeholder="Search by name or email…"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full h-9 pl-9 pr-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] placeholder-[#9A9A9A] dark:placeholder-[#666666] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all"
+            className="w-full h-9 pl-9 pr-3 rounded-md text-sm border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] placeholder-[#9A9A9A] dark:placeholder-[#666666] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all"
           />
         </div>
 
@@ -128,7 +128,7 @@ const EmployeeList: React.FC = () => {
           onChange={(e) =>
             dispatch(setFilters({ role: e.target.value as 'all' | 'admin' | 'user' }))
           }
-          className="h-9 px-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all min-w-[130px]"
+          className="h-9 px-3 rounded-md text-sm border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all min-w-[130px]"
         >
           {ROLE_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -145,7 +145,7 @@ const EmployeeList: React.FC = () => {
               setFilters({ isActive: e.target.value as 'all' | 'active' | 'inactive' }),
             )
           }
-          className="h-9 px-3 rounded-md text-sm border border-[#E8E0B8] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all min-w-[130px]"
+          className="h-9 px-3 rounded-md text-sm border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all min-w-[130px]"
         >
           {STATUS_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>

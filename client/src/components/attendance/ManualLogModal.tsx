@@ -98,9 +98,9 @@ const ManualLogModal: React.FC<ManualLogModalProps> = ({
       />
 
       {/* Modal */}
-      <div className="relative z-10 w-full max-w-md bg-white dark:bg-[#1A1A1A] rounded-2xl border border-[#E8E0B8] dark:border-[#2E2E2E] shadow-2xl">
+      <div className="relative z-10 w-full max-w-md bg-white dark:bg-[#1A1A1A] rounded-2xl border border-[#2A2A2A] dark:border-[#2E2E2E] shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#E8E0B8] dark:border-[#2E2E2E]">
+        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
           <div className="flex items-center gap-2.5">
             <span className="text-[#D4AF37]"><Clock size={18} /></span>
             <h2 id="manual-log-title" className="text-base font-semibold text-[#2A2A2A] dark:text-[#F5F5F5]">
