@@ -18,7 +18,7 @@ const NotFound: React.FC = () => {
 
   // ── FUNCTIONS ──────────────────────────────────────────────────────────────
   const handleGoHome = () => {
-    navigate(isAdmin ? APP_ROUTES.DASHBOARD : APP_ROUTES.ATTENDANCE);
+    navigate(isAdmin ? APP_ROUTES.DASHBOARD : APP_ROUTES.ATTENDANCE.DASHBOARD);
   };
 
   // ── RENDER ─────────────────────────────────────────────────────────────────

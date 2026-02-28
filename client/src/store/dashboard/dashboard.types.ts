@@ -16,12 +16,19 @@ export interface IEmployeeSummary {
 
 /** Single attendance entry from GET /api/v1/attendance/today-logs */
 export interface ITodayAttendanceEntry {
-  uid: string;
+  userId: string;
   fullName: string;
-  clockInAt: string | null;
-  clockOutAt: string | null;
-  totalDuration: number | null;
-  isActive: boolean;
+  countryCode?: string;
+  phone?: string;
+  attendanceStatus: string;
+  userLogs: {
+    ulId: string;
+    status: string;
+    checkedInAt: number;
+    checkedOutAt: number | null;
+    createdAt: number;
+  }[];
+  totalHours: number;
 }
 
 /** Inventory record from GET /api/v1/inventory */

@@ -29,7 +29,8 @@ const GuestRoute: React.FC = () => {
   }
 
   if (isAuthenticated) {
-    const redirectTo = isAdmin ? APP_ROUTES.DASHBOARD : APP_ROUTES.ATTENDANCE;
+    const redirectTo =
+    isAdmin ? APP_ROUTES.DASHBOARD : APP_ROUTES.ATTENDANCE.DASHBOARD;
     return <Navigate to={redirectTo} replace />;
   }
 

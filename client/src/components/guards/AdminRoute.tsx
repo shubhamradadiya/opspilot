@@ -20,7 +20,7 @@ const AdminRoute: React.FC = () => {
 
   // ── RENDER ─────────────────────────────────────────────────────────────────
   if (!isAdmin) {
-    return <Navigate to={APP_ROUTES.ATTENDANCE} replace />;
+    return <Navigate to={APP_ROUTES.ATTENDANCE.DASHBOARD} replace />;
   }
 
   return <Outlet />;

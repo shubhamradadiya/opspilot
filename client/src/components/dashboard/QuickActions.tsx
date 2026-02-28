@@ -30,13 +30,13 @@ const ACTIONS = [
   {
     label: 'View Payouts',
     icon: Wallet,
-    path: APP_ROUTES.PAYOUTS,
+    path: APP_ROUTES.PAYOUTS.LIST,
     color: 'bg-[#EDD6F5] dark:bg-[rgba(106,58,138,0.15)] text-[#6A3A8A] dark:text-[#9A6ABA]',
   },
   {
     label: 'Attendance Logs',
     icon: ClipboardList,
-    path: APP_ROUTES.ATTENDANCE,
+    path: APP_ROUTES.ATTENDANCE.LOGS,
     color: 'bg-[#D4E8F5] dark:bg-[rgba(90,106,122,0.15)] text-[#5A6A7A] dark:text-[#8A9AAA]',
   },
 ];

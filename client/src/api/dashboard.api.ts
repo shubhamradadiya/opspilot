@@ -93,7 +93,9 @@ export const fetchDashboardData = async (): Promise<IDashboardData> => {
   const todayAttendance: ITodayAttendanceEntry[] = Array.isArray(attData?.data)
     ? attData.data
     : [];
-  const todayClockedIn = todayAttendance.filter((e) => e.clockInAt).length;
+
+  console.log("todayAttendance", todayAttendance);
+  const todayClockedIn = todayAttendance.filter((e) => e.userLogs && e.userLogs.length > 0).length;
   const todayAbsent = Math.max(0, employeeSummary.activeUsers - todayClockedIn);
 
   // ── Extract inventory ───────────────────────────────────────────────────
@@ -124,6 +126,16 @@ export const fetchDashboardData = async (): Promise<IDashboardData> => {
     ? expData.data.expenses
     : [];
   const totalMonthlyExpense = expData?.data?.totalExpense ?? 0;
+
+  console.log("employeeSummary", employeeSummary);
+  console.log("todayAttendance", todayAttendance);
+  console.log("todayClockedIn", todayClockedIn);
+  console.log("todayAbsent", todayAbsent);
+  console.log("inventoryTotals", inventoryTotals);
+  console.log("recentInventory", recentInventory);
+  console.log("recentActivity", recentActivity);
+  console.log("recentExpenses", recentExpenses);
+  console.log("totalMonthlyExpense", totalMonthlyExpense);
 
   return {
     employeeSummary,

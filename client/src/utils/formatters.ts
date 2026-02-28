@@ -147,5 +147,6 @@ export const formatCurrency = (
   amount: number,
   symbol: '$' | '€' | '£' = '$',
 ): string => {
+  if (amount == null || isNaN(amount)) return `${symbol}0.00`;
   return `${symbol}${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 };

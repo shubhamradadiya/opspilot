@@ -16,9 +16,9 @@ interface TodayAttendanceProps {
 // ============================================================================
 // HELPERS
 // ============================================================================
-const formatTime = (iso: string | null): string => {
-  if (!iso) return '—';
-  const d = new Date(iso);
+const formatTime = (value: string | number | null): string => {
+  if (!value) return '—';
+  const d = new Date(value);
   return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
@@ -79,39 +79,44 @@ const TodayAttendance: React.FC<TodayAttendanceProps> = ({
               </tr>
             </thead>
             <tbody>
-              {entries.slice(0, 6).map((entry) => (
-                <tr
-                  key={entry.uid}
-                  className="border-b border-[#E8E0B8]/50 dark:border-[#2E2E2E]/50 last:border-0"
-                >
-                  <td className="py-2 text-[#2A2A2A] dark:text-[#F5F5F5] font-medium">
-                    {entry.fullName ?? 'Unknown'}
-                  </td>
-                  <td className="py-2 text-[#5A5A5A] dark:text-[#AAAAAA]">
-                    {formatTime(entry.clockInAt)}
-                  </td>
-                  <td className="py-2 text-[#5A5A5A] dark:text-[#AAAAAA]">
-                    {formatTime(entry.clockOutAt)}
-                  </td>
-                  <td className="py-2">
-                    <span
-                      className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
-                        entry.clockInAt && !entry.clockOutAt
-                          ? 'bg-[#D4F5E0] text-[#2D7A4F] dark:bg-[rgba(45,122,79,0.15)] dark:text-[#4CAF80]'
-                          : entry.clockOutAt
-                            ? 'bg-[#F0EDD0] text-[#5A5A5A] dark:bg-[rgba(90,90,90,0.15)] dark:text-[#AAAAAA]'
-                            : 'bg-[#FADADD] text-[#C0392B] dark:bg-[rgba(192,57,43,0.15)] dark:text-[#E05A4A]'
-                      }`}
-                    >
-                      {entry.clockInAt && !entry.clockOutAt
-                        ? 'Active'
-                        : entry.clockOutAt
-                          ? 'Done'
-                          : 'Absent'}
-                    </span>
-                  </td>
-                </tr>
-              ))}
+              {entries.slice(0, 6).map((entry) => {
+                const latestLog = entry.userLogs?.[entry.userLogs.length - 1];
+                const isActive = entry.attendanceStatus === 'clockedIn';
+                
+                return (
+                  <tr
+                    key={entry.userId}
+                    className="border-b border-[#E8E0B8]/50 dark:border-[#2E2E2E]/50 last:border-0"
+                  >
+                    <td className="py-2 text-[#2A2A2A] dark:text-[#F5F5F5] font-medium">
+                      {entry.fullName ?? 'Unknown'}
+                    </td>
+                    <td className="py-2 text-[#5A5A5A] dark:text-[#AAAAAA]">
+                      {formatTime(latestLog?.checkedInAt ?? null)}
+                    </td>
+                    <td className="py-2 text-[#5A5A5A] dark:text-[#AAAAAA]">
+                      {formatTime(latestLog?.checkedOutAt ?? null)}
+                    </td>
+                    <td className="py-2">
+                      <span
+                        className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                          isActive
+                            ? 'bg-[#D4F5E0] text-[#2D7A4F] dark:bg-[rgba(45,122,79,0.15)] dark:text-[#4CAF80]'
+                            : entry.userLogs?.length
+                              ? 'bg-[#F0EDD0] text-[#5A5A5A] dark:bg-[rgba(90,90,90,0.15)] dark:text-[#AAAAAA]'
+                              : 'bg-[#FADADD] text-[#C0392B] dark:bg-[rgba(192,57,43,0.15)] dark:text-[#E05A4A]'
+                        }`}
+                      >
+                        {isActive
+                          ? 'Active'
+                          : entry.userLogs?.length
+                            ? 'Done'
+                            : 'Absent'}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
