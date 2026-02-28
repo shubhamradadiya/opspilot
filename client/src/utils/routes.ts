@@ -26,6 +26,7 @@ export const API_ROUTES = {
     INVENTORY: '/api/v1/inventory',
     ACTIVITY_LOGS: '/api/v1/inventory/activity-logs',
     EXPENSES: '/api/v1/expenses',
+    COUNTRIES: '/api/v1/country',
   },
 } as const;
 
