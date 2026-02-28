@@ -51,8 +51,8 @@
 | FE-02 | Auth Integration & App Shell | `✅` | 2026-02-27 | 2026-02-28 | AuthRoute enabled, OpsPilot branding |
 | FE-03 | Admin Dashboard | `✅` | 2026-02-28 | 2026-02-28 | Recharts charts, 5-endpoint aggregation |
 | FE-04 | Employee Management | `✅` | 2026-02-28 | 2026-02-28 | Full CRUD, optimistic toggle, Zod forms |
-| FE-05 | Attendance Module | `⬜` | — | — | — |
-| FE-06 | Payout Module | `⬜` | — | — | — |
+| FE-05 | Attendance Module | `✅` | 2026-02-28 | 2026-02-28 | ClockButton, live timer, logs, timestamps grid, manual log |
+| FE-06 | Payout Module | `✅` | 2026-02-28 | 2026-02-28 | Role-aware list, loan modal, PDF receipt, create form |
 | FE-07 | Inventory Module | `⬜` | — | — | — |
 | FE-08 | Expense Module | `⬜` | — | — | — |
 | FE-09 | Walk-In Customer Module | `⬜` | — | — | — |
@@ -69,8 +69,8 @@ FE-01  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Project Setup & Auth UI
 FE-02  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Auth Integration & App Shell
 FE-03  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Admin Dashboard
 FE-04  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Employee Management
-FE-05  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Attendance Module
-FE-06  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Payout Module
+FE-05  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Attendance Module
+FE-06  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Payout Module
 FE-07  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Inventory Module
 FE-08  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Expense Module
 FE-09  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Walk-In Customer Module
