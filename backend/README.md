@@ -1,4 +1,4 @@
-# Uvin Tire
+# Ops Pilot
 
 - [Prerequisites](#prerequisites)
 - [Dependencies](#dependencies)
@@ -34,8 +34,8 @@ npm install pm2 -g
 ### 1.1 Clone the Repository
 
 ```bash
-git clone https://gitlab.com/uniqualitech/web-squad/uvin-tire-backend
-cd uvin-tire-backend
+git clone https://gitlab.com/uniqualitech/web-squad/ops-pilot-backend
+cd ops-pilot-backend
 ```
 
 ### 1.2 Install Dependencies

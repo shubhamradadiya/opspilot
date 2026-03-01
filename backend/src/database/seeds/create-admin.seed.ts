@@ -26,11 +26,11 @@ export default class CreateAdminSeed implements Seeder {
     const superAdminPassword = configService.get('SUPER_ADMIN_PASSWORD');
 
     const admin = {
-      email: 'admin@uvin.com',
+      email: 'admin@opspilot.com',
       password: adminPassword,
     };
     const superAdmin = {
-      email: 'superadmin@uvin.com',
+      email: 'superadmin@opspilot.com',
       password: superAdminPassword,
     };
 

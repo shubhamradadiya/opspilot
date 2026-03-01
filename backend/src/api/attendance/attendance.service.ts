@@ -1144,7 +1144,7 @@ export class AttendanceService {
     const startOfToday = moment().tz(timeZone).startOf('day').toDate();
     const endOfToday = moment().tz(timeZone).endOf('day').toDate();
 
-    // In UVIN system, Working week is Friday to Thursday
+    // In Ops Pilot system, Working week is Friday to Thursday
     const now = moment().tz(timeZone)
 
     // 5 = Friday

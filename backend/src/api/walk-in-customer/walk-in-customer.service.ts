@@ -682,7 +682,7 @@ export class WalkInCustomerService {
       const COMPANY_PHONE_NUMBER =
         this.configService.get<string>('COMPANY_PHONE_NUMBER') || '5105669355';
       const COMPANY_EMAIL =
-        this.configService.get<string>('COMPANY_EMAIL') || 'uvintirereuse@gmail.com';
+        this.configService.get<string>('COMPANY_EMAIL') || 'opspilot@gmail.com';
       const COMPANY_ADDRESS =
         this.configService.get<string>('COMPANY_ADDRESS') || '5312, E Huston RD, Huston, TX 77028';
 
