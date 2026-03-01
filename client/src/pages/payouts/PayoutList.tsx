@@ -21,7 +21,7 @@ import { setFilters } from '@/store/payouts/payouts.slice';
 import { DatePicker } from '@/components/ui/DatePicker';
 import { getCurrentWeekRange, formatCurrency } from '@/utils/formatters';
 import { APP_ROUTES } from '@/utils/routes';
-import { Button } from '@/components/ui';
+import { Button, Pagination } from '@/components/ui';
 import type { AppDispatch, RootState } from '@/store/store';
 import type { IPayout } from '@/store/payouts/payouts.types';
 
@@ -32,12 +32,16 @@ const PayoutList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((s: RootState) => s.auth);
   const isAdmin = user?.role === 'admin';
-  const { allPayouts, selfPayouts, filters, loading, submitting } = useSelector(
+  const { allPayouts, selfPayouts, filters, meta, loading, submitting } = useSelector(
     (s: RootState) => s.payouts,
   );
   const employees = useSelector((s: RootState) => s.employees.list);
   const [loanModalOpen, setLoanModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('list');
+
+  // Pagination state
+  const [page, setPage] = useState(1);
+  const LIMIT = 20;
 
   // ── Load payouts ──────────────────────────────────────────────────────────────
   const load = useCallback(() => {
@@ -48,7 +52,8 @@ const PayoutList: React.FC = () => {
           startTimestamp: filters.startTimestamp ?? Date.now() - 7 * 86_400_000,
           endTimestamp: filters.endTimestamp ?? Date.now(),
           search: filters.search || undefined,
-          limit: 50,
+          limit: LIMIT,
+          page,
         }),
       );
     } else {
@@ -56,11 +61,17 @@ const PayoutList: React.FC = () => {
         fetchSelfPayoutsThunk({
           startTimestamp: filters.startTimestamp,
           endTimestamp: filters.endTimestamp,
-          limit: 50,
+          limit: LIMIT,
+          page,
         }),
       );
     }
-  }, [dispatch, isAdmin, filters]);
+  }, [dispatch, isAdmin, filters, page]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [filters.startTimestamp, filters.endTimestamp, filters.calenderSlotType, filters.search]);
 
   useEffect(() => {
     load();
@@ -325,6 +336,17 @@ const PayoutList: React.FC = () => {
             </div>
           )}
         </div>
+      )}
+
+      {/* Pagination Controls */}
+      {viewMode === 'list' && meta && (
+        <Pagination
+          currentPage={page}
+          totalPages={meta.totalPages}
+          totalItems={meta.totalItems}
+          itemsPerPage={LIMIT}
+          onPageChange={setPage}
+        />
       )}
 
       {/* Add loan modal */}

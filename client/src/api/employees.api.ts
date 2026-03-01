@@ -42,6 +42,7 @@ export interface IGetEmployeesParams {
   search?: string;
   count?: number;
   limit?: number;
+  page?: number;
   isActive?: boolean;
 }
 

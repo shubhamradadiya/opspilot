@@ -7,7 +7,7 @@
 import React from 'react';
 import { Trash2, ChevronDown, ChevronRight } from 'lucide-react';
 import DurationBadge from './DurationBadge';
-import { formatDate, formatTime } from '@/utils/formatters';
+import { formatDate, formatTime, formatTimestamp } from '@/utils/formatters';
 import type { IDateWiseLog, IUserLog } from '@/store/attendance/attendance.types';
 
 // ============================================================================
@@ -97,7 +97,10 @@ const AttendanceLogTable: React.FC<AttendanceLogTableProps> = ({
                             : <ChevronDown size={14} className="text-[#D4AF37]" />
                           }
                           <span className="font-semibold text-[#2A2A2A] dark:text-[#F5F5F5]">
-                            {formatDate(group.date + 'T00:00:00')}
+                            {typeof group.date === 'number' || (!isNaN(Number(group.date)) && !String(group.date).includes('-'))
+                              ? formatTimestamp(Number(group.date))
+                              : formatDate(String(group.date) + (String(group.date).includes('T') ? '' : 'T00:00:00'))
+                            }
                           </span>
                           <span className="ml-auto text-xs text-[#9A9A9A] dark:text-[#666666]">
                             {group.logs.length} {group.logs.length === 1 ? 'entry' : 'entries'}

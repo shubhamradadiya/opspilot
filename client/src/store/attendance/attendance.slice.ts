@@ -11,6 +11,7 @@ import type {
   ITodayAttendanceEntry,
   ITimestampEntry,
   IAttendanceFilters,
+  IPaginationMeta,
 } from './attendance.types';
 import { getCurrentWeekRange } from '@/utils/formatters';
 
@@ -32,6 +33,7 @@ const initialState: IAttendanceState = {
     selectedUid: null,
     calenderSlotType: 'DAY',
   },
+  meta: null,
   statusLoading: false,
   clockLoading: false,
   logsLoading: false,
@@ -83,6 +85,9 @@ const attendanceSlice = createSlice({
     setTimestamps: (state, action: PayloadAction<ITimestampEntry[]>) => {
       state.timestamps = action.payload;
     },
+    setMeta: (state, action: PayloadAction<IPaginationMeta | null>) => {
+      state.meta = action.payload;
+    },
 
     // ── Filters ───────────────────────────────────────────────────────────────
     setFilters: (state, action: PayloadAction<Partial<IAttendanceFilters>>) => {
@@ -119,6 +124,7 @@ export const {
   setFilters,
   resetFilters,
   removeLogById,
+  setMeta,
 } = attendanceSlice.actions;
 
 export const attendanceReducer = attendanceSlice.reducer;

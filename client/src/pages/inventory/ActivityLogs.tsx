@@ -1,16 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { getActivityLogs, markLogsAsRead } from '../../store/inventory/inventory.thunk';
 import { RootState } from '../../store/store';
 import { ActivityLogTable } from '../../components/inventory/ActivityLogTable';
+import { Pagination } from '@/components/ui';
 
 const ActivityLogs: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { logs, loading } = useAppSelector((state: RootState) => state.inventory);
+  const { logs, loading, logsTotalPages, logsTotalItems } = useAppSelector((state: RootState) => state.inventory);
+
+  const [page, setPage] = useState(1);
+  const LIMIT = 20;
 
   useEffect(() => {
-    dispatch(getActivityLogs({ limit: 100 }));
-  }, [dispatch]);
+    dispatch(getActivityLogs({ limit: LIMIT, page }));
+  }, [dispatch, page]);
 
   const handleMarkRead = (logIds: number[]) => {
     dispatch(markLogsAsRead(logIds));
@@ -30,7 +34,18 @@ const ActivityLogs: React.FC = () => {
         </div>
       </div>
 
-      <ActivityLogTable data={logs} isLoading={loading} onMarkRead={handleMarkRead} />
+      <div className="space-y-4">
+        <ActivityLogTable data={logs} isLoading={loading} onMarkRead={handleMarkRead} />
+        
+        {/* Pagination Controls */}
+        <Pagination
+          currentPage={page}
+          totalPages={logsTotalPages}
+          totalItems={logsTotalItems}
+          itemsPerPage={LIMIT}
+          onPageChange={setPage}
+        />
+      </div>
     </div>
   );
 };

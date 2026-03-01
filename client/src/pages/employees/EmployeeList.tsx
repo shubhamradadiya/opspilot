@@ -13,8 +13,9 @@ import {
   selectEmployeeFilters,
   setFilters,
   resetFilters,
+  selectEmployeesMeta,
 } from '@/store/employees/employees.slice';
-import { Button } from '@/components/ui';
+import { Button, Pagination } from '@/components/ui';
 import EmployeeTable from '@/components/employees/EmployeeTable';
 import { APP_ROUTES } from '@/utils/routes';
 
@@ -44,30 +45,40 @@ const EmployeeList: React.FC = () => {
   const loading = useAppSelector(selectEmployeesLoading);
   const error = useAppSelector(selectEmployeesError);
   const filters = useAppSelector(selectEmployeeFilters);
+  const meta = useAppSelector(selectEmployeesMeta);
 
   // ── LOCAL STATE ────────────────────────────────────────────────────────────
   const [searchInput, setSearchInput] = useState(filters.search);
+  const [page, setPage] = useState(1);
+  const LIMIT = 20;
 
   // ── EFFECTS ────────────────────────────────────────────────────────────────
   useEffect(() => {
-    dispatch(fetchEmployeesThunk());
-  }, [dispatch]);
+    dispatch(fetchEmployeesThunk({ limit: LIMIT, page }));
+  }, [dispatch, filters.role, filters.isActive, filters.search, page]);
 
   // Debounce search input → filter (300ms)
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(setFilters({ search: searchInput }));
+      setPage(1); // Reset page on search
     }, 300);
     return () => clearTimeout(timer);
   }, [searchInput, dispatch]);
 
+  // Reset page when other filters change
+  useEffect(() => {
+    setPage(1);
+  }, [filters.role, filters.isActive]);
+
   // ── HANDLERS ───────────────────────────────────────────────────────────────
   const handleRefresh = () => {
-    dispatch(fetchEmployeesThunk());
+    dispatch(fetchEmployeesThunk({ limit: LIMIT, page }));
   };
 
   const handleReset = () => {
     setSearchInput('');
+    setPage(1);
     dispatch(resetFilters());
   };
 
@@ -175,6 +186,17 @@ const EmployeeList: React.FC = () => {
 
       {/* ── Table ── */}
       <EmployeeTable employees={employees} loading={loading} />
+
+      {/* ── Pagination ── */}
+      {meta && (
+        <Pagination
+          currentPage={page}
+          totalPages={meta.totalPages}
+          totalItems={meta.totalItems}
+          itemsPerPage={LIMIT}
+          onPageChange={setPage}
+        />
+      )}
     </div>
   );
 };

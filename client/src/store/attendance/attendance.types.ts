@@ -90,6 +90,13 @@ export interface IAttendanceFilters {
   calenderSlotType: 'DAY' | 'WEEK';
 }
 
+export interface IPaginationMeta {
+  totalItems: number;
+  itemsPerPage: number;
+  totalPages: number;
+  currentCount: number;
+}
+
 // ============================================================================
 // REDUX STATE
 // ============================================================================
@@ -106,6 +113,8 @@ export interface IAttendanceState {
   timestamps: ITimestampEntry[];
   /** UI filters */
   filters: IAttendanceFilters;
+  /** Pagination metadata */
+  meta: IPaginationMeta | null;
   /** Clock status check loading */
   statusLoading: boolean;
   /** Clock in/out in progress */

@@ -14,7 +14,7 @@ import { fetchEmployeesThunk } from '@/store/employees/employees.thunk';
 import { setFilters } from '@/store/attendance/attendance.slice';
 import { DatePicker } from '@/components/ui/DatePicker';
 import { getCurrentWeekRange } from '@/utils/formatters';
-import { Button } from '@/components/ui';
+import { Button, Pagination } from '@/components/ui';
 import type { AppDispatch, RootState } from '@/store/store';
 
 // ============================================================================
@@ -25,11 +25,20 @@ const AttendanceLogs: React.FC = () => {
   const { isAdmin } = useSelector((s: RootState) => ({
     isAdmin: s.auth.user?.role === 'admin',
   }));
-  const { logs, filters, logsLoading, submitting } = useSelector(
+  const { logs, filters, logsLoading, submitting, meta } = useSelector(
     (s: RootState) => s.attendance,
   );
   const employees = useSelector((s: RootState) => s.employees.list);
   const [manualModalOpen, setManualModalOpen] = useState(false);
+  
+  // Pagination State
+  const [page, setPage] = useState(1);
+  const LIMIT = 20;
+
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [filters.startTimestamp, filters.endTimestamp, filters.selectedUid]);
 
   // ── Load logs ───────────────────────────────────────────────────────────────
   const load = useCallback(() => {
@@ -38,10 +47,11 @@ const AttendanceLogs: React.FC = () => {
         startTimestamp: filters.startTimestamp,
         endTimestamp: filters.endTimestamp,
         uid: filters.selectedUid,
-        limit: 50,
+        limit: LIMIT,
+        count: (page - 1) * LIMIT,
       }),
     );
-  }, [dispatch, filters.startTimestamp, filters.endTimestamp, filters.selectedUid]);
+  }, [dispatch, filters.startTimestamp, filters.endTimestamp, filters.selectedUid, page]);
 
   useEffect(() => {
     load();
@@ -168,6 +178,17 @@ const AttendanceLogs: React.FC = () => {
         onDelete={handleDelete}
         submitting={submitting}
       />
+      
+      {/* Pagination Controls */}
+      {meta && (
+        <Pagination
+          currentPage={page}
+          totalPages={meta.totalPages}
+          totalItems={meta.totalItems}
+          itemsPerPage={LIMIT}
+          onPageChange={setPage}
+        />
+      )}
 
       {/* Manual log modal (admin) */}
       {isAdmin && (

@@ -12,18 +12,23 @@ import { StockSummaryCards } from '../../components/inventory/StockSummaryCards'
 import { InventoryForm, InventoryFormData } from '../../components/inventory/InventoryForm';
 import { Plus, X } from 'lucide-react';
 import { IInventory } from '../../store/inventory/inventory.types';
+import { Pagination } from '@/components/ui';
 
 const InventoryList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { records, loading } = useAppSelector((state: RootState) => state.inventory);
+  const { records, loading, totalPages, totalItems } = useAppSelector((state: RootState) => state.inventory);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingRecord, setEditingRecord] = useState<IInventory | null>(null);
   const [isDeletingId, setIsDeletingId] = useState<string | null>(null);
 
+  // Pagination State
+  const [page, setPage] = useState(1);
+  const LIMIT = 20;
+
   useEffect(() => {
-    dispatch(getInventories({ limit: 100 })); // Load primary batch
-  }, [dispatch]);
+    dispatch(getInventories({ limit: LIMIT, page }));
+  }, [dispatch, page]);
 
   const handleOpenModal = (record?: IInventory) => {
     if (record) setEditingRecord(record);
@@ -69,9 +74,12 @@ const InventoryList: React.FC = () => {
     setIsDeletingId(iId);
     await dispatch(deleteInventory(iId));
     setIsDeletingId(null);
+    
+    // Potentially refresh page if needed (already managed by thunk reducer optionally or relying on reload)
+    // Actually the deleteInventory thunk deletes from state, but pagination might be off by 1 item, which is usually fine until a refresh.
   };
 
-  const latestInventory = records.length > 0 ? records[0] : null;
+  const latestInventory = records.length > 0 && page === 1 ? records[0] : null;
 
   return (
     <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-300">
@@ -96,13 +104,24 @@ const InventoryList: React.FC = () => {
 
       <StockSummaryCards latestInventory={latestInventory} />
 
-      <InventoryTable
-        data={records}
-        isLoading={loading}
-        onEdit={handleOpenModal}
-        onDelete={handleDelete}
-        isDeletingId={isDeletingId}
-      />
+      <div className="space-y-4">
+        <InventoryTable
+          data={records}
+          isLoading={loading}
+          onEdit={handleOpenModal}
+          onDelete={handleDelete}
+          isDeletingId={isDeletingId}
+        />
+        
+        {/* Pagination Controls */}
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          itemsPerPage={LIMIT}
+          onPageChange={setPage}
+        />
+      </div>
 
       {/* Form Modal */}
       {isModalOpen && (

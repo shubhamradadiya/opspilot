@@ -18,6 +18,7 @@ import {
   setError,
   setAllPayouts,
   setSelfPayouts,
+  setMeta,
 } from './payouts.slice';
 import type { ICreatePayoutPayload, IAddLoanPayload } from './payouts.types';
 
@@ -30,12 +31,14 @@ export const fetchAllPayoutsThunk = (params: {
   endTimestamp: number;
   search?: string;
   limit?: number;
+  page?: number;
 }) => async (dispatch: AppDispatch) => {
   dispatch(setLoading(true));
   dispatch(setError(null));
   try {
-    const { payouts } = await fetchAllPayouts(params);
+    const { payouts, meta } = await fetchAllPayouts(params);
     dispatch(setAllPayouts(payouts));
+    if (meta) dispatch(setMeta(meta));
   } catch {
     dispatch(setError('Failed to load payouts'));
   } finally {
@@ -50,12 +53,14 @@ export const fetchSelfPayoutsThunk = (params: {
   startTimestamp?: number | null;
   endTimestamp?: number | null;
   limit?: number;
+  page?: number;
 }) => async (dispatch: AppDispatch) => {
   dispatch(setLoading(true));
   dispatch(setError(null));
   try {
-    const { payouts } = await fetchSelfPayouts(params);
+    const { payouts, meta } = await fetchSelfPayouts(params);
     dispatch(setSelfPayouts(payouts));
+    if (meta) dispatch(setMeta(meta));
   } catch {
     dispatch(setError('Failed to load your payouts'));
   } finally {

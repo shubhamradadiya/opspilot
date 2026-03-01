@@ -12,6 +12,8 @@ import type {
   IAddLoanPayload,
 } from '@/store/payouts/payouts.types';
 
+import type { IPaginationMeta } from '@/store/employees/employees.types';
+
 // ============================================================================
 // RESPONSE SHAPES
 // ============================================================================
@@ -19,7 +21,7 @@ interface ApiResponse<T> {
   statusCode: number;
   message: string;
   data: T;
-  meta?: { totalItems: number; itemsPerPage: number; totalPages: number; currentCount: number };
+  meta?: IPaginationMeta;
 }
 
 interface AllPayoutsData {
@@ -71,19 +73,24 @@ export const addLoan = async (payload: IAddLoanPayload): Promise<void> => {
 export const fetchSelfPayouts = async (params: {
   count?: number;
   limit?: number;
+  page?: number;
   startTimestamp?: number | null;
   endTimestamp?: number | null;
-}): Promise<{ payouts: ISelfPayout[]; total: number }> => {
+}): Promise<{ payouts: ISelfPayout[]; meta?: IPaginationMeta }> => {
   const query = new URLSearchParams();
   if (params.count) query.set('count', String(params.count));
   if (params.limit) query.set('limit', String(params.limit));
+  if (params.page) {
+    const calculatedCount = (params.page - 1) * (params.limit || 20);
+    query.set('count', String(calculatedCount));
+  }
   if (params.startTimestamp) query.set('startTimestamp', String(params.startTimestamp));
   if (params.endTimestamp) query.set('endTimestamp', String(params.endTimestamp));
 
   const url = `${API_ROUTES.PAYOUTS.SELF}?${query.toString()}`;
   const res = await axiosInstance.get<ApiResponse<ISelfPayout[]>>(url);
   const d = res.data as unknown as ApiResponse<ISelfPayout[]>;
-  return { payouts: d.data ?? [], total: d.meta?.totalItems ?? 0 };
+  return { payouts: d.data ?? [], meta: d.meta };
 };
 
 /**
@@ -96,8 +103,9 @@ export const fetchAllPayouts = async (params: {
   endTimestamp: number;
   count?: number;
   limit?: number;
+  page?: number;
   search?: string;
-}): Promise<{ payouts: IUserWisePayout[]; total: number }> => {
+}): Promise<{ payouts: IUserWisePayout[]; meta?: IPaginationMeta }> => {
   const query = new URLSearchParams({
     calenderSlotType: params.calenderSlotType,
     startTimestamp: String(params.startTimestamp),
@@ -105,12 +113,16 @@ export const fetchAllPayouts = async (params: {
   });
   if (params.count) query.set('count', String(params.count));
   if (params.limit) query.set('limit', String(params.limit));
+  if (params.page) {
+    const calculatedCount = (params.page - 1) * (params.limit || 20);
+    query.set('count', String(calculatedCount));
+  }
   if (params.search) query.set('search', params.search);
 
   const url = `${API_ROUTES.PAYOUTS.ALL}?${query.toString()}`;
   const res = await axiosInstance.get<ApiResponse<AllPayoutsData>>(url);
   const d = res.data as unknown as ApiResponse<AllPayoutsData>;
-  return { payouts: d.data.payouts ?? [], total: d.meta?.totalItems ?? 0 };
+  return { payouts: d.data.payouts ?? [], meta: d.meta };
 };
 
 /**

@@ -75,6 +75,8 @@ export interface IPayoutFilters {
   calenderSlotType: 'DAY' | 'WEEK';
 }
 
+import type { IPaginationMeta } from '../employees/employees.types';
+
 // ============================================================================
 // REDUX STATE
 // ============================================================================
@@ -84,6 +86,7 @@ export interface IPayoutsState {
   /** User: self payout list */
   selfPayouts: ISelfPayout[];
   filters: IPayoutFilters;
+  meta: IPaginationMeta | null;
   loading: boolean;
   submitting: boolean;
   error: string | null;

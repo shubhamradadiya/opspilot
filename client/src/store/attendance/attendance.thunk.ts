@@ -27,6 +27,7 @@ import {
   setSubmitting,
   setError,
   removeLogById,
+  setMeta,
 } from './attendance.slice';
 
 // ============================================================================
@@ -85,9 +86,10 @@ export const fetchLogsThunk = (params: {
   dispatch(setLogsLoading(true));
   dispatch(setError(null));
   try {
-    const { logs, summary } = await fetchAttendanceLogs(params);
+    const { logs, summary, meta } = await fetchAttendanceLogs(params);
     dispatch(setLogs(logs));
     dispatch(setSummary(summary));
+    dispatch(setMeta(meta ?? null));
   } catch {
     dispatch(setError('Failed to load attendance logs'));
   } finally {

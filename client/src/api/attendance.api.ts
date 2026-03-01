@@ -101,10 +101,10 @@ export const fetchAttendanceLogs = async (params: {
   startTimestamp?: number | null;
   endTimestamp?: number | null;
   uid?: string | null;
-}): Promise<{ logs: IDateWiseLog[]; summary: IAttendanceSummary; total: number }> => {
+}): Promise<{ logs: IDateWiseLog[]; summary: IAttendanceSummary; meta?: any }> => {
   const query = new URLSearchParams();
-  if (params.count) query.set('count', String(params.count));
-  if (params.limit) query.set('limit', String(params.limit));
+  if (params.count !== undefined) query.set('count', String(params.count));
+  if (params.limit !== undefined) query.set('limit', String(params.limit));
   if (params.startTimestamp) query.set('startTimestamp', String(params.startTimestamp));
   if (params.endTimestamp) query.set('endTimestamp', String(params.endTimestamp));
   if (params.uid) query.set('uid', params.uid);
@@ -115,7 +115,7 @@ export const fetchAttendanceLogs = async (params: {
   return {
     logs: d.data.userLogs ?? [],
     summary: d.data.attendanceSummary,
-    total: d.meta?.totalItems ?? 0,
+    meta: d.meta,
   };
 };
 

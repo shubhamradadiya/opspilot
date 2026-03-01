@@ -25,6 +25,7 @@ const initialState: IPayoutsState = {
     endTimestamp: end,
     calenderSlotType: 'DAY',
   },
+  meta: null,
   loading: false,
   submitting: false,
   error: null,
@@ -55,6 +56,9 @@ const payoutsSlice = createSlice({
     setFilters: (state, action: PayloadAction<Partial<IPayoutFilters>>) => {
       state.filters = { ...state.filters, ...action.payload };
     },
+    setMeta: (state, action: PayloadAction<any | null>) => {
+      state.meta = action.payload;
+    },
     resetFilters: (state) => {
       state.filters = initialState.filters;
     },
@@ -68,6 +72,7 @@ export const {
   setAllPayouts,
   setSelfPayouts,
   setFilters,
+  setMeta,
   resetFilters,
 } = payoutsSlice.actions;
 
