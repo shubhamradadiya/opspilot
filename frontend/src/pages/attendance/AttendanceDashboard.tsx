@@ -50,13 +50,16 @@ const AttendanceDashboard: React.FC = () => {
   // ── Fetch clock status on mount ─────────────────────────────────────────────
   useEffect(() => {
     if (!user) return;
-    dispatch(
-      checkStatusThunk({
-        isoCode: user.isoCode ?? 'IN',
-        countryCode: user.countryCode ?? '+91',
-        phoneNumber: user.phone ?? '',
-      }),
-    );
+    // Only check clock status when we have a valid phone number
+    if (user.phone) {
+      dispatch(
+        checkStatusThunk({
+          isoCode: user.isoCode ?? 'IN',
+          countryCode: user.countryCode ?? '+91',
+          phoneNumber: user.phone,
+        }),
+      );
+    }
     dispatch(fetchLogsThunk({ limit: 10 }));
   }, [dispatch, user]);
 
@@ -71,13 +74,15 @@ const AttendanceDashboard: React.FC = () => {
       }),
     );
     // Re-check status after toggle
-    dispatch(
-      checkStatusThunk({
-        isoCode: user.isoCode ?? 'IN',
-        countryCode: user.countryCode ?? '+91',
-        phoneNumber: user.phone ?? '',
-      }),
-    );
+    if (user.phone) {
+      dispatch(
+        checkStatusThunk({
+          isoCode: user.isoCode ?? 'IN',
+          countryCode: user.countryCode ?? '+91',
+          phoneNumber: user.phone,
+        }),
+      );
+    }
     dispatch(fetchLogsThunk({ limit: 10 }));
   }, [dispatch, user, status]);
 
