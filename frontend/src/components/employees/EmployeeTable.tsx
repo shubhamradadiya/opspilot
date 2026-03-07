@@ -101,7 +101,105 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ employees, loading = fals
   // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
     <>
-      <div className="rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] overflow-hidden">
+      {/* ── MOBILE: Stacked cards (hidden on sm+) ──────────────────────────── */}
+      <div className="sm:hidden space-y-3">
+        {loading ? (
+          Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-4 space-y-2 animate-pulse">
+              {[1, 2, 3].map((j) => (
+                <div key={j} className="h-4 bg-[#F5F0D0] dark:bg-[#252525] rounded" />
+              ))}
+            </div>
+          ))
+        ) : filtered.length === 0 ? (
+          <div className="py-12 text-center text-[#9A9A9A] dark:text-[#666666]">
+            <p className="font-medium text-[#2A2A2A] dark:text-[#F5F5F5] mb-1">No employees found</p>
+            <p className="text-sm">Try adjusting your search or filters.</p>
+          </div>
+        ) : (
+          filtered.map((emp) => (
+            <div
+              key={emp.uid}
+              className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-4 space-y-3"
+            >
+              {/* Top: avatar + name + actions */}
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#F0DFA0] dark:bg-[rgba(212,175,55,0.15)] flex items-center justify-center">
+                    <span className="text-xs font-bold text-[#D4AF37]">{getInitials(emp.fullName)}</span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-[#2A2A2A] dark:text-[#F5F5F5] text-sm">{emp.fullName}</p>
+                    {emp.email && <p className="text-xs text-[#9A9A9A] dark:text-[#666666]">{emp.email}</p>}
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => handleEdit(emp.uid)}
+                    aria-label={`Edit ${emp.fullName}`}
+                    className="p-1.5 rounded-lg text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#F0DFA0] dark:hover:bg-[rgba(212,175,55,0.1)] hover:text-[#D4AF37] transition-colors"
+                  >
+                    <Pencil size={15} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDeleteTarget({ uid: emp.uid, name: emp.fullName })}
+                    aria-label={`Delete ${emp.fullName}`}
+                    className="p-1.5 rounded-lg text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#FADADD] dark:hover:bg-[rgba(192,57,43,0.1)] hover:text-[#C0392B] transition-colors"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Details grid */}
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <p className="text-[#9A9A9A] dark:text-[#666666]">Phone</p>
+                  <p className="mt-0.5 text-[#5A5A5A] dark:text-[#AAAAAA]">{formatPhone(emp.countryCode, emp.phone)}</p>
+                </div>
+                <div>
+                  <p className="text-[#9A9A9A] dark:text-[#666666]">Role</p>
+                  <span className={`inline-block mt-0.5 px-2 py-0.5 rounded-full text-xs font-medium ${
+                    emp.role === 'admin'
+                      ? 'bg-[#EDD6F5] text-[#6A3A8A] dark:bg-[rgba(106,58,138,0.2)] dark:text-[#9A6ABA]'
+                      : 'bg-[#F0EDD0] text-[#5A5A5A] dark:bg-[rgba(90,90,90,0.2)] dark:text-[#AAAAAA]'
+                  }`}>
+                    {emp.role === 'admin' ? '👑 Admin' : '👤 User'}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-[#9A9A9A] dark:text-[#666666]">Rate/hr</p>
+                  <p className="mt-0.5 font-mono text-[#5A5A5A] dark:text-[#AAAAAA]">${emp.perHourRate.toFixed(2)}</p>
+                </div>
+                <div>
+                  <p className="text-[#9A9A9A] dark:text-[#666666]">Status</p>
+                  <div className="mt-0.5 flex items-center gap-2">
+                    <EmployeeStatusBadge isActive={emp.isActive} size="sm" />
+                    <button
+                      type="button"
+                      onClick={() => handleToggleStatus(emp.uid)}
+                      disabled={submitting}
+                      aria-label={`Toggle ${emp.fullName} status`}
+                      className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:ring-offset-2 disabled:opacity-40 ${
+                        emp.isActive ? 'bg-[#D4AF37]' : 'bg-[#E8E0B8] dark:bg-[#2E2E2E]'
+                      }`}
+                    >
+                      <span className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ${
+                        emp.isActive ? 'translate-x-4' : 'translate-x-0'
+                      }`} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* ── DESKTOP: Standard table (hidden on mobile) ─────────────────────── */}
+      <div className="hidden sm:block rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             {/* ── Table Head ── */}
@@ -122,11 +220,9 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ employees, loading = fals
 
             {/* ── Table Body ── */}
             <tbody>
-              {/* Loading skeletons */}
               {loading &&
                 Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} />)}
 
-              {/* Empty state */}
               {!loading && filtered.length === 0 && (
                 <tr>
                   <td
@@ -139,14 +235,12 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ employees, loading = fals
                 </tr>
               )}
 
-              {/* Data rows */}
               {!loading &&
                 filtered.map((emp) => (
                   <tr
                     key={emp.uid}
                     className="border-b border-[#F0EDD0] dark:border-[#222222] hover:bg-[#FDFBD4] dark:hover:bg-[#252525] transition-colors even:bg-[#FEFDF0] dark:even:bg-[#1A1A1A]"
                   >
-                    {/* Employee avatar + name */}
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <div className="flex-shrink-0 w-9 h-9 rounded-full bg-[#F0DFA0] dark:bg-[rgba(212,175,55,0.15)] flex items-center justify-center">
@@ -166,36 +260,24 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ employees, loading = fals
                         </div>
                       </div>
                     </td>
-
-                    {/* Phone */}
                     <td className="px-4 py-3 text-[#5A5A5A] dark:text-[#AAAAAA]">
                       {formatPhone(emp.countryCode, emp.phone)}
                     </td>
-
-                    {/* Role */}
                     <td className="px-4 py-3">
-                      <span
-                        className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          emp.role === 'admin'
-                            ? 'bg-[#EDD6F5] text-[#6A3A8A] dark:bg-[rgba(106,58,138,0.2)] dark:text-[#9A6ABA]'
-                            : 'bg-[#F0EDD0] text-[#5A5A5A] dark:bg-[rgba(90,90,90,0.2)] dark:text-[#AAAAAA]'
-                        }`}
-                      >
+                      <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        emp.role === 'admin'
+                          ? 'bg-[#EDD6F5] text-[#6A3A8A] dark:bg-[rgba(106,58,138,0.2)] dark:text-[#9A6ABA]'
+                          : 'bg-[#F0EDD0] text-[#5A5A5A] dark:bg-[rgba(90,90,90,0.2)] dark:text-[#AAAAAA]'
+                      }`}>
                         {emp.role === 'admin' ? '👑 Admin' : '👤 User'}
                       </span>
                     </td>
-
-                    {/* Per-hour rate */}
                     <td className="px-4 py-3 text-[#5A5A5A] dark:text-[#AAAAAA] font-mono text-sm">
                       ${emp.perHourRate.toFixed(2)}
                     </td>
-
-                    {/* Status badge */}
                     <td className="px-4 py-3">
                       <EmployeeStatusBadge isActive={emp.isActive} size="sm" />
                     </td>
-
-                    {/* Status toggle */}
                     <td className="px-4 py-3">
                       <button
                         type="button"
@@ -206,15 +288,11 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ employees, loading = fals
                           emp.isActive ? 'bg-[#D4AF37]' : 'bg-[#E8E0B8] dark:bg-[#2E2E2E]'
                         }`}
                       >
-                        <span
-                          className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ${
-                            emp.isActive ? 'translate-x-4' : 'translate-x-0'
-                          }`}
-                        />
+                        <span className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ${
+                          emp.isActive ? 'translate-x-4' : 'translate-x-0'
+                        }`} />
                       </button>
                     </td>
-
-                    {/* Actions */}
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <button
@@ -227,9 +305,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ employees, loading = fals
                         </button>
                         <button
                           type="button"
-                          onClick={() =>
-                            setDeleteTarget({ uid: emp.uid, name: emp.fullName })
-                          }
+                          onClick={() => setDeleteTarget({ uid: emp.uid, name: emp.fullName })}
                           aria-label={`Delete ${emp.fullName}`}
                           className="p-1.5 rounded-lg text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#FADADD] dark:hover:bg-[rgba(192,57,43,0.1)] hover:text-[#C0392B] dark:hover:text-[#E05A4A] transition-colors cursor-pointer"
                         >

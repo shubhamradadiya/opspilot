@@ -106,7 +106,7 @@ const PayoutList: React.FC = () => {
 
   // ── RENDER ────────────────────────────────────────────────────────────────────
   return (
-    <div className="space-y-6">
+    <div className="page-wrapper space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -269,73 +269,116 @@ const PayoutList: React.FC = () => {
       )}
       
       {!isAdmin && (
-        // Self payout table for employees
-        <div className="overflow-x-auto rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E]">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-[#FAF7E8] dark:bg-[#1A1A1A] border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
-                <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">#</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Week Range</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Hours</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Rate</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Gross</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Loan</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-[#D4AF37] uppercase tracking-wider">Net Pay</th>
-                <th className="px-4 py-3 text-center text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Receipt</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#E8E0B8]/40 dark:divide-[#2E2E2E]/60">
-              {loading
-                ? Array.from({ length: 3 }).map((_, i) => (
-                    <tr key={i} className="border-b border-[#2A2A2A]/40 dark:border-[#2E2E2E]/60">
-                      {[1, 2, 3, 4, 5, 6, 7].map((j) => (
-                        <td key={j} className="px-4 py-3">
-                          <div className="h-4 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded animate-pulse" />
+        // Self payout — mobile cards + desktop table
+        <>
+          {/* ── MOBILE: Cards ──────────────────────────────────────────────── */}
+          <div className="sm:hidden space-y-3">
+            {loading ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-4 space-y-2 animate-pulse">
+                  {[1, 2, 3].map((j) => <div key={j} className="h-4 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded" />)}
+                </div>
+              ))
+            ) : selfPayouts.length === 0 ? (
+              <div className="py-12 text-center text-sm text-[#9A9A9A] dark:text-[#666666]">
+                No payouts found for this period.
+              </div>
+            ) : (
+              selfPayouts.map((p, idx) => (
+                <div key={p.weekStartDate} className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-4 space-y-3">
+                  {/* Header: # + week + receipt */}
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <p className="text-xs text-[#9A9A9A] dark:text-[#666666]">#{idx + 1}</p>
+                      <p className="font-medium text-sm text-[#2A2A2A] dark:text-[#F5F5F5] mt-0.5">{p.weekRange || '—'}</p>
+                    </div>
+                    {user?.uid && (
+                      <PayoutReceiptButton uid={user.uid} startTimestamp={p.weekStartDate} endTimestamp={p.weekEndDate} />
+                    )}
+                  </div>
+                  {/* Detail grid */}
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <p className="text-[#9A9A9A] dark:text-[#666666]">Hours</p>
+                      <p className="mt-0.5 font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">{p.durationInHours?.toFixed(2) || '0.00'}</p>
+                    </div>
+                    <div>
+                      <p className="text-[#9A9A9A] dark:text-[#666666]">Rate</p>
+                      <p className="mt-0.5 font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">{formatCurrency(p.perHourRate, user?.priceUnit)}</p>
+                    </div>
+                    <div>
+                      <p className="text-[#9A9A9A] dark:text-[#666666]">Gross</p>
+                      <p className="mt-0.5 font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">{formatCurrency(p.totalAmount, user?.priceUnit)}</p>
+                    </div>
+                    <div>
+                      <p className="text-[#9A9A9A] dark:text-[#666666]">Loan</p>
+                      <p className="mt-0.5 font-mono text-[#C0392B]">{p.loanAmount > 0 ? `- ${formatCurrency(p.loanAmount, user?.priceUnit)}` : '—'}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <p className="text-[#9A9A9A] dark:text-[#666666]">Net Pay</p>
+                      <p className="mt-0.5 font-mono font-bold text-[#D4AF37]">{formatCurrency(Math.max(0, p.totalAmount - p.loanAmount), user?.priceUnit)}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* ── DESKTOP: Table ─────────────────────────────────────────────── */}
+          <div className="hidden sm:block overflow-x-auto rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E]">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-[#FAF7E8] dark:bg-[#1A1A1A] border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">#</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Week Range</th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Hours</th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Rate</th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Gross</th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Loan</th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold text-[#D4AF37] uppercase tracking-wider">Net Pay</th>
+                  <th className="px-4 py-3 text-center text-xs font-semibold text-[#5A5A5A] dark:text-[#AAAAAA] uppercase tracking-wider">Receipt</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E8E0B8]/40 dark:divide-[#2E2E2E]/60">
+                {loading
+                  ? Array.from({ length: 3 }).map((_, i) => (
+                      <tr key={i} className="border-b border-[#2A2A2A]/40 dark:border-[#2E2E2E]/60">
+                        {[1, 2, 3, 4, 5, 6, 7, 8].map((j) => (
+                          <td key={j} className="px-4 py-3">
+                            <div className="h-4 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded animate-pulse" />
+                          </td>
+                        ))}
+                      </tr>
+                    ))
+                  : selfPayouts.length === 0
+                  ? (
+                    <tr>
+                      <td colSpan={8} className="py-12 text-center text-sm text-[#9A9A9A] dark:text-[#666666]">
+                        No payouts found for this period
+                      </td>
+                    </tr>
+                  )
+                  : selfPayouts.map((p, idx) => (
+                      <tr key={p.weekStartDate} className="hover:bg-[#FAF7E8]/30 dark:hover:bg-[#1E1E1E]/30 transition-colors">
+                        <td className="px-4 py-3 text-xs text-[#9A9A9A] dark:text-[#666666]">#{idx + 1}</td>
+                        <td className="px-4 py-3 text-left text-xs text-[#5A5A5A] dark:text-[#AAAAAA]">{p.weekRange || '—'}</td>
+                        <td className="px-4 py-3 text-right text-xs font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">{p.durationInHours?.toFixed(2) || '0.00'}</td>
+                        <td className="px-4 py-3 text-right text-xs font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">{formatCurrency(p.perHourRate, user?.priceUnit)}</td>
+                        <td className="px-4 py-3 text-right text-xs font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">{formatCurrency(p.totalAmount, user?.priceUnit)}</td>
+                        <td className="px-4 py-3 text-right text-xs font-mono text-[#C0392B]">{p.loanAmount > 0 ? `- ${formatCurrency(p.loanAmount, user?.priceUnit)}` : '—'}</td>
+                        <td className="px-4 py-3 text-right text-xs font-bold font-mono text-[#D4AF37]">{formatCurrency(Math.max(0, p.totalAmount - p.loanAmount), user?.priceUnit)}</td>
+                        <td className="px-4 py-3 text-center">
+                          {user?.uid && (
+                            <PayoutReceiptButton uid={user.uid} startTimestamp={p.weekStartDate} endTimestamp={p.weekEndDate} />
+                          )}
                         </td>
-                      ))}
-                    </tr>
-                  ))
-                : selfPayouts.map((p, idx) => (
-                    <tr key={p.weekStartDate} className="hover:bg-[#FAF7E8]/30 dark:hover:bg-[#1E1E1E]/30 transition-colors">
-                      <td className="px-4 py-3 text-xs text-[#9A9A9A] dark:text-[#666666]">#{idx + 1}</td>
-                      <td className="px-4 py-3 text-left text-xs text-[#5A5A5A] dark:text-[#AAAAAA]">
-                        {p.weekRange || '—'}
-                      </td>
-                      <td className="px-4 py-3 text-right text-xs font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">
-                        {p.durationInHours?.toFixed(2) || '0.00'}
-                      </td>
-                      <td className="px-4 py-3 text-right text-xs font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">
-                        {formatCurrency(p.perHourRate, user?.priceUnit)}
-                      </td>
-                      <td className="px-4 py-3 text-right text-xs font-mono text-[#2A2A2A] dark:text-[#F5F5F5]">
-                        {formatCurrency(p.totalAmount, user?.priceUnit)}
-                      </td>
-                      <td className="px-4 py-3 text-right text-xs font-mono text-[#C0392B]">
-                        {p.loanAmount > 0 ? `- ${formatCurrency(p.loanAmount, user?.priceUnit)}` : '—'}
-                      </td>
-                      <td className="px-4 py-3 text-right text-xs font-bold font-mono text-[#D4AF37]">
-                        {formatCurrency(Math.max(0, p.totalAmount - p.loanAmount), user?.priceUnit)}
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        {user?.uid && (
-                          <PayoutReceiptButton
-                            uid={user.uid}
-                            startTimestamp={p.weekStartDate}
-                            endTimestamp={p.weekEndDate}
-                          />
-                        )}
-                      </td>
-                    </tr>
-                  ))
-              }
-            </tbody>
-          </table>
-          {!loading && selfPayouts.length === 0 && (
-            <div className="py-16 text-center">
-              <p className="text-sm text-[#9A9A9A] dark:text-[#666666]">No payouts found for this period</p>
-            </div>
-          )}
-        </div>
+                      </tr>
+                    ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
 
       {/* Pagination Controls */}

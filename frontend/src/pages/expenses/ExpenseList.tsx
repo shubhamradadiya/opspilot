@@ -119,9 +119,9 @@ const ExpenseList: React.FC = () => {
 
   // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-[#FDFBD4] dark:bg-[#121212] p-6 space-y-6">
+    <div className="page-wrapper space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold text-[#2A2A2A] dark:text-[#F5F5F5]">Expenses</h1>
           <p className="text-sm text-[#9A9A9A] dark:text-[#666666] mt-0.5">
@@ -130,7 +130,7 @@ const ExpenseList: React.FC = () => {
         </div>
         <button
           onClick={handleOpenCreate}
-          className="flex items-center gap-2 h-9 px-4 rounded-lg bg-[#D4AF37] hover:bg-[#CE8946] active:bg-[#A8892B] text-[#2A2A2A] dark:text-[#121212] text-sm font-medium transition-colors duration-150"
+          className="flex items-center gap-2 h-9 px-4 rounded-lg bg-[#D4AF37] hover:bg-[#CE8946] active:bg-[#A8892B] text-[#2A2A2A] dark:text-[#121212] text-sm font-medium transition-colors duration-150 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           Add Expense
@@ -138,14 +138,14 @@ const ExpenseList: React.FC = () => {
       </div>
 
       {/* Monthly Summary */}
-      <div className="max-w-xs">
+      <div className="w-full sm:max-w-sm">
         <MonthlySummaryCard totalExpense={totalExpense} loading={loading} />
       </div>
 
       {/* Filters Row */}
       <div className="flex flex-wrap items-center gap-3">
         {/* Search */}
-        <div className="relative flex-1 min-w-[200px] max-w-xs">
+        <div className="relative w-full sm:flex-1 sm:min-w-[200px] sm:max-w-xs">
           <Search className="absolute left-3 top-2.5 w-4 h-4 text-[#9A9A9A]" />
           <input
             type="text"
@@ -156,23 +156,26 @@ const ExpenseList: React.FC = () => {
           />
         </div>
 
-        {/* Date Range */}
-        <div className="w-[140px]">
+        {/* Start Date — full width on mobile, 140px on sm+ */}
+        <div className="w-full sm:w-[140px]">
           <DatePicker
             value={startDate}
             onChange={setStartDate}
             placeholderText="Start Date"
             dateFormat="dd/MM/yyyy"
+            maxDate={endDate ?? undefined}
             fullWidth
           />
         </div>
-        <span className="text-[#9A9A9A] text-sm">to</span>
-        <div className="w-[140px]">
+        <span className="hidden sm:inline text-[#9A9A9A] text-sm">to</span>
+        {/* End Date — full width on mobile, 140px on sm+ */}
+        <div className="w-full sm:w-[140px]">
           <DatePicker
             value={endDate}
             onChange={setEndDate}
             placeholderText="End Date"
             dateFormat="dd/MM/yyyy"
+            minDate={startDate ?? undefined}
             fullWidth
           />
         </div>

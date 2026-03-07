@@ -62,9 +62,9 @@ const AdminDashboard: React.FC = () => {
 
   // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
-    <div className="p-6 space-y-6">
+    <div className="page-wrapper space-y-6">
       {/* ── Page header ── */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-[#2A2A2A] dark:text-[#F5F5F5]">
             Dashboard
@@ -76,7 +76,7 @@ const AdminDashboard: React.FC = () => {
         <button
           type="button"
           onClick={handleRetry}
-          className="p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#F5F0D0] dark:hover:bg-[#252525] transition-colors cursor-pointer"
+          className="self-start w-fit p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#F5F0D0] dark:hover:bg-[#252525] transition-colors cursor-pointer"
           aria-label="Refresh dashboard"
         >
           <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
@@ -141,9 +141,24 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       {/* ── Row 2: Charts ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <AttendanceChart loading={loading && !data} />
-        <ExpenseChart loading={loading && !data} />
+      {/* Mobile: horizontal scroll strip. Desktop: 2-col grid */}
+      <div className="lg:hidden overflow-x-auto pb-2 -mx-1 px-1">
+        <div className="flex gap-4" style={{ minWidth: 'max-content' }}>
+          <div className="min-w-[320px] w-[calc(100vw-3rem)] min-h-[320px] flex flex-col">
+            <AttendanceChart loading={loading && !data} />
+          </div>
+          <div className="min-w-[320px] w-[calc(100vw-3rem)] min-h-[320px] flex flex-col">
+            <ExpenseChart loading={loading && !data} />
+          </div>
+        </div>
+      </div>
+      <div className="hidden lg:grid lg:grid-cols-2 gap-4">
+        <div className="min-h-[320px] flex flex-col">
+          <AttendanceChart loading={loading && !data} />
+        </div>
+        <div className="min-h-[320px] flex flex-col">
+          <ExpenseChart loading={loading && !data} />
+        </div>
       </div>
 
       {/* ── Row 3: Tables + Widgets ── */}

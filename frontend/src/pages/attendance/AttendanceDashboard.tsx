@@ -88,9 +88,9 @@ const AttendanceDashboard: React.FC = () => {
 
   // ── RENDER ──────────────────────────────────────────────────────────────────
   return (
-    <div className="space-y-8">
+    <div className="page-wrapper space-y-8">
       {/* Page header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-[#2A2A2A] dark:text-[#F5F5F5]">Attendance</h1>
           <p className="text-sm text-[#9A9A9A] dark:text-[#666666] mt-0.5">

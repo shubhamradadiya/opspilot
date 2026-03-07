@@ -87,7 +87,7 @@ const AttendanceTimestamps: React.FC = () => {
 
   // ── RENDER ──────────────────────────────────────────────────────────────────
   return (
-    <div className="space-y-6">
+    <div className="page-wrapper space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -101,45 +101,51 @@ const AttendanceTimestamps: React.FC = () => {
 
       {/* Controls */}
       <div className="bg-white dark:bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-4">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-          {/* Week navigator */}
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+
+          {/* Week navigator — always a single row, truncates on narrow */}
+          <div className="flex items-center gap-2 min-w-0">
             <button
               type="button"
               onClick={prevWeek}
-              className="p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors"
+              className="p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors flex-shrink-0"
               aria-label="Previous week"
             >
               <ChevronLeft size={16} />
             </button>
-            <span className="text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] min-w-[200px] text-center">
+
+            <span className="flex-1 min-w-0 text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] text-center truncate px-1">
               {formatWeekLabel(weekStart, weekEnd)}
             </span>
+
             <button
               type="button"
               onClick={nextWeek}
-              className="p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors"
+              className="p-2 rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] text-[#5A5A5A] dark:text-[#AAAAAA] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors flex-shrink-0"
               aria-label="Next week"
             >
               <ChevronRight size={16} />
             </button>
+
             <button
               type="button"
               onClick={goToday}
-              className="ml-2 text-xs text-[#D4AF37] hover:text-[#B8960E] font-medium transition-colors"
+              className="flex-shrink-0 text-xs text-[#D4AF37] hover:text-[#B8960E] font-medium transition-colors whitespace-nowrap"
             >
               Today
             </button>
           </div>
 
-          {/* Slot type toggle */}
-          <div className="flex items-center rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] overflow-hidden ml-auto">
+          {/* DAY / WEEK toggle
+              Mobile: full width (w-full, each button flex-1)
+              sm+: auto-width pushed to the right with ml-auto */}
+          <div className="flex w-full sm:w-auto sm:ml-auto rounded-lg border border-[#2A2A2A] dark:border-[#2E2E2E] overflow-hidden flex-shrink-0">
             {(['DAY', 'WEEK'] as const).map((type) => (
               <button
                 key={type}
                 type="button"
                 onClick={() => dispatch(setFilters({ calenderSlotType: type }))}
-                className={`px-4 py-1.5 text-xs font-medium transition-colors ${
+                className={`flex-1 sm:flex-none px-4 py-1.5 text-xs font-medium transition-colors ${
                   filters.calenderSlotType === type
                     ? 'bg-[#D4AF37] text-white'
                     : 'text-[#5A5A5A] dark:text-[#AAAAAA] hover:bg-[#E8E0B8]/40 dark:hover:bg-[#2E2E2E]'
@@ -151,7 +157,7 @@ const AttendanceTimestamps: React.FC = () => {
           </div>
 
           {/* Search */}
-          <div className="relative sm:w-52">
+          <div className="relative w-full sm:w-52 flex-shrink-0">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9A9A9A]" />
             <input
               type="text"
@@ -161,6 +167,7 @@ const AttendanceTimestamps: React.FC = () => {
               className="w-full h-9 pl-8 pr-3 rounded-md text-sm border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] outline-none focus:ring-2 focus:ring-[#D4AF37]"
             />
           </div>
+
         </div>
       </div>
 
