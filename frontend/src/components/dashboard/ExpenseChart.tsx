@@ -56,9 +56,9 @@ const DEMO_DATA = [
 // SKELETON
 // ============================================================================
 const ChartSkeleton: React.FC = () => (
-  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5 animate-pulse">
+  <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5 animate-pulse flex flex-col flex-1">
     <div className="h-4 w-40 bg-[#E8E0B8] dark:bg-[#2E2E2E] rounded mb-4" />
-    <div className="h-[250px] bg-[#F5F0D0] dark:bg-[#252525] rounded" />
+    <div className="flex-1 min-h-[300px] bg-[#F5F0D0] dark:bg-[#252525] rounded" />
   </div>
 );
 
@@ -78,21 +78,27 @@ const ExpenseChart: React.FC<ExpenseChartProps> = ({
   if (loading) return <ChartSkeleton />;
 
   return (
-    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-5">
-      <h3 className="text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] mb-4">
+    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-[#2A2A2A] dark:border-[#2E2E2E] p-3 sm:p-5 flex flex-col flex-1">
+      <h3 className="text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] mb-3">
         📉 Monthly Expenses
       </h3>
-      <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={chartData}>
+      <div className="flex-1 min-h-[300px]">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart
+          data={chartData}
+          margin={{ top: 4, right: 4, bottom: 0, left: -8 }}
+        >
           <CartesianGrid strokeDasharray="3 3" stroke={tokens.grid} vertical={false} />
           <XAxis
             dataKey="month"
-            tick={{ fill: tokens.text, fontSize: 12 }}
+            tick={{ fill: tokens.text, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: tokens.text, fontSize: 12 }}
+            width={42}
+            tickCount={5}
+            tick={{ fill: tokens.text, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
             allowDecimals={false}
@@ -119,6 +125,7 @@ const ExpenseChart: React.FC<ExpenseChartProps> = ({
           />
         </LineChart>
       </ResponsiveContainer>
+      </div>
     </div>
   );
 };

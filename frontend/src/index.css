@@ -168,6 +168,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-width: 0;        /* prevent flex child from overflowing */
+  overflow-x: hidden;  /* stop wide tables from scrolling the navbar */
 }
 
 .app-main--expanded {
@@ -176,7 +178,10 @@
 
 .app-content {
   flex: 1;
-  padding: 1.5rem;
+  /* No padding here — each page uses .page-wrapper which owns its own padding.
+     This avoids double-padding when pages have their own wrappers. */
+  padding: 0;
+  min-width: 0; /* prevent flex children from overflowing */
 }
 
 /* ============================================================================
@@ -389,6 +394,9 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex: 1;
+  min-width: 0;        /* allow flex child to shrink below content size */
+  overflow: hidden;    /* clip anything that spills out */
 }
 
 .topbar-right {
@@ -525,6 +533,13 @@
 /* ============================================================================
    BREADCRUMB — Gold Theme
    ============================================================================ */
+/* nav wrapper — must shrink so the list can scroll */
+.breadcrumb {
+  min-width: 0;
+  overflow: hidden;
+  flex: 1;
+}
+
 .breadcrumb-list {
   display: flex;
   align-items: center;
@@ -532,12 +547,21 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  min-width: 0;          /* shrink inside flex parent */
+  overflow-x: auto;      /* scroll when path is too long */
+  scrollbar-width: none; /* Firefox — hide scrollbar */
+}
+
+.breadcrumb-list::-webkit-scrollbar {
+  display: none;         /* Chrome/Safari — hide scrollbar */
 }
 
 .breadcrumb-item {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  white-space: nowrap;   /* keep each item on one line */
+  flex-shrink: 0;        /* don't crush items */
 }
 
 .breadcrumb-separator {
@@ -646,6 +670,31 @@
 }
 
 /* ============================================================================
+   PAGE WRAPPER — Consistent max-width centered container for all pages
+   Usage: className="page-wrapper space-y-6" on the page root div
+   ============================================================================ */
+.page-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem; /* 24px */
+}
+
+@media (max-width: 640px) {
+  .page-wrapper {
+    padding: 1rem; /* 16px on mobile */
+  }
+}
+
+/* ============================================================================
+   SIDEBAR OVERLAY — Mobile backdrop to dismiss sidebar by tapping outside
+   ============================================================================ */
+.sidebar-overlay {
+  display: none;
+}
+
+/* ============================================================================
    RESPONSIVE — Mobile
    ============================================================================ */
 @media (max-width: 768px) {
@@ -670,6 +719,35 @@
   .topbar-user-info {
     display: none;
   }
+
+  /* Show mobile overlay backdrop when sidebar is open */
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 39;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    animation: fadeIn 200ms ease;
+  }
+}
+
+/* Extra-small screens — avoid any overflow */
+@media (max-width: 480px) {
+  .topbar {
+    padding: 0 1rem;
+  }
+}
+
+/* Minimum app width to prevent tiny crushing */
+body {
+  min-width: 320px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* ============================================================================

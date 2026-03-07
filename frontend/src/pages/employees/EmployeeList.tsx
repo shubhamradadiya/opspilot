@@ -84,9 +84,9 @@ const EmployeeList: React.FC = () => {
 
   // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
-    <div className="p-6 space-y-6">
+    <div className="page-wrapper space-y-6">
       {/* ── Page header ── */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-[#2A2A2A] dark:text-[#F5F5F5] flex items-center gap-2">
             <Users size={24} className="text-[#D4AF37]" />

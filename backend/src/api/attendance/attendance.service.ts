@@ -274,23 +274,30 @@ export class AttendanceService {
     let user: User | null = null;
 
     if (authUser.role === UserRoles.ADMIN) {
-      user = await this.userRepository
-        .createQueryBuilder('user')
-        .where('user.uid = :uid', { uid: uid })
-        .andWhere('user.deletedAt IS NULL')
-        .andWhere('user.isActive = :isActive', { isActive: true })
-        .getOne();
+      if (uid) {
+        // Admin requested another user's logs by uid
+        user = await this.userRepository
+          .createQueryBuilder('user')
+          .where('user.uid = :uid', { uid: uid })
+          .andWhere('user.deletedAt IS NULL')
+          .andWhere('user.isActive = :isActive', { isActive: true })
+          .getOne();
 
-      if (!user) {
-        throw new NotFoundException(
-          this.i18n.t('exception.NOT_FOUND', { args: { property: 'User' } }),
-        );
+        if (!user) {
+          throw new NotFoundException(
+            this.i18n.t('exception.NOT_FOUND', { args: { property: 'User' } }),
+          );
+        }
+      } else {
+        // Admin viewing their own logs (no uid passed)
+        user = authUser;
       }
     } else {
       user = authUser;
     }
 
     const userId = authUser.role === UserRoles.ADMIN ? user.id : authUser.id;
+
 
     // Build base WHERE
     let baseWhere = `userLogs.userId = :userId

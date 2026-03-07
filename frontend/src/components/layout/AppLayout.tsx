@@ -52,6 +52,15 @@ const AppLayout: React.FC = () => {
     <div className="app-layout">
       <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
 
+      {/* Mobile overlay: dims content when sidebar is open. CSS hides it on desktop. */}
+      {!sidebarCollapsed && (
+        <div
+          className="sidebar-overlay"
+          onClick={toggleSidebar}
+          aria-hidden="true"
+        />
+      )}
+
       <div className={`app-main ${sidebarCollapsed ? 'app-main--expanded' : ''}`}>
         <Topbar sidebarCollapsed={sidebarCollapsed} onToggleSidebar={toggleSidebar} />
 

@@ -16,6 +16,7 @@ import { Spinner } from '@/components/ui';
 const AuthRoute = lazy(() => import('@/components/guards/AuthRoute'));
 const AdminRoute = lazy(() => import('@/components/guards/AdminRoute'));
 const GuestRoute = lazy(() => import('@/components/guards/GuestRoute'));
+const FeatureFlagRoute = lazy(() => import('@/components/guards/FeatureFlagRoute'));
 
 // ============================================================================
 // LAZY IMPORTS — Layout
@@ -43,6 +44,7 @@ const PayoutList = lazy(() => import('@/pages/payouts/PayoutList'));
 const CreatePayout = lazy(() => import('@/pages/payouts/CreatePayout'));
 const InventoryList = lazy(() => import('@/pages/inventory/InventoryList'));
 const ActivityLogs = lazy(() => import('@/pages/inventory/ActivityLogs'));
+const ExpenseList = lazy(() => import('@/pages/expenses/ExpenseList'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 // ============================================================================
@@ -64,7 +66,6 @@ const createPlaceholder = (title: string): React.FC => {
 };
 
 const DashboardPage = AdminDashboard;
-const ExpensesPage = createPlaceholder('Expenses');
 const WalkInPage = createPlaceholder('Walk-In Customers');
 const RingPage = createPlaceholder('Ring Customers');
 const ContainersPage = createPlaceholder('Containers');
@@ -128,8 +129,15 @@ const AppRoutes: React.FC = () => {
             <Route path={APP_ROUTES.EMPLOYEES.EDIT} element={<EditEmployee />} />
           </Route>
 
-          {/* Attendance — all users */}
-          <Route path={APP_ROUTES.ATTENDANCE.DASHBOARD} element={<AttendanceDashboard />} />
+          {/* Attendance Dashboard — user only; admin is redirected to /dashboard */}
+          <Route
+            path={APP_ROUTES.ATTENDANCE.DASHBOARD}
+            element={
+              isAdmin
+                ? <Navigate to={APP_ROUTES.DASHBOARD} replace />
+                : <AttendanceDashboard />
+            }
+          />
           <Route path={APP_ROUTES.ATTENDANCE.LOGS} element={<AttendanceLogs />} />
 
           {/* Payouts — all users */}
@@ -144,7 +152,9 @@ const AppRoutes: React.FC = () => {
           <Route element={<AdminRoute />}>
             <Route path={APP_ROUTES.INVENTORY.ACTIVITY_LOGS} element={<ActivityLogs />} />
           </Route>
-          <Route path={APP_ROUTES.EXPENSES} element={<ExpensesPage />} />
+          <Route element={<FeatureFlagRoute flag="isExpenseEnabled" />}>
+            <Route path={APP_ROUTES.EXPENSES} element={<ExpenseList />} />
+          </Route>
           <Route path={APP_ROUTES.WALK_IN_CUSTOMERS} element={<WalkInPage />} />
           <Route path={APP_ROUTES.RING_CUSTOMERS} element={<RingPage />} />
           <Route path={APP_ROUTES.CONTAINERS} element={<ContainersPage />} />

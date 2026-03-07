@@ -53,8 +53,8 @@
 | FE-04 | Employee Management | `✅` | 2026-02-28 | 2026-02-28 | Full CRUD, optimistic toggle, Zod forms |
 | FE-05 | Attendance Module | `✅` | 2026-02-28 | 2026-02-28 | ClockButton, live timer, logs, timestamps grid, manual log |
 | FE-06 | Payout Module | `✅` | 2026-02-28 | 2026-02-28 | Role-aware list, loan modal, PDF receipt, create form |
-| FE-07 | Inventory Module | `⬜` | — | — | — |
-| FE-08 | Expense Module | `⬜` | — | — | — |
+| FE-07 | Inventory Module | `✅` | 2026-02-28 | 2026-02-28 | Full CRUD, stock cards, activity logs with unread count |
+| FE-08 | Expense Module | `✅` | 2026-03-04 | 2026-03-04 | Full CRUD, vendor autocomplete, type badges, monthly summary, FeatureFlagRoute guard |
 | FE-09 | Walk-In Customer Module | `⬜` | — | — | — |
 | FE-10 | Ring Customer Module | `⬜` | — | — | — |
 | FE-11 | Container Module | `⬜` | — | — | — |
@@ -71,8 +71,8 @@ FE-03  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Admin Dashboard
 FE-04  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Employee Management
 FE-05  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Attendance Module
 FE-06  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Payout Module
-FE-07  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Inventory Module
-FE-08  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Expense Module
+FE-07  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Inventory Module
+FE-08  🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦  100%  Expense Module
 FE-09  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Walk-In Customer Module
 FE-10  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Ring Customer Module
 FE-11  ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜  0%   Container Module

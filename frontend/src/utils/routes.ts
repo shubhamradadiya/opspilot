@@ -28,6 +28,13 @@ export const API_ROUTES = {
     EXPENSES: '/api/v1/expenses',
     COUNTRIES: '/api/v1/country',
   },
+  EXPENSES: {
+    LIST: '/api/v1/expenses',
+    CREATE: '/api/v1/expense',
+    UPDATE: (eId: string) => `/api/v1/expense/${eId}`,
+    DELETE: (eId: string) => `/api/v1/expense/${eId}`,
+    VENDOR_NAMES: '/api/v1/expense/vendor-names',
+  },
   ATTENDANCE: {
     CHECK_STATUS: '/api/v1/attendance/check-status',
     CLOCK: '/api/v1/attendance/clock-in-clock-out',

@@ -35,6 +35,7 @@ interface NavItem {
   path: string;
   icon: React.ElementType;
   adminOnly?: boolean;
+  userOnly?: boolean;     // hidden for admin even if they bypass feature flags
   featureFlag?: string;
 }
 
@@ -79,9 +80,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
       }
       return item;
     }).filter((item) => {
-      // Admin-only check
+      // Admin-only check — non-admins cannot see admin items
       if (item.adminOnly && !isAdmin) return false;
-      // Feature flag check (Admins bypass feature flags to manage everything)
+      // User-only items are hidden from admins (e.g. Expenses is a user-only module)
+      // (no userOnly items currently — Expenses is accessible to all)
+      if (item.userOnly && isAdmin) return false;
+      // Feature flag check for regular users (admins bypass all feature flags)
       if (item.featureFlag && user && !isAdmin) {
         const flagValue = user[item.featureFlag as keyof typeof user];
         if (flagValue === false) return false;
