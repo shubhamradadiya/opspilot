@@ -15,7 +15,7 @@ export interface IUser {
   phone: string | null;
   countryCode: string | null;
   isoCode: string | null;
-  role: 'admin' | 'user';
+  role: 'superAdmin' | 'admin' | 'user' | 'developer';
   language: string;
   timeZone: string | null;
   profilePicture: string | null;

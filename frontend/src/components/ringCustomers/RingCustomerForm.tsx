@@ -6,9 +6,9 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { X, ChevronDown } from 'lucide-react';
-import { IWalkInCustomer, WalkInCustomerStatus } from '@/store/walkInCustomers/walkInCustomers.types';
+import { IRingCustomer, RingCustomerStatus } from '@/store/ringCustomers/ringCustomers.types';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import { fetchWalkInCustomerNamesThunk } from '@/store/walkInCustomers/walkInCustomers.thunk';
+import { fetchRingCustomerNamesThunk } from '@/store/ringCustomers/ringCustomers.thunk';
 import { RootState } from '@/store/store';
 import { DatePicker } from '@/components/ui/DatePicker';
 
@@ -16,24 +16,21 @@ import { DatePicker } from '@/components/ui/DatePicker';
 // TYPE DEFINITIONS
 // ============================================================================
 
-export interface WalkInCustomerFormData {
-  walkInCustomerDate: string;
+export interface RingCustomerFormData {
+  ringCustomerDate: string;
   customerName: string;
-  carTiresCount?: number | null;
-  carTiresPrice?: number | null;
-  truckTiresCount?: number | null;
-  truckTiresPrice?: number | null;
-  rimsCount?: number | null;
-  rimsPrice?: number | null;
+  orderedRingCount: number;
+  price: number;
+  deliveryFee?: number | null;
   totalAmount: number;
-  status: WalkInCustomerStatus | string;
+  status: RingCustomerStatus | string;
 }
 
-interface WalkInCustomerFormProps {
+interface RingCustomerFormProps {
   mode: 'create' | 'edit';
-  initialData?: IWalkInCustomer;
+  initialData?: IRingCustomer;
   submitting?: boolean;
-  onSubmit: (data: WalkInCustomerFormData) => void;
+  onSubmit: (data: RingCustomerFormData) => void;
   onClose: () => void;
 }
 
@@ -42,9 +39,9 @@ interface WalkInCustomerFormProps {
 // ============================================================================
 
 const STATUS_OPTIONS = [
-  { value: WalkInCustomerStatus.PENDING, label: 'Pending' },
-  { value: WalkInCustomerStatus.PAID, label: 'Paid' },
-  { value: WalkInCustomerStatus.CANCELLED, label: 'Cancelled' },
+  { value: RingCustomerStatus.PENDING, label: 'Pending' },
+  { value: RingCustomerStatus.DELIVERED, label: 'Delivered' },
+  { value: RingCustomerStatus.CANCELLED, label: 'Cancelled' },
 ];
 
 // ============================================================================
@@ -56,20 +53,17 @@ const nullableNumber = z.any().transform((val) => {
   return Number(val);
 }).pipe(z.number().min(0, 'Must be ≥ 0').nullable());
 
-const walkInCustomerSchema = z.object({
-  walkInCustomerDate: z.string().min(1, 'Date is required'),
+const ringCustomerSchema = z.object({
+  ringCustomerDate: z.string().min(1, 'Date is required'),
   customerName: z.string().min(1, 'Customer name is required'),
-  carTiresCount: nullableNumber,
-  carTiresPrice: nullableNumber,
-  truckTiresCount: nullableNumber,
-  truckTiresPrice: nullableNumber,
-  rimsCount: nullableNumber,
-  rimsPrice: nullableNumber,
+  orderedRingCount: z.number().min(1, 'Count must be ≥ 1'),
+  price: z.number().min(0, 'Price must be ≥ 0'),
+  deliveryFee: nullableNumber,
   totalAmount: z.number().min(0, 'Total must be ≥ 0'),
   status: z.string().min(1, 'Status is required'),
 });
 
-type WalkInCustomerSchema = z.infer<typeof walkInCustomerSchema>;
+type RingCustomerSchema = z.infer<typeof ringCustomerSchema>;
 
 // ============================================================================
 // UTILITY FUNCTIONS
@@ -84,7 +78,7 @@ const toDateInputValue = (timestamp?: number): string => {
 // MAIN COMPONENT
 // ============================================================================
 
-const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
+const RingCustomerForm: React.FC<RingCustomerFormProps> = ({
   mode,
   initialData,
   submitting,
@@ -93,7 +87,7 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
 }) => {
   // ── HOOKS — Store ───────────────────────────────────────────────────────────
   const dispatch = useAppDispatch();
-  const customerNames = useAppSelector((s: RootState) => s.walkInCustomers.customerNames);
+  const customerNames = useAppSelector((s: RootState) => s.ringCustomers.customerNames);
 
   // ── STATE ────────────────────────────────────────────────────────────────────
   const [showCustomerDropdown, setShowCustomerDropdown] = useState(false);
@@ -107,44 +101,39 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
     watch,
     control,
     formState: { errors },
-  } = useForm<WalkInCustomerSchema>({
-    resolver: zodResolver(walkInCustomerSchema),
+  } = useForm<RingCustomerSchema>({
+    resolver: zodResolver(ringCustomerSchema),
     defaultValues: {
-      walkInCustomerDate: initialData ? toDateInputValue(initialData.walkInCustomerDate) : '',
+      ringCustomerDate: initialData ? toDateInputValue(initialData.ringCustomerDate) : '',
       customerName: initialData?.customerName ?? '',
-      carTiresCount: initialData?.carTiresCount ?? null,
-      carTiresPrice: initialData?.carTiresPrice ?? null,
-      truckTiresCount: initialData?.truckTiresCount ?? null,
-      truckTiresPrice: initialData?.truckTiresPrice ?? null,
-      rimsCount: initialData?.rimsCount ?? null,
-      rimsPrice: initialData?.rimsPrice ?? null,
+      orderedRingCount: initialData ? Number(initialData.orderedRingCount) : 1,
+      price: initialData ? Number(initialData.price) : 0,
+      deliveryFee: initialData ? Number(initialData.deliveryFee) : null,
       totalAmount: initialData ? Number(initialData.totalAmount) : 0,
-      status: initialData?.status ?? WalkInCustomerStatus.PENDING,
+      status: initialData?.status ?? RingCustomerStatus.PENDING,
     },
   });
 
   const customerNameValue = watch('customerName');
-  const carCount = watch('carTiresCount') || 0;
-  const carPrice = watch('carTiresPrice') || 0;
-  const truckCount = watch('truckTiresCount') || 0;
-  const truckPrice = watch('truckTiresPrice') || 0;
-  const rimsCount = watch('rimsCount') || 0;
-  const rimsPrice = watch('rimsPrice') || 0;
+  const count = watch('orderedRingCount') || 0;
+  const price = watch('price') || 0;
+  const deliveryFee = watch('deliveryFee') || 0;
 
   // ── EFFECTS — Load customer suggestions ─────────────────────────────────────
   useEffect(() => {
     if (customerNameValue) {
-      dispatch(fetchWalkInCustomerNamesThunk(customerNameValue));
+      dispatch(fetchRingCustomerNamesThunk(customerNameValue));
     }
   }, [customerNameValue, dispatch]);
 
   // ── EFFECTS — Auto Calculate Total Amount ──────────────────────────────────
   useEffect(() => {
-    const total = (Number(carCount || 0) * Number(carPrice || 0)) + 
-                  (Number(truckCount || 0) * Number(truckPrice || 0)) + 
-                  (Number(rimsCount || 0) * Number(rimsPrice || 0));
+    const c = Number(count) || 0;
+    const p = Number(price) || 0;
+    const df = Number(deliveryFee) || 0;
+    const total = (c * p) + df;
     setValue('totalAmount', Number(total.toFixed(2)), { shouldValidate: true });
-  }, [carCount, carPrice, truckCount, truckPrice, rimsCount, rimsPrice, setValue]);
+  }, [count, price, deliveryFee, setValue]);
 
   // ── EFFECTS — Close dropdown on outside click ──────────────────────────────
   useEffect(() => {
@@ -166,9 +155,9 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
     [setValue]
   );
 
-  const handleFormSubmit: SubmitHandler<WalkInCustomerSchema> = useCallback(
+  const handleFormSubmit: SubmitHandler<RingCustomerSchema> = useCallback(
     (data) => {
-      onSubmit(data as WalkInCustomerFormData);
+      onSubmit(data as RingCustomerFormData);
     },
     [onSubmit]
   );
@@ -178,7 +167,6 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
       n.toLowerCase().includes((customerNameValue ?? '').toLowerCase()) && n !== customerNameValue
   );
 
-  // Get the customerName register props (without ref so we can manage it separately)
   const customerRegister = register('customerName');
 
   // ── RENDER ─────────────────────────────────────────────────────────────────
@@ -192,11 +180,11 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
       />
 
       {/* Panel */}
-      <div className="relative z-10 w-full max-w-2xl bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-xl border border-[#2A2A2A] dark:border-[#2E2E2E]">
+      <div className="relative z-10 w-full max-w-lg bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-xl border border-[#2A2A2A] dark:border-[#2E2E2E]">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#2A2A2A] dark:border-[#2E2E2E]">
           <h2 className="text-lg font-semibold text-[#2A2A2A] dark:text-[#F5F5F5]">
-            {mode === 'create' ? 'Add Walk-In Customer' : 'Edit Walk-In Customer'}
+            {mode === 'create' ? 'Add Ring Order' : 'Edit Ring Order'}
           </h2>
           <button
             type="button"
@@ -212,11 +200,10 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
         <form onSubmit={handleSubmit(handleFormSubmit)} className="px-6 py-5 space-y-4 max-h-[80vh] overflow-y-auto">
           {/* Row: Date + Status */}
           <div className="grid grid-cols-2 gap-4">
-            {/* Walk In Date */}
             <div>
               <Controller
                 control={control}
-                name="walkInCustomerDate"
+                name="ringCustomerDate"
                 render={({ field }) => (
                   <DatePicker
                     label={
@@ -226,7 +213,7 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
                     }
                     value={field.value ? new Date(field.value) : null}
                     onChange={(date) => field.onChange(date ? date.toISOString().split('T')[0] : '')}
-                    error={errors.walkInCustomerDate?.message}
+                    error={errors.ringCustomerDate?.message}
                     dateFormat="dd/MM/yyyy"
                     fullWidth
                   />
@@ -234,7 +221,6 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
               />
             </div>
 
-            {/* Status */}
             <div>
               <label className="block text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA] mb-1">
                 Status <span className="text-[#C0392B]">*</span>
@@ -260,7 +246,7 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
             </div>
           </div>
 
-          {/* Customer Name with Autocomplete */}
+          {/* Customer Name */}
           <div className="relative" ref={dropdownRef}>
             <label className="block text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA] mb-1">
               Customer Name <span className="text-[#C0392B]">*</span>
@@ -276,7 +262,6 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
               autoComplete="off"
               className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm placeholder:text-[#9A9A9A] dark:placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
             />
-            {/* Dropdown */}
             {showCustomerDropdown && filteredCustomers.length > 0 && (
               <div className="absolute z-20 top-full mt-1 w-full bg-white dark:bg-[#2A2A2A] border border-[#2A2A2A] dark:border-[#3A3A3A] rounded-lg shadow-md overflow-hidden">
                 {filteredCustomers.slice(0, 8).map((name: string) => (
@@ -298,98 +283,57 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
             )}
           </div>
 
-          {/* Tires & Rims Fields */}
-          <div className="pt-2 border-t border-[#2A2A2A] dark:border-[#2E2E2E]">
-            <h3 className="text-sm font-medium text-[#2A2A2A] dark:text-[#F5F5F5] mb-4">
-              Items
-            </h3>
-
-            {/* Car Tires */}
-            <div className="grid grid-cols-2 gap-4 mb-3">
-              <div>
-                <label className="block text-[#9A9A9A] dark:text-[#666666] text-xs uppercase tracking-wider mb-1">
-                  Car Tires Count
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  {...register('carTiresCount', { valueAsNumber: true })}
-                  placeholder="0"
-                  className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm placeholder:text-[#9A9A9A] dark:placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-[#9A9A9A] dark:text-[#666666] text-xs uppercase tracking-wider mb-1">
-                  Car Tires Price ($)
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  {...register('carTiresPrice', { valueAsNumber: true })}
-                  placeholder="0.00"
-                  className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm placeholder:text-[#9A9A9A] dark:placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
-                />
-              </div>
+          {/* Order Details */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA] mb-1">
+                Ordered Ring Count <span className="text-[#C0392B]">*</span>
+              </label>
+              <input
+                type="number"
+                min="1"
+                {...register('orderedRingCount', { valueAsNumber: true })}
+                placeholder="1"
+                className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
+              />
+              {errors.orderedRingCount && (
+                <p className="mt-1 text-xs text-[#C0392B] dark:text-[#E05A4A]">
+                  {errors.orderedRingCount.message}
+                </p>
+              )}
             </div>
-
-            {/* Truck Tires */}
-            <div className="grid grid-cols-2 gap-4 mb-3">
-              <div>
-                <label className="block text-[#9A9A9A] dark:text-[#666666] text-xs uppercase tracking-wider mb-1">
-                  Truck Tires Count
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  {...register('truckTiresCount', { valueAsNumber: true })}
-                  placeholder="0"
-                  className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm placeholder:text-[#9A9A9A] dark:placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-[#9A9A9A] dark:text-[#666666] text-xs uppercase tracking-wider mb-1">
-                  Truck Tires Price ($)
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  {...register('truckTiresPrice', { valueAsNumber: true })}
-                  placeholder="0.00"
-                  className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm placeholder:text-[#9A9A9A] dark:placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA] mb-1">
+                Price Per Ring ($) <span className="text-[#C0392B]">*</span>
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                {...register('price', { valueAsNumber: true })}
+                placeholder="0.00"
+                className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
+              />
+              {errors.price && (
+                <p className="mt-1 text-xs text-[#C0392B] dark:text-[#E05A4A]">
+                  {errors.price.message}
+                </p>
+              )}
             </div>
+          </div>
 
-            {/* Rims */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[#9A9A9A] dark:text-[#666666] text-xs uppercase tracking-wider mb-1">
-                  Rims Count
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  {...register('rimsCount', { valueAsNumber: true })}
-                  placeholder="0"
-                  className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm placeholder:text-[#9A9A9A] dark:placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-[#9A9A9A] dark:text-[#666666] text-xs uppercase tracking-wider mb-1">
-                  Rims Price ($)
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  {...register('rimsPrice', { valueAsNumber: true })}
-                  placeholder="0.00"
-                  className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm placeholder:text-[#9A9A9A] dark:placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
-                />
-              </div>
-            </div>
+          <div>
+            <label className="block text-sm font-medium text-[#5A5A5A] dark:text-[#AAAAAA] mb-1">
+              Delivery Fee ($)
+            </label>
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              {...register('deliveryFee', { valueAsNumber: true })}
+              placeholder="0.00"
+              className="w-full h-9 px-3 py-2 rounded-md border border-[#2A2A2A] dark:border-[#2E2E2E] bg-white dark:bg-[#1E1E1E] text-[#2A2A2A] dark:text-[#F5F5F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-colors"
+            />
           </div>
 
           {/* Total Amount (Auto Formatted) */}
@@ -424,7 +368,7 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
               disabled={submitting}
               className="h-9 px-6 rounded-lg bg-[#D4AF37] hover:bg-[#CE8946] active:bg-[#A8892B] text-[#2A2A2A] dark:text-[#121212] text-sm font-medium transition-colors duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {submitting ? 'Saving…' : mode === 'create' ? 'Add Record' : 'Save Changes'}
+              {submitting ? 'Saving…' : mode === 'create' ? 'Add Order' : 'Save Changes'}
             </button>
           </div>
         </form>
@@ -433,4 +377,4 @@ const WalkInCustomerForm: React.FC<WalkInCustomerFormProps> = ({
   );
 };
 
-export default WalkInCustomerForm;
+export default RingCustomerForm;
