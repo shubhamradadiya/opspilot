@@ -923,6 +923,63 @@ body {
 }
 
 /* ============================================================================
+   DATEPICKER PORTAL — Small screen overflow fix
+   When showTimeSelect is used, the month + time columns sit side by side.
+   On screens narrower than the combined calendar, make it scroll horizontally.
+   ============================================================================ */
+
+/* Portal overlay — centred flex container */
+.react-datepicker__portal {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+}
+
+/* Calendar box — scrollable when month+time don't fit */
+.react-datepicker__portal .react-datepicker {
+  position: relative;               /* navigation arrows anchor here */
+  display: flex !important;          /* month + time side by side */
+  align-items: flex-start !important; /* both snap to the top — no empty gap */
+  max-width: calc(100vw - 2rem);
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: calc(100vh - 4rem);
+  scrollbar-width: thin;
+}
+
+/* Right arrow: sits inside the month column, clear of the time panel */
+.react-datepicker__portal .react-datepicker__navigation--next--with-time:not(.react-datepicker__navigation--next--with-today-button) {
+  right: 100px;
+}
+
+/* Month name — pad both sides so centered text stays clear of both arrows */
+.react-datepicker__portal .react-datepicker__current-month {
+  padding: 0 56px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Time container — always anchored to top-right */
+.react-datepicker__portal .react-datepicker__time-container {
+  align-self: flex-start !important;
+  border-left: 1px solid #2A2A2A;
+  flex-shrink: 0;
+}
+
+.dark .react-datepicker__portal .react-datepicker__time-container {
+  border-left-color: #2E2E2E;
+}
+
+/* Month container — don't shrink */
+.react-datepicker__portal .react-datepicker__month-container {
+  flex-shrink: 0;
+}
+
+
+/* ============================================================================
    CUSTOM SCROLLBARS — Tailwind v4 Compatibility
    ============================================================================ */
 @layer utilities {
