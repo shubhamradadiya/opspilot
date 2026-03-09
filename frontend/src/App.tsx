@@ -47,6 +47,8 @@ const ActivityLogs = lazy(() => import('@/pages/inventory/ActivityLogs'));
 const ExpenseList = lazy(() => import('@/pages/expenses/ExpenseList'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
+const WalkInCustomerList = lazy(() => import('@/pages/walkInCustomers/WalkInCustomerList'));
+
 // ============================================================================
 // CONSTANTS
 // ============================================================================
@@ -66,7 +68,7 @@ const createPlaceholder = (title: string): React.FC => {
 };
 
 const DashboardPage = AdminDashboard;
-const WalkInPage = createPlaceholder('Walk-In Customers');
+const WalkInPage = WalkInCustomerList;
 const RingPage = createPlaceholder('Ring Customers');
 const ContainersPage = createPlaceholder('Containers');
 const SettingsPage = createPlaceholder('Settings');

@@ -9,6 +9,7 @@ import { attendanceReducer } from './attendance/attendance.slice';
 import { payoutsReducer } from './payouts/payouts.slice';
 import inventoryReducer from './inventory/inventory.slice';
 import expensesReducer from './expenses/expenses.slice';
+import walkInCustomersReducer from './walkInCustomers/walkInCustomers.slice';
 
 // ============================================================================
 // ROOT REDUCER
@@ -21,6 +22,7 @@ export const rootReducer = combineReducers({
   payouts: payoutsReducer,
   inventory: inventoryReducer,
   expenses: expensesReducer,
+  walkInCustomers: walkInCustomersReducer,
 });
 
 
