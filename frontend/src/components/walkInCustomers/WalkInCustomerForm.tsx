@@ -44,7 +44,6 @@ interface WalkInCustomerFormProps {
 const STATUS_OPTIONS = [
   { value: WalkInCustomerStatus.PENDING, label: 'Pending' },
   { value: WalkInCustomerStatus.PAID, label: 'Paid' },
-  { value: WalkInCustomerStatus.CANCELLED, label: 'Cancelled' },
 ];
 
 // ============================================================================

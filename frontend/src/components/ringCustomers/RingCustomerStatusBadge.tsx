@@ -13,17 +13,13 @@ const RingCustomerStatusBadge: React.FC<BadgeProps> = ({ status }) => {
   let label = status || 'Unknown';
 
   switch (status) {
-    case RingCustomerStatus.DELIVERED:
+    case RingCustomerStatus.PAID:
       colorClass = 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400';
-      label = 'Delivered';
+      label = 'Paid';
       break;
     case RingCustomerStatus.PENDING:
       colorClass = 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400';
       label = 'Pending';
-      break;
-    case RingCustomerStatus.CANCELLED:
-      colorClass = 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400';
-      label = 'Cancelled';
       break;
   }
 

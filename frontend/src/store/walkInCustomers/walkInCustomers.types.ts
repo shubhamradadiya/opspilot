@@ -10,7 +10,6 @@ import { IUser } from '../auth/auth.types';
 export enum WalkInCustomerStatus {
   PENDING = 'pending',
   PAID = 'paid',
-  CANCELLED = 'cancelled',
 }
 
 export interface IWalkInCustomer {

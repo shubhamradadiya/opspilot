@@ -21,10 +21,6 @@ const WalkInCustomerStatusBadge: React.FC<BadgeProps> = ({ status }) => {
       colorClass = 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400';
       label = 'Pending';
       break;
-    case WalkInCustomerStatus.CANCELLED:
-      colorClass = 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400';
-      label = 'Cancelled';
-      break;
   }
 
   return (

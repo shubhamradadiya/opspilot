@@ -209,8 +209,7 @@ const RingCustomerList: React.FC = () => {
               >
                 <option value="all">All Statuses</option>
                 <option value={RingCustomerStatus.PENDING}>Pending</option>
-                <option value={RingCustomerStatus.DELIVERED}>Delivered</option>
-                <option value={RingCustomerStatus.CANCELLED}>Cancelled</option>
+                <option value={RingCustomerStatus.PAID}>Paid</option>
             </select>
           </div>
 

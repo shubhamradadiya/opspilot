@@ -40,8 +40,7 @@ interface RingCustomerFormProps {
 
 const STATUS_OPTIONS = [
   { value: RingCustomerStatus.PENDING, label: 'Pending' },
-  { value: RingCustomerStatus.DELIVERED, label: 'Delivered' },
-  { value: RingCustomerStatus.CANCELLED, label: 'Cancelled' },
+  { value: RingCustomerStatus.PAID, label: 'Paid' },
 ];
 
 // ============================================================================

@@ -1,7 +1,6 @@
 export enum RingCustomerStatus {
   PENDING = 'pending',
-  DELIVERED = 'delivered',
-  CANCELLED = 'cancelled',
+  PAID = 'paid',
 }
 
 export interface IRingCustomer {
