@@ -47,6 +47,11 @@ const ActivityLogs = lazy(() => import('@/pages/inventory/ActivityLogs'));
 const ExpenseList = lazy(() => import('@/pages/expenses/ExpenseList'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
+const WalkInCustomerList = lazy(() => import('@/pages/walkInCustomers/WalkInCustomerList'));
+const RingCustomerList = lazy(() => import('@/pages/ringCustomers/RingCustomerList'));
+const ContainerList = lazy(() => import('@/pages/containers/ContainerList'));
+const ContainerDetail = lazy(() => import('@/pages/containers/ContainerDetail'));
+
 // ============================================================================
 // CONSTANTS
 // ============================================================================
@@ -66,9 +71,9 @@ const createPlaceholder = (title: string): React.FC => {
 };
 
 const DashboardPage = AdminDashboard;
-const WalkInPage = createPlaceholder('Walk-In Customers');
-const RingPage = createPlaceholder('Ring Customers');
-const ContainersPage = createPlaceholder('Containers');
+const WalkInPage = WalkInCustomerList;
+const RingPage = RingCustomerList;
+const ContainersPage = ContainerList;
 const SettingsPage = createPlaceholder('Settings');
 
 // ============================================================================
@@ -155,9 +160,19 @@ const AppRoutes: React.FC = () => {
           <Route element={<FeatureFlagRoute flag="isExpenseEnabled" />}>
             <Route path={APP_ROUTES.EXPENSES} element={<ExpenseList />} />
           </Route>
-          <Route path={APP_ROUTES.WALK_IN_CUSTOMERS} element={<WalkInPage />} />
-          <Route path={APP_ROUTES.RING_CUSTOMERS} element={<RingPage />} />
-          <Route path={APP_ROUTES.CONTAINERS} element={<ContainersPage />} />
+          
+          <Route element={<FeatureFlagRoute flag="isWalkInCustomerEnabled" />}>
+            <Route path={APP_ROUTES.WALK_IN_CUSTOMERS} element={<WalkInPage />} />
+          </Route>
+
+          <Route element={<FeatureFlagRoute flag="isRingCustomerEnabled" />}>
+            <Route path={APP_ROUTES.RING_CUSTOMERS} element={<RingPage />} />
+          </Route>
+
+          <Route element={<FeatureFlagRoute flag="isContainerEnabled" />}>
+             <Route path={APP_ROUTES.CONTAINERS} element={<ContainersPage />} />
+             <Route path={APP_ROUTES.CONTAINER_DETAIL} element={<ContainerDetail />} />
+          </Route>
           <Route path={APP_ROUTES.SETTINGS} element={<SettingsPage />} />
           <Route path={APP_ROUTES.AUTH.CHANGE_PASSWORD} element={<ChangePassword />} />
 

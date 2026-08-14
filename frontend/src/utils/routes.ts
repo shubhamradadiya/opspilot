@@ -84,6 +84,7 @@ export const APP_ROUTES = {
   WALK_IN_CUSTOMERS: '/walk-in-customers',
   RING_CUSTOMERS: '/ring-customers',
   CONTAINERS: '/containers',
+  CONTAINER_DETAIL: '/containers/:id',
   SETTINGS: '/settings',
   HOME: '/',
 } as const;

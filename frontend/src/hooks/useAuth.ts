@@ -24,7 +24,7 @@ export const useAuth = () => {
 
   return {
     user,
-    isAdmin: user?.role === 'admin',
+    isAdmin: user?.role === 'admin' || user?.role === 'superAdmin',
     isAuthenticated,
     sessionRestored,
     loading,

@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -151,6 +152,40 @@ export class ContainerController {
     return {
       statusCode: HttpStatus.OK,
       message: i18n.t('translate.DELETED', { args: { property: 'Booking' } }),
+    };
+  }
+
+  @Get('/container/:cId')
+  @ApiOperation({
+    summary: `Get container by cId`,
+    description: `Get container by cId`,
+  })
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse(UNAUTHORIZE_RESPONSE)
+  @ApiResponse(NOT_FOUND_RESPONSE)
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRoles.ADMIN, UserRoles.USER)
+  @ApiParam({ name: 'cId', type: String, example: 'C1234567890' })
+  async getContainerByCid(
+    @I18n() i18n: I18nContext<I18nTranslations>,
+    @Param('cId') cId: string,
+  ) {
+    const container = await this.containerService.getDetailedContainer(cId);
+
+    if (!container) {
+      throw new NotFoundException(
+        i18n.t('exception.NOT_FOUND', { args: { property: 'Container' } }),
+      );
+    }
+
+    return {
+      statusCode: HttpStatus.OK,
+      message: i18n.t('translate.SUCCESS'),
+      data: plainToInstance(Container, container, {
+        enableImplicitConversion: true,
+        excludeExtraneousValues: true,
+      }),
     };
   }
 

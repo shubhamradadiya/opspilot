@@ -155,6 +155,13 @@ const ManualLogModal: React.FC<ManualLogModalProps> = ({
               dateFormat="MMM d, yyyy h:mm aa"
               showTimeSelect
               maxDate={checkedOutAt ? new Date(checkedOutAt) : undefined}
+              withPortal
+              portalId="datepicker-portal"
+              popperPlacement="bottom-start"
+              popperModifiers={[
+                { name: 'preventOverflow', options: { boundary: 'viewport' } },
+                { name: 'flip', enabled: false },
+              ] as any}
             />
           </div>
 
@@ -171,6 +178,13 @@ const ManualLogModal: React.FC<ManualLogModalProps> = ({
               dateFormat="MMM d, yyyy h:mm aa"
               showTimeSelect
               minDate={checkedInAt ? new Date(checkedInAt) : undefined}
+              withPortal
+              portalId="datepicker-portal"
+              popperPlacement="bottom-start"
+              popperModifiers={[
+                { name: 'preventOverflow', options: { boundary: 'viewport' } },
+                { name: 'flip', enabled: false },
+              ] as any}
             />
           </div>
 
