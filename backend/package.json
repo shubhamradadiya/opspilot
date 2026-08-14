@@ -27,6 +27,7 @@
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
     "seed:run": "npx typeorm-extension seed:run",
+    "seed:test-data": "npx typeorm-extension seed:run --name src/database/seeds/main-test-data.seed.ts",
     "prepare": "husky"
   },
   "dependencies": {

@@ -49,6 +49,8 @@ const NotFound = lazy(() => import('@/pages/NotFound'));
 
 const WalkInCustomerList = lazy(() => import('@/pages/walkInCustomers/WalkInCustomerList'));
 const RingCustomerList = lazy(() => import('@/pages/ringCustomers/RingCustomerList'));
+const ContainerList = lazy(() => import('@/pages/containers/ContainerList'));
+const ContainerDetail = lazy(() => import('@/pages/containers/ContainerDetail'));
 
 // ============================================================================
 // CONSTANTS
@@ -71,7 +73,7 @@ const createPlaceholder = (title: string): React.FC => {
 const DashboardPage = AdminDashboard;
 const WalkInPage = WalkInCustomerList;
 const RingPage = RingCustomerList;
-const ContainersPage = createPlaceholder('Containers');
+const ContainersPage = ContainerList;
 const SettingsPage = createPlaceholder('Settings');
 
 // ============================================================================
@@ -169,6 +171,7 @@ const AppRoutes: React.FC = () => {
 
           <Route element={<FeatureFlagRoute flag="isContainerEnabled" />}>
              <Route path={APP_ROUTES.CONTAINERS} element={<ContainersPage />} />
+             <Route path={APP_ROUTES.CONTAINER_DETAIL} element={<ContainerDetail />} />
           </Route>
           <Route path={APP_ROUTES.SETTINGS} element={<SettingsPage />} />
           <Route path={APP_ROUTES.AUTH.CHANGE_PASSWORD} element={<ChangePassword />} />
