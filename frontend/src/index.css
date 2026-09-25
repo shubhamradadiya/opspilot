@@ -3,14 +3,243 @@
    OpsPilot · Premium Gold Theme
    ============================================================================ */
 
-/* Google Fonts — DM Sans (UI) + JetBrains Mono (code/IDs) */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Google Fonts — Plus Jakarta (display) + DM Sans (UI) + JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 /* Tailwind CSS v4 */
 @import "tailwindcss";
 
 /* Dark mode via .dark class on <html> (class strategy, not media query) */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Landing theme tokens — flip with .dark on <html> */
+:root {
+  --landing-bg: oklch(0.985 0.006 95);
+  --landing-fg: oklch(0.22 0.012 60);
+  --landing-muted: oklch(0.48 0.015 60);
+  --landing-gold: oklch(0.72 0.13 82);
+  --landing-gold-soft: oklch(0.86 0.09 88);
+  --landing-cool: oklch(0.94 0.018 230);
+  --landing-line: oklch(0.90 0.012 85);
+  --landing-glass: oklch(1 0 0 / 0.72);
+  --landing-surface: oklch(1 0 0 / 0.88);
+  --landing-elevated: #ffffff;
+  --landing-panel: #1a1a1a;
+  --landing-on-panel: #f5f5f5;
+}
+
+.dark {
+  --landing-bg: oklch(0.145 0.01 60);
+  --landing-fg: oklch(0.96 0.008 95);
+  --landing-muted: oklch(0.72 0.015 85);
+  --landing-gold: oklch(0.78 0.13 82);
+  --landing-gold-soft: oklch(0.82 0.11 88);
+  --landing-cool: oklch(0.22 0.02 230);
+  --landing-line: oklch(0.28 0.012 70);
+  --landing-glass: oklch(0.22 0.012 60 / 0.72);
+  --landing-surface: oklch(0.20 0.012 60 / 0.9);
+  --landing-elevated: oklch(0.20 0.012 60);
+  --landing-panel: #111111;
+  --landing-on-panel: #f5f5f5;
+}
+
+@theme inline {
+  --font-display: "Plus Jakarta Sans", "DM Sans", system-ui, sans-serif;
+  --font-landing: "DM Sans", system-ui, sans-serif;
+  --color-ivory: var(--landing-bg);
+  --color-charcoal: var(--landing-fg);
+  --color-muted: var(--landing-muted);
+  --color-gold: var(--landing-gold);
+  --color-gold-soft: var(--landing-gold-soft);
+  --color-cool: var(--landing-cool);
+  --color-line: var(--landing-line);
+  --color-glass: var(--landing-glass);
+  --color-surface: var(--landing-surface);
+  --color-elevated: var(--landing-elevated);
+  --color-panel: var(--landing-panel);
+  --color-on-panel: var(--landing-on-panel);
+}
+
+@utility glass-surface {
+  background: var(--landing-surface);
+  backdrop-filter: blur(28px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--landing-line) 80%, transparent);
+  box-shadow:
+    0 1px 0 color-mix(in oklab, white 40%, transparent) inset,
+    0 18px 50px color-mix(in oklab, var(--landing-fg) 6%, transparent);
+}
+
+@utility hero-wash {
+  background:
+    radial-gradient(ellipse 70% 55% at 85% 10%, color-mix(in oklab, var(--landing-gold) 18%, transparent), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 8% 90%, color-mix(in oklab, var(--landing-cool) 55%, transparent), transparent 50%),
+    linear-gradient(180deg, var(--landing-bg), color-mix(in oklab, var(--landing-cool) 22%, var(--landing-bg)));
+}
+
+@utility landing-grid {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--landing-line) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--landing-line) 55%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 75%);
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes soft-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+
+@keyframes bar-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes shimmer-line {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes review-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes workflow-icon-pop {
+  0% { opacity: 0; transform: scale(0.55); }
+  70% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes workflow-icon-ring {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.55); }
+}
+
+@utility shimmer-line {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--landing-gold) 55%, transparent),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer-line 4.5s linear infinite;
+}
+
+@utility rise-in {
+  animation: rise-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility soft-pulse {
+  animation: soft-pulse 2.2s ease-in-out infinite;
+}
+
+@utility float-soft {
+  animation: float-soft 5.5s ease-in-out infinite;
+}
+
+@utility bar-grow {
+  transform-origin: bottom;
+  animation: bar-grow 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility reveal-up {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@utility reveal-up-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@utility workflow-line {
+  transform: scaleY(0);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@utility workflow-line-visible {
+  transform: scaleY(1);
+}
+
+@utility workflow-icon {
+  opacity: 0;
+  transform: scale(0.55);
+}
+
+@utility workflow-icon-visible {
+  animation: workflow-icon-pop 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility workflow-icon-ring {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@utility workflow-icon-ring-visible {
+  animation: workflow-icon-ring 700ms ease-out both;
+}
+
+@utility workflow-rule {
+  transform: scaleX(0);
+  transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@utility workflow-rule-visible {
+  transform: scaleX(1);
+}
+
+@utility review-marquee-track {
+  animation: review-marquee 40s linear infinite;
+  will-change: transform;
+}
+
+.review-marquee:hover .review-marquee-track {
+  animation-play-state: paused;
+}
+
+@utility review-marquee-fade {
+  background: linear-gradient(90deg, color-mix(in oklab, var(--landing-elevated) 92%, transparent), transparent);
+}
+
+@utility review-marquee-fade-right {
+  background: linear-gradient(270deg, color-mix(in oklab, var(--landing-elevated) 92%, transparent), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-in,
+  .soft-pulse,
+  .float-soft,
+  .bar-grow,
+  .shimmer-line,
+  .review-marquee-track,
+  .workflow-icon-visible,
+  .workflow-icon-ring-visible {
+    animation: none !important;
+  }
+
+  .reveal-up,
+  .workflow-line,
+  .workflow-icon,
+  .workflow-rule {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
 
 /* Design system tokens */
 @import "./styles/globals.css";

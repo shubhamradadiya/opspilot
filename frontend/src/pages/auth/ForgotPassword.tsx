@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useCallback, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 // Icons
-import { Mail, Lock, ArrowLeft, ChevronRight } from 'lucide-react';
+import { Mail, Lock, KeyRound } from 'lucide-react';
 
 // External Libraries
 import { useForm } from 'react-hook-form';
@@ -15,9 +15,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'sonner';
 
-// Components - UI
-import { Button, Input, OtpInput } from '@/components/ui';
-import AuthLayout from '@/components/auth/AuthLayout';
+// Components
+import AuthShell from '@/components/auth/AuthShell';
+import AuthField from '@/components/auth/AuthField';
+import AuthSubmitButton from '@/components/auth/AuthSubmitButton';
 
 // Stores
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
@@ -57,10 +58,10 @@ const step3Schema = z
     path: ['confirmPassword'],
   });
 
-const STEP_TITLES: Record<1 | 2 | 3, { title: string; subtitle: string }> = {
-  1: { title: 'Forgot password', subtitle: 'Enter your admin email to receive a verification code' },
-  2: { title: 'Enter verification code', subtitle: 'Enter the 6-digit code sent to your email' },
-  3: { title: 'Set new password', subtitle: 'Choose a strong password for your account' },
+const STEP_COPY: Record<1 | 2 | 3, { title: string; description: string }> = {
+  1: { title: 'Reset your password', description: 'Enter your work email and we will send a six-digit verification code.' },
+  2: { title: 'Enter your code', description: 'Check your inbox for the six-digit code we just sent.' },
+  3: { title: 'Choose a new password', description: 'Pick a strong password you have not used before.' },
 };
 
 // ============================================================================
@@ -148,149 +149,105 @@ const ForgotPassword: React.FC = () => {
   );
 
   const handleOtpChange = useCallback((val: string) => {
-    setOtpValue(val);
+    setOtpValue(val.replace(/\D/g, '').slice(0, 6));
     if (otpError) setOtpError('');
   }, [otpError]);
 
   // ── COMPUTED VALUES ────────────────────────────────────────────────────────
-  const stepInfo = useMemo(() => STEP_TITLES[fpStep as 1 | 2 | 3], [fpStep]);
+  const stepInfo = useMemo(() => STEP_COPY[fpStep as 1 | 2 | 3], [fpStep]);
   const apiError = useMemo(() => authError, [authError]);
 
-  // ── RENDER - Step indicators ───────────────────────────────────────────────
-  const stepIndicators = useMemo(
-    () => (
-      <div className="flex items-center gap-1 mb-6">
-        {([1, 2, 3] as const).map((step) => (
-          <React.Fragment key={step}>
-            <div
-              className={`h-1.5 flex-1 rounded-full transition-colors duration-150 ${
-                step <= fpStep
-                  ? 'bg-[#D4AF37]'
-                  : 'bg-[#E8E0B8] dark:bg-[#2E2E2E]'
-              }`}
-            />
-            {step < 3 && (
-              <ChevronRight className="w-3 h-3 text-[#9A9A9A] dark:text-[#666666] shrink-0" aria-hidden="true" />
-            )}
-          </React.Fragment>
-        ))}
-      </div>
-    ),
-    [fpStep],
-  );
-
-  // ── RENDER - Main ──────────────────────────────────────────────────────────
+  // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
-    <AuthLayout>
-      <div className="w-full max-w-[400px] bg-white/90 dark:bg-[#1E1E1E]/90 backdrop-blur-md rounded-xl shadow-lg shadow-[#E8E0B8]/60 dark:shadow-black/40 border border-[#E8E0B8]/80 dark:border-[#2E2E2E]/80 p-8">
-        {/* Back to login */}
-        <Link
-          to={APP_ROUTES.AUTH.LOGIN}
-          className="inline-flex items-center gap-1 text-sm text-[#9A9A9A] hover:text-[#D4AF37] dark:text-[#666666] dark:hover:text-[#D4AF37] mb-6 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-          Back to sign in
-        </Link>
+    <AuthShell>
+      <div className="glass-surface rounded-xl p-7 sm:p-8">
+        <p className="text-xs font-semibold uppercase tracking-widest text-gold">
+          Step {fpStep} of 3
+        </p>
+        <h1 className="mt-3 font-display text-2xl font-semibold text-charcoal">{stepInfo.title}</h1>
+        <p className="mt-2 text-sm leading-6 text-charcoal/60">{stepInfo.description}</p>
 
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] tracking-tight">
-            {stepInfo.title}
-          </h1>
-          <p className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA] mt-1">
-            {stepInfo.subtitle}
-          </p>
-        </div>
-
-        {/* Step indicators */}
-        {stepIndicators}
-
-        {/* API Error */}
         {apiError && fpStep !== 2 && (
-          <div role="alert" className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 dark:bg-red-900/20 dark:border-red-800">
-            <p className="text-sm text-red-700 dark:text-red-400">{apiError}</p>
-          </div>
+          <p className="mt-5 rounded-md bg-[#C0392B]/10 px-3 py-2 text-sm text-[#C0392B]" role="alert">
+            {apiError}
+          </p>
         )}
 
-        {/* ── STEP 1: Enter email ──────────────────────────────────────────── */}
         {fpStep === 1 && (
-          <form onSubmit={step1Form.handleSubmit(handleStep1Submit)} noValidate className="flex flex-col gap-4">
-            <Input
+          <form onSubmit={step1Form.handleSubmit(handleStep1Submit)} noValidate className="mt-7 grid gap-5">
+            <AuthField
               {...step1Form.register('email')}
+              label="Work email"
+              icon={Mail}
               type="email"
-              label="Email address"
-              placeholder="admin@example.com"
               autoComplete="email"
+              placeholder="you@company.com"
               autoFocus
               error={step1Form.formState.errors.email?.message}
-              leftIcon={<Mail className="w-4 h-4" aria-hidden="true" />}
             />
-            <Button type="submit" variant="primary" size="md" loading={isLoading} className="w-full mt-2">
-              Send verification code
-            </Button>
+            <AuthSubmitButton loading={isLoading}>Send code</AuthSubmitButton>
           </form>
         )}
 
-        {/* ── STEP 2: Enter OTP ────────────────────────────────────────────── */}
         {fpStep === 2 && (
-          <div className="flex flex-col gap-4">
-            <div>
-              <p className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA] mb-3">
-                Code sent to{' '}
-                <span className="font-medium text-[#2A2A2A] dark:text-[#F5F5F5]">
-                  {fpEmail}
-                </span>
-              </p>
-              <OtpInput
-                value={otpValue}
-                onChange={handleOtpChange}
-                length={6}
-                autoFocus
-                error={otpError}
-              />
-            </div>
-            <Button
-              type="button"
-              variant="primary"
-              size="md"
-              loading={isLoading}
-              className="w-full mt-2"
-              onClick={handleStep2Submit}
-            >
-              Verify code
-            </Button>
-          </div>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              void handleStep2Submit();
+            }}
+            className="mt-7 grid gap-5"
+          >
+            <AuthField
+              label="Verification code"
+              icon={KeyRound}
+              inputMode="numeric"
+              maxLength={6}
+              placeholder="123456"
+              value={otpValue}
+              onChange={(event) => handleOtpChange(event.target.value)}
+              error={otpError || undefined}
+              autoFocus
+            />
+            <AuthSubmitButton loading={isLoading}>Verify code</AuthSubmitButton>
+          </form>
         )}
 
-        {/* ── STEP 3: New password ─────────────────────────────────────────── */}
         {fpStep === 3 && (
-          <form onSubmit={step3Form.handleSubmit(handleStep3Submit)} noValidate className="flex flex-col gap-4">
-            <Input
+          <form onSubmit={step3Form.handleSubmit(handleStep3Submit)} noValidate className="mt-7 grid gap-5">
+            <AuthField
               {...step3Form.register('newPassword')}
-              type="password"
               label="New password"
-              placeholder="••••••••"
+              icon={Lock}
+              type="password"
               autoComplete="new-password"
+              placeholder="Create a password"
               autoFocus
               error={step3Form.formState.errors.newPassword?.message}
-              leftIcon={<Lock className="w-4 h-4" aria-hidden="true" />}
             />
-            <Input
+            <AuthField
               {...step3Form.register('confirmPassword')}
+              label="Confirm password"
+              icon={Lock}
               type="password"
-              label="Confirm new password"
-              placeholder="••••••••"
               autoComplete="new-password"
+              placeholder="Repeat the password"
               error={step3Form.formState.errors.confirmPassword?.message}
-              leftIcon={<Lock className="w-4 h-4" aria-hidden="true" />}
             />
-            <Button type="submit" variant="primary" size="md" loading={isLoading} className="w-full mt-2">
-              Reset password
-            </Button>
+            <AuthSubmitButton loading={isLoading}>Save new password</AuthSubmitButton>
           </form>
         )}
+
+        <p className="mt-6 text-sm text-charcoal/60">
+          Remembered it?{' '}
+          <Link
+            to={APP_ROUTES.AUTH.LOGIN}
+            className="font-medium text-charcoal underline-offset-4 hover:underline"
+          >
+            Back to sign in
+          </Link>
+        </p>
       </div>
-    </AuthLayout>
+    </AuthShell>
   );
 };
 
