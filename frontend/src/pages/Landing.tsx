@@ -702,11 +702,8 @@ const Landing: React.FC = () => {
         </div>
 
         <div className="border-t border-line/50">
-          <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div className="mx-auto max-w-6xl px-5 py-6 text-center text-sm text-muted sm:px-6">
             <span>© 2026 OpsPilot · Built for daily operations</span>
-            <span className="inline-flex items-center gap-2">
-              <StarRow rating={5} size="sm" /> 4.9 team rating
-            </span>
           </div>
         </div>
       </footer>
