@@ -26,6 +26,7 @@ const AppLayout = lazy(() => import('@/components/layout/AppLayout'));
 // ============================================================================
 // LAZY IMPORTS — Auth Pages
 // ============================================================================
+const Landing = lazy(() => import('@/pages/Landing'));
 const Login = lazy(() => import('@/pages/auth/Login'));
 const ForgotPassword = lazy(() => import('@/pages/auth/ForgotPassword'));
 const ChangePassword = lazy(() => import('@/pages/auth/ChangePassword'));
@@ -103,7 +104,7 @@ const AppRoutes: React.FC = () => {
 
   return (
     <Routes>
-      {/* Root → redirect based on role */}
+      {/* Root → landing for guests; signed-in users go to their workspace */}
       <Route
         path="/"
         element={
@@ -112,7 +113,7 @@ const AppRoutes: React.FC = () => {
           ) : isAuthenticated ? (
             <Navigate to={isAdmin ? APP_ROUTES.DASHBOARD : APP_ROUTES.ATTENDANCE.DASHBOARD} replace />
           ) : (
-            <Navigate to={APP_ROUTES.AUTH.LOGIN} replace />
+            <Landing />
           )
         }
       />

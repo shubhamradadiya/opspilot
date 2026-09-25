@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 // Icons
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, Check } from 'lucide-react';
 
 // External Libraries
 import { useForm } from 'react-hook-form';
@@ -15,9 +15,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'sonner';
 
-// Components - UI
-import { Button, Input } from '@/components/ui';
-import AuthLayout from '@/components/auth/AuthLayout';
+// Components
+import AuthShell from '@/components/auth/AuthShell';
+import AuthField from '@/components/auth/AuthField';
+import AuthSubmitButton from '@/components/auth/AuthSubmitButton';
 
 // Stores
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
@@ -102,83 +103,70 @@ const Login: React.FC = () => {
 
   // ── RENDER ─────────────────────────────────────────────────────────────────
   return (
-    <AuthLayout>
-      <div className="w-full max-w-[400px] bg-white/90 dark:bg-[#1E1E1E]/90 backdrop-blur-md rounded-xl shadow-lg shadow-[#E8E0B8]/60 dark:shadow-black/40 border border-[#E8E0B8]/80 dark:border-[#2E2E2E]/80 p-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-[#2A2A2A] dark:text-[#F5F5F5] tracking-tight">
-            Sign in
-          </h1>
-          <p className="text-sm text-[#D4AF37] font-medium mt-1">
-            OpsPilot
-          </p>
-        </div>
+    <AuthShell>
+      <div className="glass-surface rounded-xl p-7 sm:p-8">
+        <p className="text-xs font-semibold uppercase tracking-widest text-gold">Sign in</p>
+        <h1 className="mt-3 font-display text-2xl font-semibold text-charcoal">Welcome back to OpsPilot</h1>
+        <p className="mt-2 text-sm leading-6 text-charcoal/60">
+          Use your work email to open your operations workspace.
+        </p>
 
-        {/* API Error */}
-        {apiError && (
-          <div
-            role="alert"
-            className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 dark:bg-red-900/20 dark:border-red-800"
-          >
-            <p className="text-sm text-red-700 dark:text-red-400">{apiError}</p>
-          </div>
-        )}
-
-        {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
-          <Input
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="mt-7 grid gap-5">
+          <AuthField
             {...register('email')}
+            label="Work email"
+            icon={Mail}
             type="email"
-            label="Email address"
-            placeholder="admin@example.com"
             autoComplete="email"
+            placeholder="you@company.com"
             autoFocus
             error={emailError}
-            leftIcon={<Mail className="w-4 h-4" aria-hidden="true" />}
           />
-
-          <Input
+          <AuthField
             {...register('password')}
-            type="password"
             label="Password"
-            placeholder="••••••••"
+            icon={Lock}
+            type="password"
             autoComplete="current-password"
+            placeholder="Enter your password"
             error={passwordError}
-            leftIcon={<Lock className="w-4 h-4" aria-hidden="true" />}
           />
 
-          {/* Remember me + Forgot password */}
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                {...register('rememberMe')}
-                type="checkbox"
-                className="h-4 w-4 rounded accent-[#D4AF37]"
-              />
-              <span className="text-sm text-[#5A5A5A] dark:text-[#AAAAAA]">
-                Remember me
+          <div className="flex items-center justify-between gap-3">
+            <label className="flex cursor-pointer items-center gap-2 text-sm text-muted">
+              <input {...register('rememberMe')} type="checkbox" className="peer sr-only" />
+              <span className="grid size-4 shrink-0 place-items-center rounded-sm border border-line bg-elevated text-panel peer-checked:border-gold peer-checked:bg-gold peer-checked:text-[#1a1a1a] [&_svg]:opacity-0 peer-checked:[&_svg]:opacity-100">
+                <Check className="size-3" aria-hidden="true" />
               </span>
+              Keep me signed in
             </label>
             <Link
               to={APP_ROUTES.AUTH.FORGOT_PASSWORD}
-              className="text-sm text-[#D4AF37] hover:text-[#CE8946] dark:text-[#D4AF37] dark:hover:text-[#F0DFA0] transition-colors"
+              className="text-sm font-medium text-charcoal underline-offset-4 hover:underline"
             >
               Forgot password?
             </Link>
           </div>
 
-          <Button
-            type="submit"
-            variant="primary"
-            size="md"
-            loading={isLoading}
-            className="w-full mt-2"
-          >
-            Sign in
-          </Button>
+          {apiError && (
+            <p className="rounded-md bg-[#C0392B]/10 px-3 py-2 text-sm text-[#C0392B]" role="alert">
+              {apiError}
+            </p>
+          )}
+
+          <AuthSubmitButton loading={isLoading}>
+            {isLoading ? 'Signing in…' : 'Sign in'}
+          </AuthSubmitButton>
         </form>
+
+        <p className="mt-6 text-sm text-charcoal/60">
+          Need an account?{' '}
+          <a href="mailto:admin@opspilot.app" className="font-medium text-charcoal underline-offset-4 hover:underline">
+            Request access
+          </a>
+        </p>
       </div>
-    </AuthLayout>
+    </AuthShell>
   );
 };
 

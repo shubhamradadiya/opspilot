@@ -74,6 +74,10 @@
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* ── Base Resets ───────────────────────────────────────────────────────────── */
@@ -84,6 +88,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 /* ── Auth Page Animations ─────────────────────────────────────────────────── */
